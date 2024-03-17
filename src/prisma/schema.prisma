@@ -1,0 +1,143 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Apartement{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  location String
+  usage    String
+  document_type String
+  land_metrage Int
+  useful_metrage Int
+  floor_number Int
+  floor Int
+  Unit_in_floor Int
+  year_of_build Int
+  full_name String
+  phone     String
+  price     Int
+  room_number  Int
+  features     String
+  photo        Json @db.JsonB
+}
+model House{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  location String
+  usage    String
+  document_type String
+  land_metrage Int
+  useful_metrage Int
+  floor_number Int
+  floor Int
+  year_of_build Int
+  full_name String
+  phone     String
+  price     Int
+  room_number  Int
+  features     String
+  photo        Json @db.JsonB
+}
+model Land{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  location String
+  document_type String
+  land_metrage Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model Enterprise{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  usage    String
+  document_type String
+  land_metrage Int
+  year_of_build Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model AgricultureLand{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  usage    String
+  document_type String
+  land_metrage Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model ServiceLand{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  location String
+  usage    String
+  document_type String
+  land_metrage Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model Nitche{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  usage    String
+  document_type String
+  land_metrage Int
+  useful_metrage Int
+  year_of_build Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model Garden{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  usage    String
+  document_type String
+  land_metrage Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}
+model Shop{
+  id Int @default(autoincrement()) @unique
+  region String 
+  address String
+  usage    String
+  document_type String
+  land_metrage Int
+  year_of_build Int
+  full_name String
+  phone     String
+  price     Int
+  photo        Json @db.JsonB
+}

@@ -128,3 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+.env
+/Users/aryaneuse/Desktop/zhingeh/src/prisma/migrations
