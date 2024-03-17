@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AryanElahi/zhingeh#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "prisma": "^5.11.0"
   }
