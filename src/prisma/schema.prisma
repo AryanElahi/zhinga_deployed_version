@@ -12,7 +12,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
+model User {
+  id Int @default(autoincrement()) @unique
+  full_name String @default("")
+  username String @default("")
+  password String @default("")
+  countryCode String @default("")
+  phone String @unique
+  refreshToken String @default("")
+  Blocked Boolean @default(false)
+  softDelete Boolean @default(false)
+  address String @default("")
+}
 model Apartement{
   id Int @default(autoincrement()) @unique
   region String 
