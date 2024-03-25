@@ -14,11 +14,11 @@ datasource db {
 }
 model User {
   id Int @default(autoincrement()) @unique
-  full_name String @default("")
-  username String @default("")
-  password String @default("")
-  countryCode String @default("")
-  phone String @unique
+  full_name String @default("") //require
+  username String @default("")  //require
+  password String @default("")  //require
+  countryCode String @default("")  //require
+  phone String @unique          //require
   refreshToken String @default("")
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)

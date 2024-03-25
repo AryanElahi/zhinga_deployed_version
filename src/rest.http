@@ -1,3 +1,25 @@
 POST  http://localhost:3000/auth/register
+Content-type : application/json
+
+{
+    "fullname": "aryan fagh",
+    "username" : "adaw",
+    "password": "1",
+    "countrycode": "98",
+    "phone": "09741751990"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
