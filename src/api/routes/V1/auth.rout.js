@@ -2,37 +2,30 @@ const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
 const {PrismaClient} = require("@prisma/client")
-
+const {signupVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 
 router.post("/register", async (req, res, next) => {
     //console.log(req.body)
 try {
-    const {fullname, username, password, countrycode, phone } = req.body
-    if (!fullname || !username || !password || !countrycode || !phone) throw creatErrors.BadRequest()
+    //const {full_name, password, phone } = req.body
+
+    const result = await signupVal.validateAsync(req.body)
+    console.log(result)
     const doesExistphone = await prisma.user.findUnique({
     where: {
-        phone: phone
+        phone: result.phone
     }
     })
-    const doesExistusername = await prisma.user.findUnique({
-        where: {
-            phone: phone
-        }
-        })
-    if (doesExistphone && doesExistusername) throw creatErrors.Conflict(" username or phone already exists")
+    if (doesExistphone) throw creatErrors.Conflict(" phone already exists")
     const newuser =await prisma.user.create({
-        data : {
-            full_name : fullname,
-            username: username,
-            password: password,
-            countryCode: countrycode,
-            phone: phone
-        }
+        data :
+            result
     })
     const getall = await prisma.user.findMany()
     res.send(getall)
 } catch (error) {
+    if (error.isJoi === true) error.status = 422
     next(error)
 }
 })
