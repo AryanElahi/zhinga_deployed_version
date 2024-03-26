@@ -4,13 +4,14 @@ const creatErrors = require("http-errors")
 const {PrismaClient} = require("@prisma/client")
 const {signupVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
+const bcrypt = require("bcrypt")
 
 router.post("/register", async (req, res, next) => {
     //console.log(req.body)
 try {
     //const {full_name, password, phone } = req.body
 
-    const result = await signupVal.validateAsync(req.body)
+    let result = await signupVal.validateAsync(req.body)
     console.log(result)
     const doesExistphone = await prisma.user.findUnique({
     where: {
@@ -18,6 +19,9 @@ try {
     }
     })
     if (doesExistphone) throw creatErrors.Conflict(" phone already exists")
+    const salt = await bcrypt.genSalt(10)
+    const hashedpass = await bcrypt.hash(result.password, salt)
+    result.password = hashedpass
     const newuser =await prisma.user.create({
         data :
             result
