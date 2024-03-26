@@ -5,14 +5,17 @@ const {PrismaClient} = require("@prisma/client")
 const {signupVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
+const {signAccessToken} = require("../../../auth/handeler")
+
 
 router.post("/register", async (req, res, next) => {
     //console.log(req.body)
 try {
     //const {full_name, password, phone } = req.body
-
     let result = await signupVal.validateAsync(req.body)
     console.log(result)
+    const token = signAccessToken(result.phone)
+    console.log(token)
     const doesExistphone = await prisma.user.findUnique({
     where: {
         phone: result.phone
