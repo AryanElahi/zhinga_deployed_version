@@ -15,9 +15,15 @@ const signupVal = joi.object ({
     softDelete : joi.boolean()
 })
 
-
+const loginVal = joi.object({
+    phone : joi.string()
+    .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
+    password : joi.string()
+    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+})
 
 
 module.exports = { 
-    signupVal
+    signupVal,
+    loginVal
 }

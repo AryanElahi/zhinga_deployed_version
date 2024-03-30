@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
 const {PrismaClient} = require("@prisma/client")
-const {signupVal} = require("../../../validation/user.auth.validation")
+const {signupVal, loginVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const {signAccessToken} = require("../../../auth/handeler")
@@ -36,7 +36,26 @@ try {
 })
 
 router.post("/login", async (req, res, next) => {
-    res.send("login")
+    try {
+        const result = await loginVal.validateAsync(req.body) 
+        res.send (result)
+        const regesterd = await prisma.user.findUnique({
+            where : result.phone
+        })
+        if (!regesterd) throw creatErrors.NotFound("user is not regesterd")
+        // was in a different file
+        async function (password){
+            try {
+                return await 
+            } catch (error) {
+                
+            }
+        }
+
+    } catch (error) {
+        if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))
+        next(error)
+    }
 })
 
 router.post("/refreshToken", async (req, res, next) => {
