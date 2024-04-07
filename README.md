@@ -7,5 +7,5 @@ technology used:
           REST Architecture
           Reds 
           JWT
-          joi
+          joi for validation 
           bcrypt
