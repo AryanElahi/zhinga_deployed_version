@@ -1,10 +1,68 @@
 POST  http://localhost:3000/auth/login
 Content-type : application/json
 
+
+
 {
-    "password": "1ruykuehr",
-    "phone": "9497651690"
+    //"full_name": "akdsjlkds",
+    "phone": "8181711690",
+    "password": "94jhgjy"
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

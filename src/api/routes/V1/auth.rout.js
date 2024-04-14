@@ -38,21 +38,31 @@ try {
 router.post("/login", async (req, res, next) => {
     try {
         const result = await loginVal.validateAsync(req.body) 
-        res.send (result)
+        console.log(result)
         const regesterd = await prisma.user.findUnique({
-            where : result.phone
-        })
-        if (!regesterd) throw creatErrors.NotFound("user is not regesterd")
+            where: {
+                phone: result.phone
+            }
+            })
+        console.log(regesterd)
+        if (!regesterd || result.softDelete ) throw creatErrors.NotFound("user is not regesterd")
         // was in a different file
-        async function (password){
+        async function isValid(password){
             try {
-                return await 
+                await bcrypt.compare(password, regesterd.password ,(err, data) => {
+                    if (err) throw creatErrors.BadRequest("username or poassword is incorrect")
+                    if (data) {
+                        res.send ("ok")
+                    }
+                    if (!data) res.send ("not ok")
+                })
             } catch (error) {
-                
+                throw error
             }
         }
-
+        isValid(result.password)
     } catch (error) {
+        if (error.isJoi === true) error.status = 422
         if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))
         next(error)
     }
