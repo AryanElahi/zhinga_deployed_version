@@ -5,7 +5,7 @@ const {PrismaClient} = require("@prisma/client")
 const {signupVal, loginVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
-const {signAccessToken, signRefreshToken} = require("../../../auth/handeler")
+const {signAccessToken, signRefreshToken, verifyAccessToken, verifyRefreshToken} = require("../../../auth/handeler")
 
 router.post("/register", async (req, res, next) => {
 try {
@@ -71,7 +71,17 @@ router.post("/login", async (req, res, next) => {
 })
 
 router.post("/refreshToken", async (req, res, next) => {
-    res.send("refresh token")
+    try {
+        const {RefreshToken} = req.body
+        if (!RefreshToken) throw creatErrors.BadRequest()
+        const phone = await verifyRefreshToken(RefreshToken)
+        const AccessToken = await signAccessToken(phone)
+        const refreshToken = await signRefreshToken(phone)
+        res.send ({AccessToken, refreshToken})
+        
+    } catch (error) {
+        if (error) throw error
+    }
 })
 
 router.delete("/logout", async (req, res, next) => {
