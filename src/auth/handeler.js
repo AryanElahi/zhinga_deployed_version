@@ -17,7 +17,7 @@ module.exports = {
           JWT.sign(payload, secret, options, (err, token) => {
             if (err) {
               console.log(err.message)
-              reject(createError.InternalServerError())
+              reject(creatError.InternalServerError())
               return
             }
             console.log(token)
@@ -37,5 +37,25 @@ module.exports = {
             req.payload = payload
             next()
         })
-    }
+    },
+    signRefreshToken: (userId) => {
+        return new Promise((resolve, reject) => {
+          const payload = {}
+          const secret = "sdljkdlkjasdlkdjsalkdjsakldsajklajsd"
+          const options = {
+            expiresIn: '1y',
+            issuer: 'pickurpage.com',
+            audience: userId,
+          }
+          JWT.sign(payload, secret, options, (err, token) => {
+            if (err) {
+              console.log(err.message)
+              reject(createError.InternalServerError())
+              return
+            }
+            console.log(token)
+            resolve(token)
+          })
+        })
+      }
     }

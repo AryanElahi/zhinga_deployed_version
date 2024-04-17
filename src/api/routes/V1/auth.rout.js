@@ -5,21 +5,18 @@ const {PrismaClient} = require("@prisma/client")
 const {signupVal, loginVal} = require("../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
-const {signAccessToken} = require("../../../auth/handeler")
-
+const {signAccessToken, signRefreshToken} = require("../../../auth/handeler")
 
 router.post("/register", async (req, res, next) => {
 try {
     let result = await signupVal.validateAsync(req.body)
-    console.log(result)
-    const token = signAccessToken(result.phone)
-    console.log(token)
     const doesExistphone = await prisma.user.findUnique({
     where: {
         phone: result.phone
     }
     })
-    if (doesExistphone) throw creatErrors.Conflict(" phone already exists")
+    if (doesExistphone) throw creatErrors.Conflict("phone already exists")
+
     const salt = await bcrypt.genSalt(10)
     const hashedpass = await bcrypt.hash(result.password, salt)
     result.password = hashedpass
@@ -27,8 +24,9 @@ try {
         data :
             result
     })
+    const refreshToken = await signRefreshToken(result.phone)
     const getall = await prisma.user.findMany()
-    res.send(getall)
+    res.send({getall, refreshToken})
 } catch (error) {
     if (error.isJoi === true) error.status = 422
     next(error)
@@ -52,9 +50,8 @@ router.post("/login", async (req, res, next) => {
                 await bcrypt.compare(password, regesterd.password ,(err, data) => {
                     if (err) throw err
                     if (data) {
-                        const AccessToken = signAccessToken(regesterd.phone)
                         console.log(AccessToken)
-                        res.send ({AccessToken})
+                        //res.send ({AccessToken})
                     }
                     if (!data) throw creatErrors.Unauthorized("username of password is not correct")
                 })
@@ -63,6 +60,9 @@ router.post("/login", async (req, res, next) => {
             }
         }
         isValid(result.password)
+        const refreshToken = await signRefreshToken(regesterd.phone)
+        const AccessToken = await signAccessToken(regesterd.phone)
+        res.send({refreshToken, AccessToken})
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))

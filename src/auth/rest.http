@@ -1,5 +1,5 @@
-GET http://localhost:3000/
-Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMzNTQwMzUsImV4cCI6MTcxMzM1NzYzNSwiYXVkIjoiODE4MTcxMTY5MCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.N8RK_xsSzkrmAoHjngOmHf1DsObS52NATM4kZNKfaFw
+//GET http://localhost:3000/
+//Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMzNTQwMzUsImV4cCI6MTcxMzM1NzYzNSwiYXVkIjoiODE4MTcxMTY5MCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.N8RK_xsSzkrmAoHjngOmHf1DsObS52NATM4kZNKfaFw
 
 POST  http://localhost:3000/auth/login
 Content-type : application/json
@@ -9,6 +9,7 @@ Content-type : application/json
     "phone": "8181711690",
     "password": "94jhgjy"
 }
+
 
 
 
