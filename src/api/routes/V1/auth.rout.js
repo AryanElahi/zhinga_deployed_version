@@ -50,11 +50,13 @@ router.post("/login", async (req, res, next) => {
         async function isValid(password){
             try {
                 await bcrypt.compare(password, regesterd.password ,(err, data) => {
-                    if (err) throw creatErrors.BadRequest("username or poassword is incorrect")
+                    if (err) throw err
                     if (data) {
-                        res.send ("ok")
+                        const AccessToken = signAccessToken(regesterd.phone)
+                        console.log(AccessToken)
+                        res.send ({AccessToken})
                     }
-                    if (!data) res.send ("not ok")
+                    if (!data) throw creatErrors.Unauthorized("username of password is not correct")
                 })
             } catch (error) {
                 throw error

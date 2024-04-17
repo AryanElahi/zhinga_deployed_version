@@ -2,6 +2,8 @@ const express = require("express")
 const morgan = require("morgan")
 const creatErrors = require("http-errors")
 const AuthRouts = require("../api/routes/V1/auth.rout")
+const {varifyAccessToken} = require ("../auth/handeler")
+
 
 require("dotenv").config()
 
@@ -11,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
-app.get("/", async (req, res, next) => {
+app.get("/", varifyAccessToken, async (req, res, next) => {
     res.send("hello world again")
 })
 app.use("/auth", AuthRouts)

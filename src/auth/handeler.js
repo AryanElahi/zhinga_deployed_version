@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken")
+const JWT = require("jsonwebtoken")
 const creatError = require("http-errors")
 const { process } = require("@hapi/joi/lib/errors")
 const env = require("dotenv")
@@ -6,22 +6,36 @@ const env = require("dotenv")
 
 module.exports = {
     signAccessToken: (userId) => {
-        console.log(userId)
-        return new Promise((resolve, reject ) => {
-            const payload = {
-                aud : userId,
-                iss : "www.zhinga.ir"
+        return new Promise((resolve, reject) => {
+          const payload = {}
+          const secret = "sdljkdlkjasdlkdjsalkdjsakldsajklajsd"
+          const options = {
+            expiresIn: '1h',
+            issuer: 'pickurpage.com',
+            audience: userId,
+          }
+          JWT.sign(payload, secret, options, (err, token) => {
+            if (err) {
+              console.log(err.message)
+              reject(createError.InternalServerError())
+              return
             }
-            const secret = "5b29b663001ba6bd03a27b417dd8392d405a26a770b84b335628044b31ade046"
-            const option = {
-                expiresIn : "1h",
-            }
-            jwt.sign(payload, secret, option, (err, token) => {
-                if (err) reject (err)
-                console.log(token)
-                resolve (token)
-            })
-
-            })
-        }
+            console.log(token)
+            resolve(token)
+          })
+        })
+      },
+    varifyAccessToken: (req, res, next) => {
+        console.log(req.headers)
+        if (!req.headers["authorization"]) next (creatError.Unauthorized())
+        const authheader = req.headers["authorization"]
+        const bearertoken = authheader.split(' ')
+        console.log(bearertoken)
+        const token = bearertoken[1]
+        JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
+            if (err) {return next (creatError.Unauthorized())}
+            req.payload = payload
+            next()
+        })
+    }
     }
