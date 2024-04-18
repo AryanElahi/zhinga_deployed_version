@@ -6,6 +6,7 @@ const {signupVal, loginVal} = require("../../../validation/user.auth.validation"
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const {signAccessToken, signRefreshToken, verifyAccessToken, verifyRefreshToken} = require("../../../auth/handeler")
+const { ref } = require("joi")
 
 router.post("/register", async (req, res, next) => {
 try {
@@ -20,13 +21,17 @@ try {
     const salt = await bcrypt.genSalt(10)
     const hashedpass = await bcrypt.hash(result.password, salt)
     result.password = hashedpass
+    const refreshToken = await signRefreshToken(result.phone)
     const newuser =await prisma.user.create({
         data :
-            result
+            result            
     })
-    const refreshToken = await signRefreshToken(result.phone)
+    const RT =await prisma.user.update({
+    where: {phone: result.phone},
+    data : {refreshToken : refreshToken}
+    })
     const getall = await prisma.user.findMany()
-    res.send({getall, refreshToken})
+    res.send({getall})
 } catch (error) {
     if (error.isJoi === true) error.status = 422
     next(error)
@@ -47,7 +52,7 @@ router.post("/login", async (req, res, next) => {
         // was in a different file
         async function isValid(password){
             try {
-                await bcrypt.compare(password, regesterd.password ,(err, data) => {
+                bcrypt.compare(password, regesterd.password ,(err, data) => {
                     if (err) throw err
                     if (data) {
                         console.log(AccessToken)
