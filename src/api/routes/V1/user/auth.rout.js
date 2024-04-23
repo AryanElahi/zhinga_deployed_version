@@ -2,10 +2,10 @@ const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
 const {PrismaClient} = require("@prisma/client")
-const {signupVal, loginVal} = require("../../../validation/user.auth.validation")
+const {signupVal, loginVal} = require("../../../../validation/user.auth.validation")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
-const {signAccessToken, signRefreshToken, verifyAccessToken, verifyRefreshToken} = require("../../../auth/handeler")
+const {signAccessToken, signRefreshToken, verifyAccessToken, verifyRefreshToken} = require("../../../../auth/handeler")
 const { ref } = require("joi")
 
 router.post("/register", async (req, res, next) => {
