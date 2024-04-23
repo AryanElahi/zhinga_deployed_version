@@ -1,0 +1,10 @@
+post http://localhost:3000/api/V1/auth/refreshToken
+Content-type : application/json
+
+{
+    "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM4OTMwMzgsImV4cCI6MTc0NTQ1MDYzOCwiYXVkIjoiMDAwMDAwMDAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.na0ehKIK9DnLr_YjfGho2CAKXbrIFXfwXxawMX8lJRE"
+}
+//Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMzNTQwMzUsImV4cCI6MTcxMzM1NzYzNSwiYXVkIjoiODE4MTcxMTY5MCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.N8RK_xsSzkrmAoHjngOmHf1DsObS52NATM4kZNKfaFw
+    //"full_name": "akdsjlkds",
+    //"phone": "0000000000",
+    //"password": "94jhgjy"

@@ -2,7 +2,6 @@ const express = require("express")
 const morgan = require("morgan")
 const creatErrors = require("http-errors")
 const routes = require("../api/routes")
-const {verifyAccessToken} = require ("../auth/handeler")
 require("dotenv").config()
 
 const expressLoader = async (app) => {
