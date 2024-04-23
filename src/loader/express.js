@@ -12,7 +12,7 @@ const expressLoader = async (app) => {
     app.get("/", async (req, res, next) => {
         res.send("hello world again")
     })
-    app.use("/auth", routes())
+    app.use("/api", routes())
     //app.use("/auth", AuthRouts)
     app.use(async(req, res, next) => {
         next(creatErrors.NotFound())
