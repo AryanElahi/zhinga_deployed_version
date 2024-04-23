@@ -14,9 +14,6 @@ const expressLoader = async (app) => {
     })
     app.use("/auth", AuthRouts)
     app.use(async(req, res, next) => {
-        //  const error = new Error('not found')
-        //error.status = 404 
-        //next (error)
         next(creatErrors.NotFound())
         })
     app.use( async (err, req, res, next) => {
@@ -28,11 +25,10 @@ const expressLoader = async (app) => {
         }
     })
 })
-
-const port = 3000
-
-app.listen(port, () => {
-   console.log ("server is runnng")
+//port = process.env.PORT
+//console.log (port)
+app.listen(process.env.PORT, () => {
+   console.log ("server is runnng on port ", process.env.PORT)
 })
 }
 
