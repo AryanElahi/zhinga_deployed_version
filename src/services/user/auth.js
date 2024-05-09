@@ -3,6 +3,7 @@ const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
+const creatErrors = require ("http-errors")
 
 async function doesExistphone(phone) {
 const Exist = await prisma.user.findUnique({
@@ -57,7 +58,32 @@ async function isValid(pass, dpass){
         throw error
     }
 }
+async function updateUser (phone, result){
+  try {
+    const updated = await prisma.user.update({
+    where: {phone: phone},
+    data : result
+    })
+  return (updated)
+  } catch (error) {
+    if (error) return(error)
+  }
 
+}
+async function getUserByAccessToken (AccessToken){
+  return new Promise((resolve, reject) => {
+    const spliter = AccessToken.split(' ')
+    const token = spliter[1]
+    JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
+      if (err) {
+        reject(creatErrors.InternalServerError())
+        return
+      }
+      const phone = payload.aud.toString()
+      resolve (phone)
+    })
+  })
+}
 
 module.exports = {
     doesExistphone,
@@ -67,6 +93,8 @@ module.exports = {
     getUserByPhone,
     getAllUsers,
     isValid,
+    updateUser,
+    getUserByAccessToken,
     signRefreshToken: (phone) => {
         return new Promise((resolve, reject) => {
           const payload = {}
@@ -81,7 +109,6 @@ module.exports = {
               console.log(err.message)
               reject(creatError.InternalServerError())
             }
-            console.log(token)
             resolve(token)
           })
         })
@@ -91,7 +118,7 @@ module.exports = {
           const payload = {}
           const secret = "sdljkdlkjasdlkdjsalkdjsakldsajklajsd"
           const options = {
-            expiresIn: '60s',
+            expiresIn: '1y',
             issuer: 'pickurpage.com',
             audience: phone,
           }
@@ -101,7 +128,6 @@ module.exports = {
               reject(creatError.InternalServerError())
               return
             }
-            console.log(token)
             resolve(token)
           })
         })
