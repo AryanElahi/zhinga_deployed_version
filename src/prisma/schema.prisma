@@ -17,6 +17,7 @@ model User{
   full_name String @default("") //require
   password String @default("")  //require
   phone String @unique          //require
+  admin Boolean @default(false)
   refreshToken String @default("")
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)
@@ -40,6 +41,7 @@ model Apartement{
   room_number  Int
   features     String
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model House{
   id Int @default(autoincrement()) @unique
@@ -59,6 +61,7 @@ model House{
   room_number  Int
   features     String
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model Land{
   id Int @default(autoincrement()) @unique
@@ -71,6 +74,7 @@ model Land{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model Enterprise{
   id Int @default(autoincrement()) @unique
@@ -84,6 +88,7 @@ model Enterprise{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model AgricultureLand{
   id Int @default(autoincrement()) @unique
@@ -96,6 +101,7 @@ model AgricultureLand{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model ServiceLand{
   id Int @default(autoincrement()) @unique
@@ -108,7 +114,8 @@ model ServiceLand{
   full_name String
   phone     String
   price     Int
-  photo        Json @db.JsonB
+  photo     Json @db.JsonB
+  check Boolean @default(false)
 }
 model Nitche{
   id Int @default(autoincrement()) @unique
@@ -123,6 +130,7 @@ model Nitche{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model Garden{
   id Int @default(autoincrement()) @unique
@@ -135,6 +143,7 @@ model Garden{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
 model Shop{
   id Int @default(autoincrement()) @unique
@@ -148,4 +157,5 @@ model Shop{
   phone     String
   price     Int
   photo        Json @db.JsonB
+  check Boolean @default(false)
 }
