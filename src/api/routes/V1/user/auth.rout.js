@@ -3,9 +3,12 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/user.auth.validation")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-    saveRefreshToken, getUserByPhone, isValid, signAccessToken} = require("../../../../services/user/auth")
+    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const { ref } = require("joi")
+const {PrismaClient} = require("@prisma/client")
+const prisma = new PrismaClient()
+
 
 router.post("/register", async (req, res, next) => {
 try {
@@ -50,6 +53,18 @@ router.post("/refreshToken", async (req, res, next) => {
     }
 })
 
+router.put ("/updateuser", async (req, res) => {
+    try {
+        if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
+        let result = req.body
+        const authheader = req.headers["authorization"]
+        let phone = await getUserByAccessToken(authheader)
+        res.send(await updateUser(phone, result))
+    } catch (error) {
+        if (error) throw error
+    }
+
+})
 router.delete("/logout", async (req, res, next) => {
     res.send("logout")
 })
