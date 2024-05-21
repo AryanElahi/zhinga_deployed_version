@@ -22,140 +22,25 @@ model User{
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)
 }
-model Apartement{
+model property{
   id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  location String
-  usage    String
-  document_type String
-  land_metrage Int
-  useful_metrage Int
-  floor_number Int
-  floor Int
-  Unit_in_floor Int
-  year_of_build Int
-  full_name String
-  phone     String
-  price     Int
-  room_number  Int
+  type String @default("")
+  region String @default("")
+  address String @default("")
+  location String @default("")
+  usage    String @default("")
+  document_type String @default("")
+  land_metrage Int @default(0)
+  useful_metrage Int @default(0)
+  floor_number Int @default(0)
+  floor Int @default(0)
+  Unit_in_floor Int @default(0)
+  year_of_build Int @default(0)
+  full_name String @default("")
+  phone     String @default("")
+  price     Int @default(0)
+  room_number  Int @default(0)
   features     String
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model House{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  location String
-  usage    String
-  document_type String
-  land_metrage Int
-  useful_metrage Int
-  floor_number Int
-  floor Int
-  year_of_build Int
-  full_name String
-  phone     String
-  price     Int
-  room_number  Int
-  features     String
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model Land{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  location String
-  document_type String
-  land_metrage Int
-  full_name String
-  phone     String
-  price     Int
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model Enterprise{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  usage    String
-  document_type String
-  land_metrage Int
-  year_of_build Int
-  full_name String
-  phone     String
-  price     Int
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model AgricultureLand{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  usage    String
-  document_type String
-  land_metrage Int
-  full_name String
-  phone     String
-  price     Int
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model ServiceLand{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  location String
-  usage    String
-  document_type String
-  land_metrage Int
-  full_name String
-  phone     String
-  price     Int
-  photo     Json @db.JsonB
-  check Boolean @default(false)
-}
-model Nitche{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  usage    String
-  document_type String
-  land_metrage Int
-  useful_metrage Int
-  year_of_build Int
-  full_name String
-  phone     String
-  price     Int
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model Garden{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  usage    String
-  document_type String
-  land_metrage Int
-  full_name String
-  phone     String
-  price     Int
-  photo        Json @db.JsonB
-  check Boolean @default(false)
-}
-model Shop{
-  id Int @default(autoincrement()) @unique
-  region String 
-  address String
-  usage    String
-  document_type String
-  land_metrage Int
-  year_of_build Int
-  full_name String
-  phone     String
-  price     Int
   photo        Json @db.JsonB
   check Boolean @default(false)
 }

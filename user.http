@@ -1,31 +1,12 @@
 put http://localhost:3000/api/V1/auth/updateuser
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTUyNjQ4NDUsImV4cCI6MTc0NjgyMjQ0NSwiYXVkIjoiMDAwMDIzOTAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.80yiQcoTOdorfJ72kHWPeW3lmc0wLHXe0GdBRDH_abU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTYzMDM2NjIsImV4cCI6MTc0Nzg2MTI2MiwiYXVkIjoiMDAwMDIzOTg5MCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.WOVoy1VkTsiYBmIvD8U81A6d0vNg72zDkFxRcYZcKpc
 Content-type : application/json
 
 {
     "full_name": "Jkdsjlkd",
-    "phone": "0000239800",
+    "phone": "kjhkj",
     "password": "94jhgjy"
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//await signupVal.validateAsync(
-
-
-    //"refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM4OTMwMzgsImV4cCI6MTc0NTQ1MDYzOCwiYXVkIjoiMDAwMDAwMDAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.na0ehKIK9DnLr_YjfGho2CAKXbrIFXfwXxawMX8lJRE"
-
 
 
 
