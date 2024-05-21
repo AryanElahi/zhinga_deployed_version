@@ -55,8 +55,8 @@ router.post("/refreshToken", async (req, res, next) => {
 
 router.put ("/updateuser", async (req, res) => {
     try {
+        let result = await signupVal.validateAsync(req.body)
         if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
-        let result = req.body
         const authheader = req.headers["authorization"]
         let phone = await getUserByAccessToken(authheader)
         res.send(await updateUser(phone, result))
