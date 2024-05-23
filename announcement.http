@@ -1,12 +1,5 @@
-put http://localhost:3000/api/V1/auth/updateuser
-Content-type : application/json
-
-{
-    "full_name": "Jkdsjlkd",
-    "phone": "0790239800",
-    "password": "94jhgjy"
-
-}
+GET http://localhost:3000/api/V1/announce/creat
+//Content-type : application/json
 
 
 //Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTUyNjQ4NDUsImV4cCI6MTc0NjgyMjQ0NSwiYXVkIjoiMDAwMDIzOTAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.80yiQcoTOdorfJ72kHWPeW3lmc0wLHXe0GdBRDH_abU

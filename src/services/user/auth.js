@@ -84,7 +84,8 @@ async function getUserByAccessToken (AccessToken){
     })
   })
 }
-
+async function softDelete (phone) {
+}
 module.exports = {
     doesExistphone,
     hashPassword,
