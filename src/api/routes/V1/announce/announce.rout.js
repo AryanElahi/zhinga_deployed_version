@@ -1,8 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
-const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
-const {    creatAnnouncement,
+const {creat} = require("../../../../validation/announce.crud.validation")
+const { 
+    creatAnnouncement,
     getAnnounByID,
     getAllAnnouns,
     getAnnounBytype,
@@ -17,19 +18,15 @@ const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 
 
-router.get("/creat", async (req, res, next) => {
-    console.log("hello")
+router.post ("/creat", async (req, res, next) => {
+    const result = await creat.validateAsync(req.body)  
+    console.log (req.body)
+    res.send ( await creatAnnouncement(result))  
 })
 router.post("/login", async (req, res, next) => {
     try {
         const result = await loginVal.validateAsync(req.body) 
-        const user = await getUserByPhone(result.phone)
-        const compare = await isValid(result.password, user.password)
-        if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
-        if (compare === false) throw creatErrors.Unauthorized("username of password is not correct")
-        const refreshToken = await signRefreshToken(user.phone)
-        const AccessToken = await signAccessToken(user.phone)
-        res.send({refreshToken, AccessToken})
+        
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))

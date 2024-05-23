@@ -1,31 +1,26 @@
-GET http://localhost:3000/api/V1/announce/creat
-//Content-type : application/json
+post http://localhost:3000/api/V1/announce/creat
 
+Content-type : application/json
 
-//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTUyNjQ4NDUsImV4cCI6MTc0NjgyMjQ0NSwiYXVkIjoiMDAwMDIzOTAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.80yiQcoTOdorfJ72kHWPeW3lmc0wLHXe0GdBRDH_abU
-
-
-
-
-
-
-
-
-
-
-
-//await signupVal.validateAsync(
-
-
-    //"refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM4OTMwMzgsImV4cCI6MTc0NTQ1MDYzOCwiYXVkIjoiMDAwMDAwMDAwMCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.na0ehKIK9DnLr_YjfGho2CAKXbrIFXfwXxawMX8lJRE"
-
-
-
-
-
-
-
-
+{
+    "type" : "appartement",
+    "region" : "appartement",
+    "address" : "appartement",
+    "location" : "appartement",
+    "usage" : "appartement",
+  "document_type" : "appartement",
+  "land_metrage" : 78,
+  "useful_metrage" : 87,
+  "floor_number" : 7,
+  "floor" : 8,
+  "Unit_in_floor" : 9,
+  "year_of_build" : 9,
+  "full_name" : "appartement",
+  "phone"     : "09181711690",
+  "price"     : 9890,
+  "room_number"  : 98,
+  "features"   :  "09181711690"
+}
 
 
 

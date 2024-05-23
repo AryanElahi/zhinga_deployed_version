@@ -41,7 +41,7 @@ model property{
   price     Float @default(0)
   room_number  Int @default(0)
   features     String
-  photo        Json @db.JsonB
+  photo        Json @db.JsonB @default("{}")
   check Boolean @default(false)
   softDelete Boolean @default(false)
 }
