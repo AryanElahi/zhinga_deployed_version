@@ -1,29 +1,29 @@
 const joi = require("joi")
 
-const signupVal = joi.object ({
-    full_name : joi.string()
-    .min(5)
+const creat = joi.object ({
+    type : joi.string()
+    .min(3)
     .required(),
-    password : joi.string()
-    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
-    repeat_password : joi.ref("password"),
-    phone : joi.string()
-    .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
-    refreshToken : [joi.string(),
-    joi.number()],
-    Blocked : joi.boolean(),
-    softDelete : joi.boolean()
+    region : joi.string(),
+    address : joi.string(),
+    location : joi.string(),
+    usage : joi.string(),
+    document_type : joi.string(),
+    land_metrage : joi.int(),
+    useful_metrage : joi.int(),
+    floor_number : joi.int(),
+    floor : joi.Int(),
+    Unit_in_floor : joi.Int(),
+    year_of_build : joi.Int(),
+    full_name : joi.string(),
+    phone : joi.string(),
+    price : joi.Float(),
+    room_number : joi.Int(),
+    features : joi.string(),
+    check : joi.boolean(),
+    softDelete : joi.boolean(),
 })
-
-const loginVal = joi.object({
-    phone : joi.string()
-    .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
-    password : joi.string()
-    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-})
-
 
 module.exports = { 
-    signupVal,
-    loginVal
+    creat
 }

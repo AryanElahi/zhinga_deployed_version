@@ -38,7 +38,7 @@ model property{
   year_of_build Int @default(0)
   full_name String @default("")
   phone     String @default("")
-  price     Int @default(0)
+  price     Float @default(0)
   room_number  Int @default(0)
   features     String
   photo        Json @db.JsonB
