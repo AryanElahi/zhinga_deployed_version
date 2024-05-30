@@ -1,40 +1,42 @@
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
-const JWT = require("jsonwebtoken")
 const creatErrors = require ("http-errors")
 
 
-async function creatAnnouncement (data){
-    const newAnnoun =await prisma.property.create({
+async function creatAnnouncement(data){
+    console.log(data)
+    const newAnnoun = await prisma.property.create({
         data :
-            data           
+            data          
     })
     return newAnnoun
 }
-async function getAnnounByID (ID){
-    const announ = await prisma.property.findUnique({
-        where:  {
-            ID : ID 
+async function getByStateCode (code) {
+    return prisma.property.findFirst({
+        where: {
+            state_code : code
         }
     })
-    return announ
+}
+async function getByUid (code) {
+    return prisma.property.findUnique({
+        where: {
+            Uid : code
+        }
+    })
 }
 async function getAllAnnouns () {
     return (await prisma.property.findMany())
 
 }
-async function updateAnnoun (ID, result){
-  try {
-    const updated = await prisma.user.update({
-    where: {ID: ID},
+async function updateAnnoun (result){
+    const code = await getByUid(result.Uid)
+    console.log(code.state_code, result)
+    return await prisma.property.update({
+    where: {Uid : code.Uid},
     data : result
     })
-  return (updated)
-  } catch (error) {
-    if (error) return(error)
-  }
-
-}
+    }
 async function deleteAnnoun (ID){
     try {
       const updated = await prisma.property.delete({
@@ -46,7 +48,7 @@ async function deleteAnnoun (ID){
     }
   
   }
-  async function getAnnounBytype(type){
+async function getAnnounBytype(type){
     const announ = await prisma.property.findMany({
         where:  {
             type : type 
@@ -90,7 +92,6 @@ async function getAnnounByland_metrage(filter){
 
 module.exports = {
     creatAnnouncement,
-    getAnnounByID,
     getAllAnnouns,
     getAnnounBytype,
     getAnnounByregion,
@@ -98,5 +99,7 @@ module.exports = {
     getAnnounBydocument_type,
     getAnnounByland_metrage,
     updateAnnoun,
-    deleteAnnoun
+    deleteAnnoun,
+    getByStateCode,
+    getByUid
 }

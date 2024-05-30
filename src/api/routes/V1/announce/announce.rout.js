@@ -4,7 +4,7 @@ const creatErrors = require("http-errors")
 const {creat} = require("../../../../validation/announce.crud.validation")
 const { 
     creatAnnouncement,
-    getAnnounByID,
+    getByStateCode,
     getAllAnnouns,
     getAnnounBytype,
     getAnnounByregion,
@@ -12,51 +12,29 @@ const {
     getAnnounBydocument_type,
     getAnnounByland_metrage,
     updateAnnoun,
-    deleteAnnoun } = require("../../../../services/anouncement/CRUD")
-const { ref } = require("joi")
-const {PrismaClient} = require("@prisma/client")
-const prisma = new PrismaClient()
+    deleteAnnoun,
+} = require("../../../../services/anouncement/CRUD")
 
 
-router.post ("/creat", async (req, res, next) => {
-    const result = await creat.validateAsync(req.body)  
-    console.log (req.body)
-    res.send ( await creatAnnouncement(result))  
+router.post ("/creatAnnounce", async (req, res, next) => {
+    let result = await creat.validateAsync(req.body)  
+    result.Uid = String(new Date().getTime()) 
+    console.log (result)
+    const  newA = await creatAnnouncement(result)
+    res.send (newA)
 })
-router.post("/login", async (req, res, next) => {
-    try {
-        const result = await loginVal.validateAsync(req.body) 
-        
-    } catch (error) {
-        if (error.isJoi === true) error.status = 422
-        if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))
-        next(error)
-    }
+router.post("/getbystatecode", async (req, res, next) => {
+    console.log(req.body.state_code)
+    res.send(await getByStateCode(req.body.state_code))
 })
 
-router.post("/refreshToken", async (req, res, next) => {
-    try {
-        const {refreshToken} = req.body
-        if (!refreshToken) throw creatErrors.BadRequest()
-        const phone = await verifyRefreshToken(refreshToken)
-        const AccessToken = await signAccessToken(phone)
-        const RefreshToken = await signRefreshToken(phone)
-        res.send ({AccessToken, RefreshToken})
-    } catch (error) {
-        if (error) throw error
-    }
+router.get("/getallannounce", async (req, res, next) => {
+    res.send(await getAllAnnouns())
 })
 
-router.put ("/updateuser", async (req, res) => {
-    try {
-        let result = await signupVal.validateAsync(req.body)
-        if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
-        const authheader = req.headers["authorization"]
-        let phone = await getUserByAccessToken(authheader)
-        res.send(await updateUser(phone, result))
-    } catch (error) {
-        if (error) throw error
-    }
+router.put ("/updateannoun", async (req, res) => {
+
+    res.send (await updateAnnoun(req.body))
 
 })
 router.delete("/logout", async (req, res, next) => {

@@ -1,6 +1,7 @@
 const joi = require("joi")
 
 const creat = joi.object ({
+    state_code: joi.number().integer(),
     type : joi.string()
     .min(3)
     .required(),
