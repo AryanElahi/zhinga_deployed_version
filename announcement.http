@@ -1,39 +1,28 @@
-post http://localhost:3000/api/V1/announce/creat
+put http://localhost:3000/api/V1/announce/updateannoun
 Content-Type: application/json
 
+
 {
-    "state_code": 6,
-    "type": "appartement",
-    "region": "appartement",
-    "address": "appartement",
-    "location": "appartement",
-    "usage": "appartement",
-    "document_type": "appartement",
-    "land_metrage": 78,
-    "useful_metrage": 87,
-    "floor_number": 7,
-    "floor": 8,
-    "Unit_in_floor": 9,
-    "year_of_build": 9,
-    "full_name": "appartement",
-    "phone": "9181711690",
-    "price": 9890,
-    "room_number": 98,
-    "features": "09181711690",
-    "photo": {},
-    "check": false,
-    "softDelete": false
+  "type": "appartemen",
+  "region": "appartement",
+  "address": "appartement",
+  "location": "appartement",
+  "usage": "appartement",
+  "document_type": "kjlkjl",
+  "land_metrage": 9,
+  "useful_metrage": 87,
+  "floor_number": 89,
+  "floor": 67,
+  "Unit_in_floor": 9,
+  "year_of_build": 9,
+  "full_name": "appartement",
+  "phone": "9181711690",
+  "price": 9890,
+  "room_number": 98,
+  "features": "09181711690",
+  "photo": {"address" : "/Users/aryaneuse/Documents/web development/coding projects/zhingeh/src"},
+  "check": false,
+  "softDelete": false,
+  "state_code": "798798987987",
+  "Uid": "1717034752391"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
-const {creat} = require("../../../../validation/announce.crud.validation")
+const {creat, update} = require("../../../../validation/announce.crud.validation")
 const { 
     creatAnnouncement,
     getByStateCode,
@@ -13,6 +13,7 @@ const {
     getAnnounByland_metrage,
     updateAnnoun,
     deleteAnnoun,
+    getByUid
 } = require("../../../../services/anouncement/CRUD")
 
 
@@ -33,8 +34,8 @@ router.get("/getallannounce", async (req, res, next) => {
 })
 
 router.put ("/updateannoun", async (req, res) => {
-
-    res.send (await updateAnnoun(req.body))
+    let result = await update.validateAsync(req.body)
+    res.send (await updateAnnoun(result))
 
 })
 router.delete("/logout", async (req, res, next) => {
