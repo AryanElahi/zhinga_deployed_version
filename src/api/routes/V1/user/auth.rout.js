@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
-const {signupVal, loginVal} = require("../../../../validation/user.auth.validation")
+const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
     saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
@@ -55,8 +55,8 @@ router.post("/refreshToken", async (req, res, next) => {
 
 router.put ("/updateuser", async (req, res) => {
     try {
+        let result = await signupVal.validateAsync(req.body)
         if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
-        let result = req.body
         const authheader = req.headers["authorization"]
         let phone = await getUserByAccessToken(authheader)
         res.send(await updateUser(phone, result))

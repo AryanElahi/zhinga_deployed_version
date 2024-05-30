@@ -1,0 +1,23 @@
+Content-type : application/json
+
+
+
+{
+    "type" : "appartement",
+    "region" : "appartement",
+    "address" : "appartement",
+    "location" : "appartement",
+    "usage" : "appartement",
+  "document_type" : "appartement",
+  "land_metrage" : 78,
+  "useful_metrage" : 87,
+  "floor_number" : 7,
+  "floor" : 8,
+  "Unit_in_floor" : 9,
+  "year_of_build" : 9,
+  "full_name" : "appartement",
+  "phone"     : "9181711690",
+  "price"     : 9890,
+  "room_number"  : 98,
+  "features"   :  "09181711690"
+}
