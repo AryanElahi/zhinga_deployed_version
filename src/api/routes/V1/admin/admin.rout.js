@@ -3,7 +3,11 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
-const {getAllAnnouns} = require("../../../../services/adminpanel/services")
+const {
+    getAllAnnouns, 
+    inPrigressStates,
+    deleted_or_not_confirmed 
+} = require("../../../../services/adminpanel/services")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 
 router.get("/dashboard", async (req, res, next) => {
@@ -11,9 +15,14 @@ try {
     const user = await getAllUsers()
     const announcount = await getAllAnnouns()
     console.log(announcount)
+    const inprogress = await inPrigressStates()
+    const notConfirmed = await deleted_or_not_confirmed()
+
     res.send ({
         "all announcements" : announcount.number.toString(),
-        "all users" : user.number.toString()
+        "all users" : user.number.toString(), 
+        "in progress ": inprogress.number.toString(),
+        "deleted or not confirmed" : notConfirmed.number.toString()
     })
 } catch (error) {
     if (error.isJoi === true) error.status = 422

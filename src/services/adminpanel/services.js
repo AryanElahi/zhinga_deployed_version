@@ -8,6 +8,22 @@ async function getAllAnnouns () {
     const counter = announs.length
     return ({"announce": announs, "number": counter})
 }
+async function inPrigressStates() {
+    const announs = await prisma.property.findMany({
+        where : {check : false}
+    })
+    const count = announs.length
+    return ({"inprogress": announs, "number": count})
+}
+async function deleted_or_not_confirmed (){
+    const announs = await prisma.property.findMany({
+        where : {softDelete : true}
+    })
+    const count = announs.length
+    return ({"deleted": announs, "number": count})
+}
 module.exports = {
-    getAllAnnouns
+    getAllAnnouns,
+    inPrigressStates,
+    deleted_or_not_confirmed
 }
