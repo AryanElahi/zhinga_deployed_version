@@ -26,8 +26,9 @@ async function getByUid (code) {
     })
 }
 async function getAllAnnouns () {
-    return (await prisma.property.findMany())
-
+    return (await prisma.property.findMany({
+        where : {softDelete : false}
+}))
 }
 async function updateAnnoun (result){
     const code = await getByUid(result.Uid)
@@ -37,69 +38,27 @@ async function updateAnnoun (result){
     data : result
     })
     }
-async function deleteAnnoun (ID){
-    try {
-      const updated = await prisma.property.delete({
-      where: {ID: ID}
+async function softdeleteAnnoun (ID){
+      const updated = await prisma.property.update({
+      where: {Uid: ID},
+      data : {softDelete : true }
       })
-    return ("the announcement has been deleted successfully")
-    } catch (error) {
-      if (error) return(error)
-    }
-  
+      console.log (updated)
+    return (updated)
   }
-async function getAnnounBytype(type){
-    const announ = await prisma.property.findMany({
-        where:  {
-            type : type 
-        }
-    })
-    return announ
-}
-async function getAnnounByregion(filter){
-    const announ = await prisma.property.findMany({
-        where:  {
-            region : filter 
-        }
-    })
-    return announ
-}
-async function getAnnounByAddress(filter){
-    const announ = await prisma.property.findMany({
-        where:  {
-            address : filter 
-        }
-    })
-    return announ
-}
-async function getAnnounBydocument_type(filter){
-    const announ = await prisma.property.findMany({
-        where:  {
-            document_type : filter 
-        }
-    })
-    return announ
-}
-async function getAnnounByland_metrage(filter){
-    const announ = await prisma.property.findMany({
-        where:  {
-            land_metrage : filter 
-        }
-    })
-    return announ
-}
-
+async function deleteAnnoun (ID){
+      const updated = await prisma.property.delete({
+      where: {Uid: ID}
+      })
+    return (updated)
+  }
 
 module.exports = {
     creatAnnouncement,
     getAllAnnouns,
-    getAnnounBytype,
-    getAnnounByregion,
-    getAnnounByAddress,
-    getAnnounBydocument_type,
-    getAnnounByland_metrage,
     updateAnnoun,
     deleteAnnoun,
+    softdeleteAnnoun,
     getByStateCode,
     getByUid
 }

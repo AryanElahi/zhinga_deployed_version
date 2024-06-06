@@ -42,8 +42,9 @@ async function getUserByPhone (phone){
     return user
 }
 async function getAllUsers () {
-    return (await prisma.user.findMany())
-
+    const user = await prisma.user.findMany()
+    const counter = user.length
+    return ({"users" : user, "number" : counter} )
 }
 async function isValid(pass, dpass){
     try {
