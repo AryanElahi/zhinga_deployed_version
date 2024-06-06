@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
-const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
+const {signupVal, loginVal} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
     saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
@@ -12,10 +12,12 @@ const prisma = new PrismaClient()
 
 router.post("/register", async (req, res, next) => {
 try {
-    let result = await signupVal.validateAsync(req.body)
+    console.log(req.body)
+    let result = await signupVal.validateAsync (req.body)
     if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
     result.password = await hashPassword(result.password)
     await creatUser(result)
+    console.log(creatUser)
     await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
     res.send(await getUserByPhone(result.phone))
 } catch (error) {

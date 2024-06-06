@@ -1,5 +1,4 @@
 const joi = require("joi")
-const { check } = require("prisma")
 
 const creat = joi.object ({
     state_code: joi.number().integer(),

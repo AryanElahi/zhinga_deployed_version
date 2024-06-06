@@ -1,0 +1,24 @@
+DELETE  http://localhost:3000/api/V1/announce/hdelete
+Content-Type: application/json
+
+{
+  "type": "appartemen",
+  "region": "appartement",
+  "address": "appartement",
+  "location": "appartement",
+  "usage": "appartement",
+  "document_type": "kjljl",
+  "land_metrage": 9,
+  "useful_metrage": 87,
+  "floor_number": 90 ,
+  "floor": 67,
+  "Unit_in_floor": 9,
+  "year_of_build": 9,
+  "full_name": "appartement",
+  "phone": "9181711690",
+  "price": 8999889.7,
+  "room_number": 98,
+  "features": "09181711690",
+    "Uid": "1717034752391"
+}
+
