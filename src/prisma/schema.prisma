@@ -49,14 +49,14 @@ model property{
 }
 model request {
     id Int @default(autoincrement()) @unique
-    full_name String 
-    phone String
-    region String
-    type String
-    lowest_price Float
-    hieghest_price Float
-    location String
-    message  String
-    status   Boolean
+    full_name String @default("")
+    phone String @default("")
+    region String @default("")
+    type String @default("")
+    lowest_price Float @default(0)
+    hieghest_price Float @default(0)
+    location String @default("")
+    message  String @default("")
+    status   Boolean @default(false)
     Uid      String @unique
 }
