@@ -6,7 +6,8 @@ const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
     getAllAnnouns, 
     inPrigressStates,
-    deleted_or_not_confirmed 
+    deleted_or_not_confirmed,
+    uncheckedRequests
 } = require("../../../../services/adminpanel/services")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 
@@ -17,12 +18,15 @@ try {
     console.log(announcount)
     const inprogress = await inPrigressStates()
     const notConfirmed = await deleted_or_not_confirmed()
+    const uncheckedRequest = await uncheckedRequests()
 
     res.send ({
         "all announcements" : announcount.number.toString(),
         "all users" : user.number.toString(), 
         "in progress ": inprogress.number.toString(),
-        "deleted or not confirmed" : notConfirmed.number.toString()
+        "deleted or not confirmed" : notConfirmed.number.toString(),
+        "unchecked requests" : uncheckedRequest.number.toString()
+        //"unchecked requests" : 
     })
 } catch (error) {
     if (error.isJoi === true) error.status = 422

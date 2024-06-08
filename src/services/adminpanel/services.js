@@ -22,8 +22,16 @@ async function deleted_or_not_confirmed (){
     const count = announs.length
     return ({"deleted": announs, "number": count})
 }
+async function uncheckedRequests() {
+    const request = await prisma.request.findMany({
+        where : {status : false}
+    })
+    const count = request.length
+    return ({"requests": request, "number": count})
+}
 module.exports = {
     getAllAnnouns,
     inPrigressStates,
-    deleted_or_not_confirmed
+    deleted_or_not_confirmed,
+    uncheckedRequests
 }
