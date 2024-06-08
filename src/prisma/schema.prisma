@@ -47,3 +47,15 @@ model property{
   state_code String  @default("")
   Uid        String  @unique
 }
+model request {
+    id Int @default(autoincrement()) @unique
+    full_name String 
+    phone String
+    region String
+    type String
+    lowest_price Float
+    hieghest_price Float
+    location String
+    message  String
+    Uid      String @unique
+}
