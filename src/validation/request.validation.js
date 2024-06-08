@@ -9,7 +9,7 @@ const request = joi.object ({
     .min(3)
     .required(),
     lowest_price : joi.number(),
-    hiegest_price : joi.number(),
+    hieghest_price : joi.number(),
     location : joi.string(),
     Message : joi.string().optional()
 })

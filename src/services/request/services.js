@@ -12,14 +12,14 @@ async function creatRequest(data){
     return neww
 }
 async function getByUid(code) {
-    return prisma.property.findUnique({
+    return prisma.request.findUnique({
         where: {
             Uid : code
         }
     })
 }
 async function getAll() {
-    return (await prisma.property.findMany())
+    return (await prisma.request.findMany())
 }
 async function getunchecked () {
     return (await prisma.request.findMany({
