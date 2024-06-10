@@ -1,9 +1,6 @@
-const express = require('express')
 const requestIp = require('request-ip')
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
-const app = express()
-const port = 3000
 
 async function get_exact_date(){
     let ts = Date.now();
@@ -12,8 +9,6 @@ async function get_exact_date(){
     let month = date_time.getMonth() + 1;
     let year = date_time.getFullYear();
     const final = (year + "-" + month + "-" + date);
-    //const spliter = final.split('-')
-    //console.log()
     return (final)
 }
 async function get_ip (req){
@@ -29,16 +24,28 @@ async function save_visitor (req) {
     })
     return visitor
 }
+async function get_daily_visitors () {
+    const date = await get_exact_date()
+    const visitors = await prisma.visitor.findMany({
+        where : {
+            date : date
+        }
+    })
+    const number = visitors.length
+    console.log(number, visitors, date)
+    return number
+
+}
 async function get_all_visitors (){
     const visitor = await prisma.visitor.findMany()
     const number = visitor.length
     return ({"visitor": visitor, "number": number})
 }
-app.get('/', async (req, res) => {
 
-    res.send( await get_all_visitors())
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+module.exports = {
+    get_ip,
+    get_exact_date,
+    save_visitor,
+    get_daily_visitors,
+    get_all_visitors
+}
