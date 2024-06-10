@@ -60,3 +60,8 @@ model request {
     status   Boolean @default(false)
     Uid      String @unique
 }
+model visitor {
+  id Int @default(autoincrement()) @unique
+  date String
+  ip String
+}
