@@ -16,12 +16,10 @@ async function get_exact_date(){
     //console.log()
     return (final)
 }
-
 async function get_ip (req){
     const clientIp = requestIp.getClientIp(req)
     return clientIp
 }
-
 async function save_visitor (req) {
     const date = await get_exact_date()
     const ip = await get_ip(req)
@@ -44,4 +42,3 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-get_exact_date()
