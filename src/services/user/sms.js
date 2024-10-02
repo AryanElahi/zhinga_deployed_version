@@ -1,5 +1,6 @@
 const Sdata = require("simple-data-storage");
-const {Token,VerificationCode} = require('sms-ir')
+const {Token,VerificationCode} = require('sms-ir');
+const { get } = require("../../api/routes/V1/admin/admin.rout");
 const token = new Token();
 const verificationCode = new VerificationCode();
 
@@ -16,12 +17,12 @@ async function sendSMS (code, number) {
     return verificationResult
 } 
 async function saveCodeInDB(code, number) {
-    await Sdata(number, {code, time: Date.now()})
+    const result = await Sdata(number, { code, time: Date.now(), number})
+    console.log(result)
 }
-async function generateNewCodeForThisNumber(number){
-    const code = getRandomInt() 
-    await saveCodeInDB(code, number)
+async function generateNewCodeForThisNumber(code, number){
     await sendSMS(code, number)
+    await saveCodeInDB(code, number)
 }
 async function CheckIfCorrect(code, number) {
     try {
@@ -29,27 +30,35 @@ async function CheckIfCorrect(code, number) {
       const savedCode =  Sdata(number);
       console.log(savedCode);
       if (Date.now() - savedCode.time <= 120000) {
-        console.log("test2");
-        console.log("saved code", savedCode.code);
         if (savedCode.code == Number (code) ) {
-          console.log("saved code", savedCode.code);
           Sdata.clear(number);
-          console.log("true")
           return true;
         }
-        return false;
+        else {
+          Sdata.clear(number);
+          return false 
+        }
+        }
+      else {
+        return ("out of time")
       }
     } catch (err) {
       return false;
     }
 }
 async function run () {
-//generateNewCodeForThisNumber("09181711690")
-await CheckIfCorrect(89102 , "09181711690")
+  var code = getRandomInt()
+  console.log("test")
+  await sendSMS(code, 9181711690)
+  console.log("test2")
+  await saveCodeInDB(code, 9181711690)
+  console.log("test2")
+  await CheckIfCorrect(14567, 9181711690)
 }
 run()
 module.exports  = {
     generateNewCodeForThisNumber,
     CheckIfCorrect,
-    sendSMS
+    sendSMS,
+    getRandomInt
 }

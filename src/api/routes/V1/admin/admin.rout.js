@@ -17,7 +17,7 @@ const {
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-
+//Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
     const user = await getAllUsers()
@@ -41,6 +41,11 @@ try {
     if (error.isJoi === true) error.status = 422
     next(error)
 }
+})
+//dashboard ended
+//real state management started
+router.post ("/newRealState", async (req, res, next) => {
+
 })
 
 module.exports = router

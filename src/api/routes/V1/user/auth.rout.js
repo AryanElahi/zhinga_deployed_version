@@ -35,7 +35,7 @@ router.post("/login", async (req, res, next) => {
         const user = await getUserByPhone(result.phone)
         const compare = await isValid(result.password, user.password)
         if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
-        if (compare === false) throw creatErrors.Unauthorized("username of password is not correct")
+        if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)
         res.send({refreshToken, AccessToken})
