@@ -17,8 +17,7 @@ async function sendSMS (code, number) {
     return verificationResult
 } 
 async function saveCodeInDB(code, number) {
-    const result = await Sdata(number, { code, time: Date.now(), number})
-    console.log(result)
+    await Sdata(number, { code, time: Date.now(), number})
 }
 async function generateNewCodeForThisNumber(code, number){
     await sendSMS(code, number)
@@ -26,23 +25,22 @@ async function generateNewCodeForThisNumber(code, number){
 }
 async function CheckIfCorrect(code, number) {
     try {
-      console.log(code);
       const savedCode =  Sdata(number);
-      console.log(savedCode);
       if (Date.now() - savedCode.time <= 120000) {
         if (savedCode.code == Number (code) ) {
           Sdata.clear(number);
-          return true;
+          return 1;
         }
         else {
           Sdata.clear(number);
-          return false 
+          return 2 
         }
+      } else {
+        Sdata.clear(number);
+        return 3 
         }
-      else {
-        return ("out of time")
-      }
-    } catch (err) {
+    } 
+    catch (err) {
       return false;
     }
 }
@@ -55,10 +53,10 @@ async function run () {
   console.log("test2")
   await CheckIfCorrect(14567, 9181711690)
 }
-run()
 module.exports  = {
     generateNewCodeForThisNumber,
     CheckIfCorrect,
     sendSMS,
-    getRandomInt
+    getRandomInt, 
+    saveCodeInDB
 }
