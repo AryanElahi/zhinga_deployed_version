@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const creatErrors = require("http-errors")
-const {signupVal, loginVal} = require("../../../../validation/user.auth.validation copy")
+const {signupVal, loginVal, phone, codephone} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
     saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
@@ -18,10 +18,10 @@ const { check } = require("prisma")
 
 router.post ("/sendcode", async (req, res, next) =>
     {
-        console.log(req.body)
-        if (await doesExistphone(req.body.phone) === true) throw creatErrors.Conflict("phone already exists")
-        await creatUser(req.body)
-        phone = req.body.phone
+        let result = await phone.validateAsync (req.body)
+        if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
+        await creatUser(result.phone)
+        phone = result.phone
         code = getRandomInt()
         await sendSMS(code, phone)
         await saveCodeInDB(code, phone)
@@ -29,13 +29,14 @@ router.post ("/sendcode", async (req, res, next) =>
     })
 router.post ("/varify", async (req, res, next) =>
     {
-        phone = req.body.phone
-        code = req.body.code
+        let result = await codephone.validateAsync (req.body)
+        const phone = result.phone
+        const code = result.code
         const status = await CheckIfCorrect(code, phone)
         if (status == 1) {
             res.status(200).send("ok")
         } if ( status == 2 ){
-            res.status(200).send("code not true")
+            res.status(200).send("code is not true")
         } if ( status == 3) {
             res.status(200).send("code expired")
         }
