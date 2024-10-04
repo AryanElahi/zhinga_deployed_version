@@ -1,0 +1,19 @@
+put http://localhost:3000/api/V1/auth/register
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTYzMDM2NjIsImV4cCI6MTc0Nzg2MTI2MiwiYXVkIjoiMDAwMDIzOTg5MCIsImlzcyI6InBpY2t1cnBhZ2UuY29tIn0.WOVoy1VkTsiYBmIvD8U81A6d0vNg72zDkFxRcYZcKpc
+Content-type : application/json
+
+{
+    "full_name": "Jkdsjlkd",
+    "phone": "kjhkj",
+    "password": "94jhgjy"
+}
+
+
+
+
+
+
+
+
+
+

@@ -5,19 +5,47 @@ const {signupVal, loginVal} = require("../../../../validation/user.auth.validati
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
     saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-const { ref } = require("joi")
+const { ref, number } = require("joi")
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
+const {    
+    generateNewCodeForThisNumber,
+    CheckIfCorrect,
+    sendSMS, getRandomInt, saveCodeInDB
+} = require ("../../../../services/user/sms")
+const { HttpStatusCode } = require("axios")
+const { check } = require("prisma")
 
-
+router.post ("/sendcode", async (req, res, next) =>
+    {
+        console.log(req.body)
+        if (await doesExistphone(req.body.phone) === true) throw creatErrors.Conflict("phone already exists")
+        await creatUser(req.body)
+        phone = req.body.phone
+        code = getRandomInt()
+        await sendSMS(code, phone)
+        await saveCodeInDB(code, phone)
+        res.status(200).send("ok")
+    })
+router.post ("/varify", async (req, res, next) =>
+    {
+        phone = req.body.phone
+        code = req.body.code
+        const status = await CheckIfCorrect(code, phone)
+        if (status == 1) {
+            res.status(200).send("ok")
+        } if ( status == 2 ){
+            res.status(200).send("code not true")
+        } if ( status == 3) {
+            res.status(200).send("code expired")
+        }
+    })
 router.post("/register", async (req, res, next) => {
 try {
     console.log(req.body)
     let result = await signupVal.validateAsync (req.body)
-    if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
     result.password = await hashPassword(result.password)
-    await creatUser(result)
-    console.log(creatUser)
+    await updateUser(result.phone , result)
     await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
     res.send(await getUserByPhone(result.phone))
 } catch (error) {
@@ -25,13 +53,14 @@ try {
     next(error)
 }
 })
+
 router.post("/login", async (req, res, next) => {
     try {
         const result = await loginVal.validateAsync(req.body) 
         const user = await getUserByPhone(result.phone)
         const compare = await isValid(result.password, user.password)
         if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
-        if (compare === false) throw creatErrors.Unauthorized("username of password is not correct")
+        if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)
         res.send({refreshToken, AccessToken})

@@ -1,4 +1,4 @@
-DELETE  http://localhost:3000/api/V1/announce/hdelete
+POST  http://localhost:3000/api/V1/announce/creat
 Content-Type: application/json
 
 {
@@ -19,6 +19,4 @@ Content-Type: application/json
   "price": 8999889.7,
   "room_number": 98,
   "features": "09181711690",
-    "Uid": "1717034752391"
 }
-
