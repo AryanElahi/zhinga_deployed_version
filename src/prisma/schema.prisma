@@ -21,6 +21,7 @@ model User{
   refreshToken String @default("")
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)
+  phoneVarify Boolean @default(false)
 }
 model property{
   id Int @default(autoincrement()) @unique

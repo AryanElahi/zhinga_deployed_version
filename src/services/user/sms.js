@@ -47,7 +47,7 @@ async function CheckIfCorrect(code, number) {
 async function run () {
   var code = getRandomInt()
   console.log("test")
-  await sendSMS(code, 9181711690)
+  await sendSMS(code, "09181711690")
   console.log("test2")
   await saveCodeInDB(code, 9181711690)
   console.log("test2")

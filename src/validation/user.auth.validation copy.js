@@ -1,8 +1,10 @@
 const joi = require("joi")
-const phone = joi.object({
+
+const phone = joi.object ({
     phone : joi.string()
     .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$"))
 })
+
 const codephone = joi.object ({
     phone : joi.string()
     .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
@@ -35,6 +37,6 @@ const loginVal = joi.object({
 module.exports = { 
     signupVal,
     loginVal,
-    phone,
-    codephone
+    codephone,
+    phone
 }

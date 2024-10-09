@@ -4,6 +4,7 @@ const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
 const creatErrors = require ("http-errors")
+const { client, connectRedis, disconnectRedis } = require("./../../loader/redis")
 
 async function doesExistphone(phone) {
 const Exist = await prisma.user.findUnique({
@@ -32,6 +33,12 @@ async function saveRefreshToken(RT, phone) {
     where: {phone: phone},
     data : {refreshToken : RT}
     })
+}
+async function userPhoneVarify(phone) {
+  await prisma.user.update({
+  where: {phone: phone},
+  data : {phoneVarify : true}
+  })
 }
 async function getUserByPhone (phone){
     const user = await prisma.user.findUnique({
@@ -112,7 +119,27 @@ module.exports = {
               console.log(err.message)
               reject(creatError.InternalServerError())
             }
-            resolve(token)
+            JWT.sign(payload, secret, options, (err, token) => {
+              if (err) {
+                  console.log(err.message);
+                  reject(creatError.InternalServerError());
+              }
+          
+              (async () => {
+                  try {
+                      await connectRedis();
+                      await client.set(phone, token, {
+                        EX: 365 * 24 * 60 * 60 // تنظیم انقضا به مدت یک سال بر حسب ثانیه
+                    });
+                    resolve(token);
+                  } catch (err) {
+                      console.error('Error:', err);
+                      reject(creatError.InternalServerError());
+                  } finally {
+                      await disconnectRedis();
+                  }
+              })();
+          });          
           })
         })
       },
@@ -135,4 +162,5 @@ module.exports = {
           })
         })
       },
+    userPhoneVarify
 }

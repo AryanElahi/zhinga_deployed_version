@@ -3,9 +3,8 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal, phone, codephone} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
+    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-const { ref, number } = require("joi")
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 const {    
@@ -13,19 +12,26 @@ const {
     CheckIfCorrect,
     sendSMS, getRandomInt, saveCodeInDB
 } = require ("../../../../services/user/sms")
-const { HttpStatusCode } = require("axios")
-const { check } = require("prisma")
-
-router.post ("/sendcode", async (req, res, next) =>
-    {
-        let result = await phone.validateAsync (req.body)
+const { result } = require("@hapi/joi/lib/base")
+router.post("/register", async (req, res, next) => {
+    try {
+        const result = await signupVal.validateAsync (req.body)
         if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
-        await creatUser(result.phone)
-        phone = result.phone
-        code = getRandomInt()
+        result.password = await hashPassword(result.password)
+        await creatUser(result)
+        console.log(await getUserByPhone(result.phone))
+        await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
+        console.log("test")
+        const phone = result.phone
+        console.log(phone)
+        const code = getRandomInt()
         await sendSMS(code, phone)
         await saveCodeInDB(code, phone)
-        res.status(200).send("ok")
+        res.send(await getUserByPhone(result.phone))
+    } catch (error) {
+        if (error.isJoi === true) error.status = 422
+        next(error)
+    }
     })
 router.post ("/varify", async (req, res, next) =>
     {
@@ -34,37 +40,36 @@ router.post ("/varify", async (req, res, next) =>
         const code = result.code
         const status = await CheckIfCorrect(code, phone)
         if (status == 1) {
-            res.status(200).send("ok")
+            userPhoneVarify(phone)
+            res.send(await getUserByPhone(phone))
         } if ( status == 2 ){
             res.status(200).send("code is not true")
         } if ( status == 3) {
             res.status(200).send("code expired")
         }
     })
-router.post("/register", async (req, res, next) => {
-try {
-    console.log(req.body)
-    let result = await signupVal.validateAsync (req.body)
-    result.password = await hashPassword(result.password)
-    await updateUser(result.phone , result)
-    await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
-    res.send(await getUserByPhone(result.phone))
-} catch (error) {
-    if (error.isJoi === true) error.status = 422
-    next(error)
-}
+router.post ("/newcode", async (req, res, next) => {
+    const result = await phone.validateAsync(req.body)
+    const number = result.phone
+    const code = getRandomInt()
+    await generateNewCodeForThisNumber(code, number)
+    res.send("ok")
 })
-
 router.post("/login", async (req, res, next) => {
     try {
         const result = await loginVal.validateAsync(req.body) 
         const user = await getUserByPhone(result.phone)
+        if (user.phoneVarify === false) {
+            res.status(401).send("phone not varify")
+        }
+        else {
         const compare = await isValid(result.password, user.password)
         if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
         if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)
         res.send({refreshToken, AccessToken})
+        }       
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))
