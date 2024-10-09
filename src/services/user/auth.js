@@ -125,23 +125,20 @@ module.exports = {
                   reject(creatError.InternalServerError());
               }
           
-              // اینجا باید تابع async فراخوانی شود
               (async () => {
                   try {
-                      // اتصال به Redis
                       await connectRedis();
-          
-                      // ذخیره token با استفاده از SET (به صورت async)
-                      await client.set(phone, token); // استفاده از await به جای callback
-                      resolve(token);
+                      await client.set(phone, token, {
+                        EX: 365 * 24 * 60 * 60 // تنظیم انقضا به مدت یک سال بر حسب ثانیه
+                    });
+                    resolve(token);
                   } catch (err) {
                       console.error('Error:', err);
                       reject(creatError.InternalServerError());
                   } finally {
-                      // بستن اتصال Redis
                       await disconnectRedis();
                   }
-              })(); // فراخوانی فوری تابع async
+              })();
           });          
           })
         })
