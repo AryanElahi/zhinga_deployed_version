@@ -4,6 +4,7 @@ const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
 const creatErrors = require ("http-errors")
+const { client, connectRedis, disconnectRedis } = require("./../../loader/redis")
 
 async function doesExistphone(phone) {
 const Exist = await prisma.user.findUnique({
@@ -112,7 +113,32 @@ module.exports = {
               console.log(err.message)
               reject(creatError.InternalServerError())
             }
-            resolve(token)
+            JWT.sign(payload, secret, options, (err, token) => {
+              if (err) {
+                  console.log(err.message);
+                  reject(creatError.InternalServerError());
+              }
+          
+              // اینجا باید تابع async فراخوانی شود
+              (async () => {
+                  try {
+                      // اتصال به Redis
+                      await connectRedis();
+          
+                      // ذخیره token با استفاده از SET (به صورت async)
+                      await client.set(phone, token); // استفاده از await به جای callback
+          
+                      // اگر ذخیره سازی موفقیت آمیز بود، token را resolve کنید
+                      resolve(token);
+                  } catch (err) {
+                      console.error('Error:', err);
+                      reject(creatError.InternalServerError());
+                  } finally {
+                      // بستن اتصال Redis
+                      await disconnectRedis();
+                  }
+              })(); // فراخوانی فوری تابع async
+          });          
           })
         })
       },

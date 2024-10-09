@@ -46,7 +46,8 @@ try {
     console.log(req.body)
     let result = await signupVal.validateAsync (req.body)
     result.password = await hashPassword(result.password)
-    await updateUser(result.phone , result)
+    await creatUser(result)
+    console.log(await getUserByPhone(result.phone))
     await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
     res.send(await getUserByPhone(result.phone))
 } catch (error) {
