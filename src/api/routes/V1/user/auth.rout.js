@@ -3,7 +3,7 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal, phone, codephone} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
+    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
@@ -39,7 +39,8 @@ router.post ("/varify", async (req, res, next) =>
         const code = result.code
         const status = await CheckIfCorrect(code, phone)
         if (status == 1) {
-            res.status(200).send("ok")
+            userPhoneVarify(phone)
+            res.send(await getUserByPhone(phone))
         } if ( status == 2 ){
             res.status(200).send("code is not true")
         } if ( status == 3) {

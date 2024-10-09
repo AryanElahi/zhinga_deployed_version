@@ -34,6 +34,12 @@ async function saveRefreshToken(RT, phone) {
     data : {refreshToken : RT}
     })
 }
+async function userPhoneVarify(phone) {
+  await prisma.user.update({
+  where: {phone: phone},
+  data : {phoneVarify : true}
+  })
+}
 async function getUserByPhone (phone){
     const user = await prisma.user.findUnique({
         where:  {
@@ -159,4 +165,5 @@ module.exports = {
           })
         })
       },
+    userPhoneVarify
 }
