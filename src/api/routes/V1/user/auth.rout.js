@@ -5,7 +5,6 @@ const {signupVal, loginVal, phone, codephone} = require("../../../../validation/
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
     saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-const { ref, number } = require("joi")
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 const {    
@@ -13,19 +12,25 @@ const {
     CheckIfCorrect,
     sendSMS, getRandomInt, saveCodeInDB
 } = require ("../../../../services/user/sms")
-const { HttpStatusCode } = require("axios")
-const { check } = require("prisma")
-
-router.post ("/sendcode", async (req, res, next) =>
-    {
-        let result = await phone.validateAsync (req.body)
+router.post("/register", async (req, res, next) => {
+    try {
+        const result = await signupVal.validateAsync (req.body)
         if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
-        await creatUser(result.phone)
-        phone = result.phone
-        code = getRandomInt()
+        result.password = await hashPassword(result.password)
+        await creatUser(result)
+        console.log(await getUserByPhone(result.phone))
+        await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
+        console.log("test")
+        const phone = result.phone
+        console.log(phone)
+        const code = getRandomInt()
         await sendSMS(code, phone)
         await saveCodeInDB(code, phone)
-        res.status(200).send("ok")
+        res.send(await getUserByPhone(result.phone))
+    } catch (error) {
+        if (error.isJoi === true) error.status = 422
+        next(error)
+    }
     })
 router.post ("/varify", async (req, res, next) =>
     {
@@ -41,20 +46,6 @@ router.post ("/varify", async (req, res, next) =>
             res.status(200).send("code expired")
         }
     })
-router.post("/register", async (req, res, next) => {
-try {
-    console.log(req.body)
-    let result = await signupVal.validateAsync (req.body)
-    result.password = await hashPassword(result.password)
-    await creatUser(result)
-    console.log(await getUserByPhone(result.phone))
-    await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
-    res.send(await getUserByPhone(result.phone))
-} catch (error) {
-    if (error.isJoi === true) error.status = 422
-    next(error)
-}
-})
 
 router.post("/login", async (req, res, next) => {
     try {

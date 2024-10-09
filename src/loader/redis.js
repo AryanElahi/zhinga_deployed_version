@@ -3,7 +3,7 @@ require("dotenv").config()
 const redis = require('redis');
 
 const client = redis.createClient({
-    url: process.env.REDIS_HOST
+    url: 'redis://127.0.0.1:6379'
 });
 
 client.on('error', (err) => {
@@ -12,14 +12,15 @@ client.on('error', (err) => {
 
 const connectRedis = async () => {
     if (!client.isOpen) {
+        console.log("redis has been connected");
         await client.connect();
-        console.log("redis has been connected")
     }
 };
 
 const disconnectRedis = async () => {
     if (client.isOpen) {
         await client.quit();
+        console.log("redis has been disconnected");
     }
 };
 

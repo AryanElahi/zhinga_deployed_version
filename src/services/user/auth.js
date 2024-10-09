@@ -127,8 +127,6 @@ module.exports = {
           
                       // ذخیره token با استفاده از SET (به صورت async)
                       await client.set(phone, token); // استفاده از await به جای callback
-          
-                      // اگر ذخیره سازی موفقیت آمیز بود، token را resolve کنید
                       resolve(token);
                   } catch (err) {
                       console.error('Error:', err);
