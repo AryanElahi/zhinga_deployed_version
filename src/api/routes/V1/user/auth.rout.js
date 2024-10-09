@@ -12,6 +12,7 @@ const {
     CheckIfCorrect,
     sendSMS, getRandomInt, saveCodeInDB
 } = require ("../../../../services/user/sms")
+const { result } = require("@hapi/joi/lib/base")
 router.post("/register", async (req, res, next) => {
     try {
         const result = await signupVal.validateAsync (req.body)
@@ -47,17 +48,28 @@ router.post ("/varify", async (req, res, next) =>
             res.status(200).send("code expired")
         }
     })
-
+router.post ("/newcode", async (req, res, next) => {
+    const result = await phone.validateAsync(req.body)
+    const number = result.phone
+    const code = getRandomInt()
+    await generateNewCodeForThisNumber(code, number)
+    res.send("ok")
+})
 router.post("/login", async (req, res, next) => {
     try {
         const result = await loginVal.validateAsync(req.body) 
         const user = await getUserByPhone(result.phone)
+        if (user.phoneVarify === false) {
+            res.status(401).send("phone not varify")
+        }
+        else {
         const compare = await isValid(result.password, user.password)
         if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
         if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)
         res.send({refreshToken, AccessToken})
+        }       
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         if (error.isJoi === true) return next(creatErrors.BadRequest("username or password is invalid"))
