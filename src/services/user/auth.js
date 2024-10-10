@@ -129,7 +129,7 @@ module.exports = {
                   try {
                       await connectRedis();
                       await client.set(phone, token, {
-                        EX: 365 * 24 * 60 * 60 // تنظیم انقضا به مدت یک سال بر حسب ثانیه
+                        EX: 30 
                     });
                     resolve(token);
                   } catch (err) {
