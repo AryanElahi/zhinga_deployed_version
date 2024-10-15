@@ -1,8 +1,7 @@
-post http://localhost:3000/api/V1/auth/register
+post http://localhost:3000/api/V1/auth/login
 Content-type : application/json
 
 {
-    "full_name": "Jkdsjlkd",
     "phone": "09185326583",
     "password": "94jhgjy"
 }

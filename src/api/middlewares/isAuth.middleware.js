@@ -20,12 +20,38 @@ module.exports = {
     },
     verifyRefreshToken: (refreshToken) => {
         return new Promise((resolve, reject) => {
-            JWT.verify(refreshToken,"80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a", (err, payload) =>{
-                if (err)  reject (creatError.Unauthorized())
-                const phone = payload.aud
-                resolve (phone)
-
-            })
-        })
-    }
+          JWT.verify(refreshToken, "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a", async (err, payload) => {
+            if (err) {
+              if (err.name === 'TokenExpiredError') {
+                return reject(creatError.Unauthorized('Refresh token expired'));
+              } else {
+                return reject(creatError.Unauthorized('Invalid refresh token'));
+              }
+            }
+      
+            const phone = payload.aud;
+      
+            try {
+              await connectRedis();
+      
+              const storedToken = await client.get(phone);
+      
+              if (!storedToken || storedToken !== refreshToken) {
+                return reject(creatError.Unauthorized('Token mismatch'));
+              }
+      
+              resolve(phone);
+            } catch (redisErr) {
+              console.error('Redis error:', redisErr);
+              reject(creatError.InternalServerError('Redis error occurred'));
+            } finally {
+              try {
+                await disconnectRedis();
+              } catch (disconnectErr) {
+                console.error('Failed to disconnect Redis:', disconnectErr);
+              }
+            }
+          });
+        });
+      },
     }

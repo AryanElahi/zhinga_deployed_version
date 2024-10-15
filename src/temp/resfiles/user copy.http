@@ -1,12 +1,8 @@
-put http://localhost:3000/api/V1/auth/register
+post http://localhost:3000/api/V1/auth/refreshToken
 Content-type : application/json
 
 {
-    "full_name": "Jkdsjlkd",
-    "phone": "kjhkj",
-    "password": "94jhgjy"
-}
-
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mjg5NzI0NzMsImV4cCI6MTcyODk3MjQ4MywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9._gtvw8tUIrFGSYKL3vdHnrsE9Ik3GMdFU6ENIFhg-lw"}
 
 
 

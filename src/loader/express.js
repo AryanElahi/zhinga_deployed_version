@@ -26,7 +26,7 @@ const expressLoader = async (app) => {
     })
 })
 
-app.listen(process.env.PORT , () => {
+app.listen(3000 , () => {
    console.log ("server is runnng on port ",3000)
 })
 }

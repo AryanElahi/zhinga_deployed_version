@@ -18,7 +18,6 @@ model User{
   password String @default("")  //require
   phone String @unique          //require
   admin Boolean @default(false)
-  refreshToken String @default("")
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)
   phoneVarify Boolean @default(false)

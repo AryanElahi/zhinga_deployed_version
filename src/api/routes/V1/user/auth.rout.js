@@ -20,8 +20,6 @@ router.post("/register", async (req, res, next) => {
         result.password = await hashPassword(result.password)
         await creatUser(result)
         console.log(await getUserByPhone(result.phone))
-        await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
-        console.log("test")
         const phone = result.phone
         console.log(phone)
         const code = getRandomInt()
@@ -85,9 +83,10 @@ router.post("/refreshToken", async (req, res, next) => {
         const AccessToken = await signAccessToken(phone)
         const RefreshToken = await signRefreshToken(phone)
         res.send ({AccessToken, RefreshToken})
+        next()
     } catch (error) {
-        if (error) throw error
-    }
+        console.error('Auth Error:', error);
+        next(error);    }
 })
 
 router.put ("/updateuser", async (req, res) => {
