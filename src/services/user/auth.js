@@ -103,7 +103,7 @@ module.exports = {
         const payload = {};
         const secret = "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a";
         const options = {
-          expiresIn: '10 s',
+          expiresIn: '1y',
           issuer: 'pickurpage.com',
           audience: phone,
         };
@@ -116,7 +116,7 @@ module.exports = {
           try {
             await connectRedis();
             await client.set(phone, token, {
-              EX: 10 ,
+              EX: 365 * 24 * 60 * 60,
             });
             resolve(token);
           } catch (err) {

@@ -3,6 +3,7 @@ const creatError = require("http-errors")
 const { process } = require("@hapi/joi/lib/errors")
 const env = require("dotenv")
 const { reject } = require("bcrypt/promises")
+const { client, connectRedis, disconnectRedis } = require("./../../loader/redis")
 
 module.exports = {
     verifyAccessToken: (req, res, next) => {

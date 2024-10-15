@@ -2,9 +2,7 @@ post http://localhost:3000/api/V1/auth/refreshToken
 Content-type : application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mjg5NzI0NzMsImV4cCI6MTcyODk3MjQ4MywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9._gtvw8tUIrFGSYKL3vdHnrsE9Ik3GMdFU6ENIFhg-lw"}
-
-
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mjg5NzI4MzksImV4cCI6MTc2MDUzMDQzOSwiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.8BAHzIUMgVpsJTw0xA0u5xabMd_hPR3IGE_J6DQVP6w"}
 
 
 

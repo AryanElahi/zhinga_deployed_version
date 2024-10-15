@@ -82,8 +82,7 @@ router.post("/refreshToken", async (req, res, next) => {
         const phone = await verifyRefreshToken(refreshToken)
         const AccessToken = await signAccessToken(phone)
         const RefreshToken = await signRefreshToken(phone)
-        res.send ({AccessToken, RefreshToken})
-        next()
+        res.send({AccessToken, RefreshToken})
     } catch (error) {
         console.error('Auth Error:', error);
         next(error);    }
