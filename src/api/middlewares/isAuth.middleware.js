@@ -29,18 +29,14 @@ module.exports = {
                 return reject(creatError.Unauthorized('Invalid refresh token'));
               }
             }
-      
             const phone = payload.aud;
-      
             try {
               await connectRedis();
-      
               const storedToken = await client.get(phone);
-      
               if (!storedToken || storedToken !== refreshToken) {
                 return reject(creatError.Unauthorized('Token mismatch'));
               }
-      
+              await disconnectRedis(); 
               resolve(phone);
             } catch (redisErr) {
               console.error('Redis error:', redisErr);
