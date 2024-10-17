@@ -12,7 +12,10 @@ const {
     CheckIfCorrect,
     sendSMS, getRandomInt, saveCodeInDB
 } = require ("../../../../services/user/sms")
+const { client , connectRedis, disconnectRedis } = require("./../../../../loader/redis")
 const { result } = require("@hapi/joi/lib/base")
+const { ref } = require("joi")
+
 router.post("/register", async (req, res, next) => {
     try {
         const result = await signupVal.validateAsync (req.body)
@@ -20,8 +23,6 @@ router.post("/register", async (req, res, next) => {
         result.password = await hashPassword(result.password)
         await creatUser(result)
         console.log(await getUserByPhone(result.phone))
-        await saveRefreshToken(await signRefreshToken(result.phone), result.phone)
-        console.log("test")
         const phone = result.phone
         console.log(phone)
         const code = getRandomInt()
@@ -77,17 +78,17 @@ router.post("/login", async (req, res, next) => {
     }
 })
 
-router.post("/refreshToken", async (req, res, next) => {
+router.delete ("/refreshToken", async (req, res, next) => {
     try {
         const {refreshToken} = req.body
         if (!refreshToken) throw creatErrors.BadRequest()
         const phone = await verifyRefreshToken(refreshToken)
         const AccessToken = await signAccessToken(phone)
         const RefreshToken = await signRefreshToken(phone)
-        res.send ({AccessToken, RefreshToken})
+        res.send({AccessToken, RefreshToken})
     } catch (error) {
-        if (error) throw error
-    }
+        console.error('Auth Error:', error);
+        next(error);    }
 })
 
 router.put ("/updateuser", async (req, res) => {
@@ -102,8 +103,38 @@ router.put ("/updateuser", async (req, res) => {
     }
 
 })
-router.delete("/logout", async (req, res, next) => {
-    res.send("logout")
-})
+
+router.delete ("/logout", async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            throw creatErrors.BadRequest("Refresh token is required!");
+        }
+        const phone = await verifyRefreshToken(refreshToken);
+        try {
+            await connectRedis();
+            const result = await client.del(phone)
+            console.log(result)
+            if (result === 0) {
+                throw creatErrors.NotFound("Refresh token not found or already deleted.");
+            }
+            await disconnectRedis();
+            res.sendStatus(204);
+        } catch (redisError) {
+            console.error("Redis error:", redisError);
+            return next(creatErrors.InternalServerError("Redis connection or operation failed."));
+        }
+    } catch (error) {
+        if (error instanceof creatErrors.HttpError) {
+            return next(error);
+        } else {
+            console.error("Unexpected error:", error);
+            return next(creatErrors.InternalServerError("An unexpected error occurred"));
+        }
+    }
+});
+
+
+
 
 module.exports = router

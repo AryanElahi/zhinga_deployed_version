@@ -9,7 +9,7 @@ const expressLoader = async (app) => {
     app.use(express.json())
     app.use(express.urlencoded({extended: true}))
     app.get("/", async (req, res, next) => {
-        res.send("hello world again")
+        res.send("Home Rout")
     })
     app.use("/api", routes())
     //app.use("/auth", AuthRouts)
@@ -25,9 +25,8 @@ const expressLoader = async (app) => {
         }
     })
 })
-//port = process.env.PORT
-//console.log (port)
-app.listen(3000, () => {
+
+app.listen(3000 , () => {
    console.log ("server is runnng on port ",3000)
 })
 }

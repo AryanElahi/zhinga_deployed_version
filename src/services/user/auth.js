@@ -28,12 +28,6 @@ async function creatUser (data){
     })
     return newuser
 }
-async function saveRefreshToken(RT, phone) {
-    await prisma.user.update({
-    where: {phone: phone},
-    data : {refreshToken : RT}
-    })
-}
 async function userPhoneVarify(phone) {
   await prisma.user.update({
   where: {phone: phone},
@@ -99,50 +93,41 @@ module.exports = {
     doesExistphone,
     hashPassword,
     creatUser,
-    saveRefreshToken,
     getUserByPhone,
     getAllUsers,
     isValid,
     updateUser,
     getUserByAccessToken,
     signRefreshToken: (phone) => {
-        return new Promise((resolve, reject) => {
-          const payload = {}
-          const secret = "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a"
-          const options = {
-            expiresIn: '1y',
-            issuer: 'pickurpage.com',
-            audience: phone,
+      return new Promise((resolve, reject) => {
+        const payload = {};
+        const secret = "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a";
+        const options = {
+          expiresIn: '1y',
+          issuer: 'pickurpage.com',
+          audience: phone,
+        };
+    
+        JWT.sign(payload, secret, options, async (err, token) => {
+          if (err) {
+            console.log(err.message);
+            return reject(creatError.InternalServerError());
           }
-          JWT.sign(payload, secret, options, (err, token) => {
-            if (err) {
-              console.log(err.message)
-              reject(creatError.InternalServerError())
-            }
-            JWT.sign(payload, secret, options, (err, token) => {
-              if (err) {
-                  console.log(err.message);
-                  reject(creatError.InternalServerError());
-              }
-          
-              (async () => {
-                  try {
-                      await connectRedis();
-                      await client.set(phone, token, {
-                        EX: 365 * 24 * 60 * 60 // تنظیم انقضا به مدت یک سال بر حسب ثانیه
-                    });
-                    resolve(token);
-                  } catch (err) {
-                      console.error('Error:', err);
-                      reject(creatError.InternalServerError());
-                  } finally {
-                      await disconnectRedis();
-                  }
-              })();
-          });          
-          })
-        })
-      },
+          try {
+            await connectRedis();
+            await client.set(phone, token, {
+              EX: 365 * 24 * 60 * 60,
+            });
+            resolve(token);
+          } catch (err) {
+            console.error('Error:', err);
+            reject(creatError.InternalServerError());
+          } finally {
+            await disconnectRedis();
+          }
+        });
+      });
+    },
     signAccessToken: (phone) => {
         return new Promise((resolve, reject) => {
           const payload = {}

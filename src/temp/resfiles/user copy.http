@@ -1,15 +1,9 @@
-put http://localhost:3000/api/V1/auth/register
+delete http://localhost:3000/api/V1/auth/logout
 Content-type : application/json
 
 {
-    "full_name": "Jkdsjlkd",
-    "phone": "kjhkj",
-    "password": "94jhgjy"
+  "refreshToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkxNDczMTMsImV4cCI6MTc2MDcwNDkxMywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.7e0sLPL-Xo5Sg_UNVP_D04kNfOlWb6YwcKwsvBsDF7k"
 }
-
-
-
-
 
 
 
