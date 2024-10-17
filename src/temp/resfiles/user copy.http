@@ -1,9 +1,10 @@
-POST http://localhost:3000/api/V1/auth/logout
+delete http://localhost:3000/api/V1/auth/logout
 Content-type : application/json
 
 {
-  "refreshToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkxMDM1NDgsImV4cCI6MTc2MDY2MTE0OCwiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.iZhoStoubkWYib9m1lxBICo13zPFIjKIXuSgLnYqp8k"
+  "refreshToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkxNDczMTMsImV4cCI6MTc2MDcwNDkxMywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.7e0sLPL-Xo5Sg_UNVP_D04kNfOlWb6YwcKwsvBsDF7k"
 }
+
 
 
 
