@@ -52,6 +52,7 @@ try {
 })
 //dashboard ended
 //real state management started
+
 router.post("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
@@ -64,6 +65,7 @@ router.post("/getAllRequests", async (req, res, next) => {
     const requests = await getAll()
     res.send(requests)
 })
+
 module.exports = router
 
 
