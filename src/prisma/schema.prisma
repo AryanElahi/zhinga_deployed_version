@@ -63,6 +63,25 @@ model request {
     status   Boolean @default(false)
     Uid      String @unique
 }
+model visit{
+  id Int @default(autoincrement()) @unique
+  name String @default("")
+  phone String @default("")
+  description String @default("")
+}
+model deal {
+  id Int @default(autoincrement()) @unique
+  seller String @default("")
+  region String @default("")
+  type String @default("")
+  number String @default("")
+  client String @default("")
+  price String @default("")
+  commission Int @default(0)
+  date String @default("")
+  note String @default("")
+
+}
 model visitor {
   id Int @default(autoincrement()) @unique
   date String
