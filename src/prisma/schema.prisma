@@ -21,9 +21,12 @@ model User{
   Blocked Boolean @default(false)
   softDelete Boolean @default(false)
   phoneVarify Boolean @default(false)
+  propertys property[]
 }
 model property{
   id Int @default(autoincrement()) @unique
+  userID Int 
+  user User @relation(fields: [userID], references: [id])
   type String @default("")
   region String @default("")
   address String @default("")

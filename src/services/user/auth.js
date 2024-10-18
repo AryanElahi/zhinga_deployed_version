@@ -72,7 +72,7 @@ async function updateUser (phone, result){
   }
 
 }
-async function getUserByAccessToken (AccessToken){
+async function getUserByAccessToken(AccessToken){
   return new Promise((resolve, reject) => {
     const spliter = AccessToken.split(' ')
     const token = spliter[1]
