@@ -15,8 +15,11 @@ const {
 const { client , connectRedis, disconnectRedis } = require("./../../../../loader/redis")
 const { result } = require("@hapi/joi/lib/base")
 const { ref } = require("joi")
-
-router.post("/register", async (req, res, next) => {
+router.post("/test", verifyAccessToken,async (req, res)=> {
+    const a = await getUserByAccessToken(req.body.AccessToken)
+    res.send(a)
+})
+router.post ("/register", async (req, res, next) => {
     try {
         const result = await signupVal.validateAsync (req.body)
         if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
