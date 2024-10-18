@@ -11,12 +11,19 @@ const {
     softdeleteAnnoun,
     deleteAnnoun,
 } = require("../../../../services/anouncement/CRUD")
+const {getUserByAccessToken} = require ("./../../../../services/user/auth")
 
 router.post ("/creatAnnounce", async (req, res, next) => {
-    let result = await creat.validateAsync(req.body)  
+    let result = await creat.validateAsync(req.body)
+    const authheader = req.headers["authorization"]
+    const bearertoken = authheader.split(' ')
+    console.log(bearertoken)
+    const token = bearertoken[1]
+    console.log(token)
+    const userId = await getUserByAccessToken(token)
     result.Uid = String(new Date().getTime()) 
     console.log (result)
-    const  newA = await creatAnnouncement(result)
+    const  newA = await creatAnnouncement(result, userId)
     res.send (newA)
 })
 router.post("/getbystatecode", async (req, res, next) => {

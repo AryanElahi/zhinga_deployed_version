@@ -7,11 +7,9 @@ const { client, connectRedis, disconnectRedis } = require("./../../loader/redis"
 
 module.exports = {
     verifyAccessToken: (req, res, next) => {
-        console.log(req.headers)
         if (!req.headers["authorization"]) next (creatError.Unauthorized())
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
-        console.log(bearertoken)
         const token = bearertoken[1]
         JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
             if (err) {return next (creatError.Unauthorized())}

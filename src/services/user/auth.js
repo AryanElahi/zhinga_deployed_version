@@ -72,11 +72,12 @@ async function updateUser (phone, result){
   }
 
 }
+
 async function getUserByAccessToken(AccessToken){
+  //enter just the AT without of any othe thing
+  
   return new Promise((resolve, reject) => {
-    const spliter = AccessToken.split(' ')
-    const token = spliter[1]
-    JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
+    JWT.verify(AccessToken, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
       if (err) {
         reject(creatErrors.InternalServerError())
         return
@@ -89,6 +90,15 @@ async function getUserByAccessToken(AccessToken){
 async function softDelete (phone) {
   
 }
+async function getUserAnnounce(phone) {
+  const userAnnounces = await prisma.property.findMany(
+    {where : {
+      userID : phone
+    }}
+  )
+  return userAnnounces
+}
+
 module.exports = {
     doesExistphone,
     hashPassword,
@@ -98,6 +108,7 @@ module.exports = {
     isValid,
     updateUser,
     getUserByAccessToken,
+    getUserAnnounce,
     signRefreshToken: (phone) => {
       return new Promise((resolve, reject) => {
         const payload = {};

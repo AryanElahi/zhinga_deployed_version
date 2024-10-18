@@ -3,11 +3,12 @@ const prisma = new PrismaClient()
 const creatErrors = require ("http-errors")
 
 
-async function creatAnnouncement(data){
+async function creatAnnouncement(data, userId){
     console.log(data)
+    data.userID = userId
     const newAnnoun = await prisma.property.create({
         data :
-            data          
+            data    
     })
     return newAnnoun
 }

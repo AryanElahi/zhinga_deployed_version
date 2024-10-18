@@ -1,12 +1,13 @@
-delete http://localhost:3000/api/V1/auth/logout
+post http://localhost:3000/api/V1/request/creatrequest
 Content-type : application/json
 
 {
-  "refreshToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkxNDczMTMsImV4cCI6MTc2MDcwNDkxMywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.7e0sLPL-Xo5Sg_UNVP_D04kNfOlWb6YwcKwsvBsDF7k"
+  "full_name" : "skaljd",
+  "phone" : "09181711690",
+  "region" : "akdlskdsa",
+  "type" : "String @default()",
+  "lowest_price" : 8282.9 ,
+  "hieghest_price" : 92393 ,
+  "location" : "String @default()",
+  "Message" :  "String @default()"
 }
-
-
-
-
-
-
