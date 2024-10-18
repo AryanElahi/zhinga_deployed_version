@@ -3,7 +3,7 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal, phone, codephone} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-     getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify} = require("../../../../services/user/auth")
+     getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify, getUserAnnounce} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const {    
     generateNewCodeForThisNumber,
@@ -12,8 +12,9 @@ const {
 } = require ("../../../../services/user/sms")
 const { client , connectRedis, disconnectRedis } = require("./../../../../loader/redis")
 router.post("/test", verifyAccessToken,async (req, res)=> {
-    const a = await getUserByAccessToken(req.body.AccessToken)
-    res.send(a)
+    const a = await getUserByAccessToken (req.body.AccessToken)
+    const AS = await getUserAnnounce(a)
+    res.send(AS)
 })
 router.post ("/register", async (req, res, next) => {
     try {
@@ -132,6 +133,12 @@ router.delete ("/logout", async (req, res, next) => {
         }
     }
 });
+
+router.post("/getAnnouncements", verifyAccessToken ,async (req, res)=> {
+    const phone = await getUserByAccessToken (req.body.AccessToken)
+    const Announces = await getUserAnnounce(phone)
+    res.send(Announces)
+})
 
 
 
