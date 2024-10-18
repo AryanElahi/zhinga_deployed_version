@@ -4,6 +4,12 @@ const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
+    getByUid,
+    getAll,
+    getchecked,
+    getunchecked,
+    check} = require("../../../../services/request/services")
+const {
     getAllAnnouns, 
     inPrigressStates,
     deleted_or_not_confirmed,
@@ -17,6 +23,8 @@ const {
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
+const { not } = require("joi")
+
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -44,10 +52,18 @@ try {
 })
 //dashboard ended
 //real state management started
-router.post ("/newRealState", async (req, res, next) => {
-
+router.post("/inprogress", async (req, res, next) => {
+    const inprogress = await inPrigressStates()
+    res.send(inprogress)
 })
-
+router.post("/notconfirmed", async (req, res, next) => {
+    const notconfirmed = await deleted_or_not_confirmed()
+    res.send(notconfirmed)
+})
+router.post("/getAllRequests", async (req, res, next) => {
+    const requests = await getAll()
+    res.send(requests)
+})
 module.exports = router
 
 
