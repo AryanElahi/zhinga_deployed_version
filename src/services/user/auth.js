@@ -74,9 +74,7 @@ async function updateUser (phone, result){
 }
 async function getUserByAccessToken(AccessToken){
   return new Promise((resolve, reject) => {
-    const spliter = AccessToken.split(' ')
-    const token = spliter[1]
-    JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
+    JWT.verify(AccessToken, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
       if (err) {
         reject(creatErrors.InternalServerError())
         return

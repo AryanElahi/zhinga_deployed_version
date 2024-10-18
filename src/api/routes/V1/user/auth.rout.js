@@ -3,18 +3,14 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal, phone, codephone} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-    saveRefreshToken, getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify} = require("../../../../services/user/auth")
+     getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-const {PrismaClient} = require("@prisma/client")
-const prisma = new PrismaClient()
 const {    
     generateNewCodeForThisNumber,
     CheckIfCorrect,
     sendSMS, getRandomInt, saveCodeInDB
 } = require ("../../../../services/user/sms")
 const { client , connectRedis, disconnectRedis } = require("./../../../../loader/redis")
-const { result } = require("@hapi/joi/lib/base")
-const { ref } = require("joi")
 router.post("/test", verifyAccessToken,async (req, res)=> {
     const a = await getUserByAccessToken(req.body.AccessToken)
     res.send(a)

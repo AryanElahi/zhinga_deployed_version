@@ -1,6 +1,6 @@
 const express = require("express")
 const authUserV1 = require ("./user/auth.rout")
-const announcementV1 = require("./request/request.rout")
+const announcementV1 = require("./announce/announce.rout")
 const adminV1 = require("./admin/admin.rout")
 const requestV1 = require("./request/request.rout")
 

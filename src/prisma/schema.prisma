@@ -25,8 +25,8 @@ model User{
 }
 model property{
   id Int @default(autoincrement()) @unique
-  userID Int 
-  user User @relation(fields: [userID], references: [id])
+  userID String
+  user User @relation(fields: [userID], references: [phone])
   type String @default("")
   region String @default("")
   address String @default("")
