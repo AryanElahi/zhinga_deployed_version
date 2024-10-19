@@ -30,6 +30,12 @@ const {
     updateVisits,
     deleteVisits
 } = require("./../../../../services/adminpanel/visit/CRUD")
+const {
+    creatdeal,
+    getAlldeals,
+    updatedeal,
+    deletedeal
+} = require("./../../../../services/adminpanel/deal/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -55,12 +61,10 @@ try {
     next(error)
 }
 })
-
 router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
 })
-
 router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
@@ -69,6 +73,8 @@ router.get("/getAllRequests", async (req, res, next) => {
     const requests = await getAll()
     res.send(requests)
 })
+//announcement management
+//visit part
 router.post("/creatVisit", async(req, res, next) => {
     data = req.body
     data.Uid = new Date().getTime().toString()
@@ -92,6 +98,31 @@ router.post("/deleteVisit", async(req, res, next) => {
     const del = deleteVisits(ID)
     res.send(await getAllVisits())
 })
+//deal part
+router.post("/creatdeal", async(req, res, next) => {
+    data = req.body
+    data.Uid = new Date().getTime().toString()
+    deal = await creatdeal(data)
+    res.send(deal)
+})
+router.get("/getAlldeals", async (req, res, next) => {
+    const deals = await getAlldeals()
+    res.send(deals)
+})
+router.post("/updatedeal", async(req, res, next) => {
+    ID = req.body.ID
+    let requestData = req.body
+    delete requestData.ID
+    const data = requestData
+    deal = await updatedeal(ID, data)
+    res.send(deal)
+})
+router.post("/deletedeal", async(req, res, next) => {
+    ID = req.body.ID
+    const del = deletedeal(ID)
+    res.send(await getAlldeals())
+})
+
 
 
 

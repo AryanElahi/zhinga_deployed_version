@@ -79,11 +79,11 @@ model deal {
   type String @default("")
   number String @default("")
   client String @default("")
-  price String @default("")
+  price Int @default(0)
   commission Int @default(0)
   date String @default("")
   note String @default("")
-  Uid String @default("")
+  Uid String @unique
 }
 model visitor {
   id Int @default(autoincrement()) @unique

@@ -1,9 +1,16 @@
-post http://localhost:3000/api/V1/auth/getAnnouncements
+post http://localhost:3000/api/V1/admin/creatdeal
 Content-type : application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkyNzYyNDcsImV4cCI6MTc2MDgzMzg0NywiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.YegOi_lem_SQPVs3vbK4stLLvI2-psFisdVQVQk5N2k
 
 {
-    "AccessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkyNzYyNDcsImV4cCI6MTc2MDgzMzg0NywiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.YegOi_lem_SQPVs3vbK4stLLvI2-psFisdVQVQk5N2k"
+    "seller" : "slkjd",
+    "region" : "sal",
+    "type" : "kladjslda", 
+    "number" : "8902", 
+    "client" : "adjkklads",
+    "price" : 19821,
+    "commission" : 12791,
+    "date" : "asdjlka",
+    "note" : "dkla;skdsa"
 }
 
 
