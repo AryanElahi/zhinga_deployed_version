@@ -3,12 +3,14 @@ const morgan = require("morgan")
 const creatErrors = require("http-errors")
 const routes = require("../api/routes")
 require("dotenv").config()
+const {save_visitor} = require("./../services/adminpanel/visitCountingServices")
 
 const expressLoader = async (app) => {
     app.use(morgan("dev"))
     app.use(express.json())
     app.use(express.urlencoded({extended: true}))
     app.get("/", async (req, res, next) => {
+        await save_visitor(req)
         res.send("Home Rout")
     })
     app.use("/api", routes())
