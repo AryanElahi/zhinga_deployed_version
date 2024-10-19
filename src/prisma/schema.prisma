@@ -68,6 +68,9 @@ model visit{
   name String @default("")
   phone String @default("")
   description String @default("")
+  date String @default("")
+  address String @default("")
+  Uid  Int @default(0)
 }
 model deal {
   id Int @default(autoincrement()) @unique
