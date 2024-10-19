@@ -75,6 +75,10 @@ router.post("/creatVisit", async(req, res, next) => {
     visit = await creatvisit(data)
     res.send(visit)
 })
+router.get("/getAllVisits", async (req, res, next) => {
+    const visits = await getAllVisits()
+    res.send(visits)
+})
 
 
 
