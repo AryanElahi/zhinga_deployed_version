@@ -12,12 +12,10 @@ async function creatvisit(data){
 async function getAllVisits() {
     return (await prisma.visit.findMany())
 }
-async function updateVisits(result){
-    const code = await getByUid(result.Uid)
-    console.log(code.state_code, result)
+async function updateVisits(Uid, data){
     return await prisma.visit.update({
-    where: {Uid : code.Uid},
-    data : result
+    where: {Uid : Uid},
+    data : data
     })
     }
 async function deleteVisits (ID){

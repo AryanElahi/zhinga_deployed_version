@@ -70,7 +70,7 @@ model visit{
   description String @default("")
   date String @default("")
   address String @default("")
-  Uid  String @default("")
+  Uid  String @unique
 }
 model deal {
   id Int @default(autoincrement()) @unique

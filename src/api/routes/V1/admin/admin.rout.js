@@ -79,6 +79,14 @@ router.get("/getAllVisits", async (req, res, next) => {
     const visits = await getAllVisits()
     res.send(visits)
 })
+router.post("/updateVisits", async(req, res, next) => {
+    ID = req.body.ID
+    let requestData = req.body
+    delete requestData.ID
+    const data = requestData
+    visit = await updateVisits(ID ,data)
+    res.send(visit)
+})
 
 
 
