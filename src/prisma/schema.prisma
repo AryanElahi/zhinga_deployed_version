@@ -70,7 +70,7 @@ model visit{
   description String @default("")
   date String @default("")
   address String @default("")
-  Uid  Int @default(0)
+  Uid  String @default("")
 }
 model deal {
   id Int @default(autoincrement()) @unique
@@ -83,7 +83,7 @@ model deal {
   commission Int @default(0)
   date String @default("")
   note String @default("")
-
+  Uid String @default("")
 }
 model visitor {
   id Int @default(autoincrement()) @unique

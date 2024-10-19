@@ -24,7 +24,12 @@ const {
 }= require ("../../../../services/adminpanel/visitCountingServices")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const { not } = require("joi")
-
+const {
+    creatvisit,
+    getAllVisits,
+    updateVisits,
+    deleteVisits
+} = require("./../../../../services/adminpanel/visit/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -64,6 +69,24 @@ router.get("/getAllRequests", async (req, res, next) => {
     const requests = await getAll()
     res.send(requests)
 })
+router.post("/creatVisit", async(req, res, next) => {
+    data = req.body
+    data.Uid = new Date().getTime().toString()
+    visit = await creatvisit(data)
+    res.send(visit)
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router
 

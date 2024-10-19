@@ -3,12 +3,11 @@ const prisma = new PrismaClient()
 const creatErrors = require ("http-errors")
 
 async function creatvisit(data){
-    data.userID = userId
-    const newAnnoun = await prisma.visit.create({
+    const newvisit = await prisma.visit.create({
         data :
             data    
     })
-    return newAnnoun
+    return newvisit
 }
 async function getAllVisits() {
     return (await prisma.visit.findMany())
