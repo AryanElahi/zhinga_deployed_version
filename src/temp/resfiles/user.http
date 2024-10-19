@@ -5,12 +5,12 @@ Content-type : application/json
     "seller" : "slkjd",
     "region" : "sal",
     "type" : "kladjslda", 
-    "number" : "8902", 
+    "number " : "8902", 
     "client" : "adjkklads",
     "price" : 19821,
     "commission" : 12791,
     "date" : "asdjlka",
-    "note" : "dkla;skdsa"
+    "note" :
 }
 
 
