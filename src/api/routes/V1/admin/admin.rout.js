@@ -50,18 +50,17 @@ try {
     next(error)
 }
 })
-//dashboard ended
-//real state management started
 
-router.post("/inprogress", async (req, res, next) => {
+router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
 })
-router.post("/notconfirmed", async (req, res, next) => {
+
+router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
 })
-router.post("/getAllRequests", async (req, res, next) => {
+router.get("/getAllRequests", async (req, res, next) => {
     const requests = await getAll()
     res.send(requests)
 })
