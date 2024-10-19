@@ -87,6 +87,12 @@ router.post("/updateVisits", async(req, res, next) => {
     visit = await updateVisits(ID ,data)
     res.send(visit)
 })
+router.post("/deleteVisit", async(req, res, next) => {
+    ID = req.body.ID
+    const del = deleteVisits(ID)
+    res.send(await getAllVisits())
+})
+
 
 
 
