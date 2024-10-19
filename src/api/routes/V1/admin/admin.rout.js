@@ -24,7 +24,12 @@ const {
 }= require ("../../../../services/adminpanel/visitCountingServices")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const { not } = require("joi")
-
+const {
+    creatvisit,
+    getAllVisits,
+    updateVisits,
+    deleteVisits
+} = require("./../../../../services/adminpanel/visit/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -50,21 +55,56 @@ try {
     next(error)
 }
 })
-//dashboard ended
-//real state management started
 
-router.post("/inprogress", async (req, res, next) => {
+router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
 })
-router.post("/notconfirmed", async (req, res, next) => {
+
+router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
 })
-router.post("/getAllRequests", async (req, res, next) => {
+router.get("/getAllRequests", async (req, res, next) => {
     const requests = await getAll()
     res.send(requests)
 })
+router.post("/creatVisit", async(req, res, next) => {
+    data = req.body
+    data.Uid = new Date().getTime().toString()
+    visit = await creatvisit(data)
+    res.send(visit)
+})
+router.get("/getAllVisits", async (req, res, next) => {
+    const visits = await getAllVisits()
+    res.send(visits)
+})
+router.post("/updateVisits", async(req, res, next) => {
+    ID = req.body.ID
+    let requestData = req.body
+    delete requestData.ID
+    const data = requestData
+    visit = await updateVisits(ID ,data)
+    res.send(visit)
+})
+router.post("/deleteVisit", async(req, res, next) => {
+    ID = req.body.ID
+    const del = deleteVisits(ID)
+    res.send(await getAllVisits())
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router
 
