@@ -49,9 +49,8 @@ model property{
   state_code String  @default("")
   Uid        String  @unique
 }
-model adminproperty{
+model adminproperty {
   id Int @default(autoincrement()) @unique
-  phone String @default("")
   tour3dRequest Boolean @default(false)
   tour3dlink    String @default("")
   type String @default("")
@@ -63,18 +62,19 @@ model adminproperty{
   document_type String @default("")
   land_metrage Int @default(0)
   useful_metrage Int @default(0)
-  floor_number Int @default(0)
-  floor Int @default(0)
+  floor_number  Int @default(0)
+  floor         Int @default(0)
   Unit_in_floor Int @default(0)
   year_of_build Int @default(0)
-  full_name String @default("")
-  price     Float @default(0)
+  full_name    String @default("")
+  price        Float @default(0)
   room_number  Int @default(0)
   features     String @default("")
+  phone       String @default("")
   photo        Json @db.JsonB @default("{}")
-  softDelete Boolean @default(false)
-  state_code String  @default("")
-  Uid        String  @unique
+  softDelete   Boolean @default(false)
+  state_code   String  @default("")
+  Uid          String  @unique
 }
 model request {
     id Int @default(autoincrement()) @unique

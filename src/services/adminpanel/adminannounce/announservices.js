@@ -1,4 +1,5 @@
 const {PrismaClient} = require("@prisma/client")
+const { use } = require("bcrypt/promises")
 const prisma = new PrismaClient()
 
 async function creatannounce (data){
@@ -28,10 +29,26 @@ async function deleted_or_not_confirmed (){
     const count = announs.length
     return ({"deleted": announs, "number": count})
 }
+async function search(data) {
+    const user_announs = await prisma.adminproperty.findMany({
+        where: data
+    });
+    
+    const admin_announs = await prisma.adminproperty.findMany({
+        where: data,
+    });
+
+    // برگرداندن هر دو نتیجه به صورت یک آبجکت
+    return {
+        user_announs,
+        admin_announs
+    };
+}
 
 module.exports = {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
     deleted_or_not_confirmed,
+    search
 }

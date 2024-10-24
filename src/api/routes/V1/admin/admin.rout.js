@@ -17,6 +17,7 @@ const {
     getAllAnnouns,
     inPrigressStates,
     deleted_or_not_confirmed,
+    search
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_ip,
@@ -66,10 +67,7 @@ try {
     next(error)
 }
 })
-router.get("/inprogress", async (req, res, next) => {
-    const inprogress = await inPrigressStates()
-    res.send(inprogress)
-})
+
 router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
@@ -86,6 +84,19 @@ router.post("/creatAnnouncement", async(req, res, next) => {
     console.log (result)
     const  newA = await creatannounce(result)
     res.send (newA)
+})
+router.get("/inprogress", async (req, res, next) => {
+    const inprogress = await inPrigressStates()
+    res.send(inprogress)
+})
+router.get("/notconfirmed", async (req, res, next) => {
+    const notconfirmed = await deleted_or_not_confirmed()
+    res.send(notconfirmed)
+})
+router.post("/search", async (req, res, next) => {
+    console.log(req.body)
+    const result = await search(req.body)
+    res.send(result)
 })
 //visit part
 router.post("/creatVisit", async(req, res, next) => {
