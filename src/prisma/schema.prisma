@@ -51,7 +51,6 @@ model property{
 }
 model adminproperty{
   id Int @default(autoincrement()) @unique
-  name String @default("")
   phone String @default("")
   tour3dRequest Boolean @default(false)
   tour3dlink    String @default("")
@@ -73,7 +72,6 @@ model adminproperty{
   room_number  Int @default(0)
   features     String @default("")
   photo        Json @db.JsonB @default("{}")
-  check Boolean @default(false)
   softDelete Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
