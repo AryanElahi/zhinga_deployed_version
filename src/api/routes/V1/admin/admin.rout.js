@@ -171,7 +171,11 @@ router.put("/promotToAdmin", async (req, res, next) => {
     const phone = req.body.phone
     const PA = await promotToAdmin(phone)
     res.send(PA)
-    
+})
+router.put("/softDelete", async (req, res, next) => {
+    const phone = req.body.phone
+    const SD = await softDelete(phone)
+    res.send(SD)
 })
 
 
