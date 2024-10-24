@@ -11,7 +11,7 @@ const {
     check} = require("../../../../services/request/services")
 const {
     uncheckedRequests
-} = require("../../../../services/adminpanel/services")
+} = require("../../../../services/adminpanel/userManagement/services")
 const {
     creatannounce,
     getAllAnnouns,
@@ -41,7 +41,11 @@ const {
     deletedeal
 } = require("./../../../../services/adminpanel/deal/CRUD")
 const {creatval} = require("./../../../../validation/adminval")
-
+const {
+    promotToAdmin,
+    softDelete
+} = require("./../../../../services/adminpanel/userManagement/services")
+const {creatval} = require("./../../../../validation/adminval")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -146,8 +150,29 @@ router.post("/deletedeal", async(req, res, next) => {
     const del = deletedeal(ID)
     res.send(await getAlldeals())
 })
-
-
+//user management
+router.get("/alluseres", async (req, res, next) => {
+    try {
+        res.send (await getAllUsers())
+    } catch (error) {
+        next(error)
+    }
+})
+router.put("/updateuser", async (req, res) => {
+    try {
+        let result = req.body
+        let phone = req.phone
+        res.send(await updateUser(phone, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
+router.put("/promotToAdmin", async (req, res, next) => {
+    const phone = req.body.phone
+    const PA = await promotToAdmin(phone)
+    res.send(PA)
+    
+})
 
 
 
@@ -168,10 +193,3 @@ module.exports = router
 
 
 
-router.get("/alluseres", async (req, res, next) => {
-    try {
-        res.send (await getAllUsers())
-    } catch (error) {
-        next(error)
-    }
-})
