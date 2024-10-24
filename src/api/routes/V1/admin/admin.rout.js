@@ -40,7 +40,6 @@ const {
     updatedeal,
     deletedeal
 } = require("./../../../../services/adminpanel/deal/CRUD")
-const {creatval} = require("./../../../../validation/adminval")
 const {
     promotToAdmin,
     softDelete
@@ -177,23 +176,6 @@ router.put("/softDelete", async (req, res, next) => {
     const SD = await softDelete(phone)
     res.send(SD)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = router
-
-
-
-
 
 

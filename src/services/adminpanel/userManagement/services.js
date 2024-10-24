@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
 const creatErrors = require ("http-errors")
-const { client, connectRedis, disconnectRedis } = require("./../../loader/redis")
+const { client, connectRedis, disconnectRedis } = require("./../../../loader/redis")
 async function softDelete (phone) {
     try {
         const updated = await prisma.user.update({
