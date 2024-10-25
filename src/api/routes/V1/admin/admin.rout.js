@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const upload = require('./../../../middlewares/photoUploading'); 
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
@@ -80,14 +81,52 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-router.post("/creatAnnouncement", async(req, res, next) => {
-    console.log(req.body)   
-    let result = await creatval.validateAsync(req.body)
-    result.Uid = String(new Date().getTime()) 
-    console.log (result)
-    const  newA = await creatannounce(result)
-    res.send (newA)
-})
+
+router.post("/creatAnnouncement", async (req, res, next) => {
+    // آپلود فایل‌ها (چندین عکس)
+    upload(req, res, async (err) => {
+        if (err) {
+            // مدیریت خطا در آپلود فایل
+            return res.status(400).send({
+                success: 0,
+                message: err.message
+            });
+        }
+
+        try {
+            // بررسی اینکه آیا فایلی آپلود شده است یا خیر
+            let imageUrls = [];
+            if (req.files && req.files.length > 0) {
+                // اگر فایل‌هایی آپلود شده باشند، URL آن‌ها را به دست می‌آوریم
+                imageUrls = req.files.map(file => `http://localhost:4000/profile/${file.filename}`);
+            }
+
+            // پردازش اطلاعات فرم (که در req.body قرار دارند)
+            console.log(req.body);
+            let result = await creatval.validateAsync(req.body);
+            result.Uid = String(new Date().getTime());
+
+            // اضافه کردن URL عکس‌ها به نتیجه
+            if (imageUrls.length > 0) {
+                result.images = imageUrls; // اضافه کردن لیست URL عکس‌ها
+            }
+            console.log(result);
+            const newA = await creatannounce(result);
+            res.send({
+                success: 1,
+                data: newA,
+                images: imageUrls
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success: 0,
+                message: error.message
+            });
+        }
+    });
+});
+
 router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
