@@ -46,6 +46,7 @@ const {
     softDelete
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
+require('dotenv').config();
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -81,34 +82,24 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-
 router.post("/creatAnnouncement", async (req, res, next) => {
-    // آپلود فایل‌ها (چندین عکس)
     upload(req, res, async (err) => {
         if (err) {
-            // مدیریت خطا در آپلود فایل
             return res.status(400).send({
                 success: 0,
                 message: err.message
             });
         }
-
         try {
-            // بررسی اینکه آیا فایلی آپلود شده است یا خیر
             let imageUrls = [];
             if (req.files && req.files.length > 0) {
-                // اگر فایل‌هایی آپلود شده باشند، URL آن‌ها را به دست می‌آوریم
-                imageUrls = req.files.map(file => `http://localhost:4000/profile/${file.filename}`);
+                imageUrls = req.files.map(file => `${process.env.SERVER_URL}/profile/${file.filename}`);
             }
-
-            // پردازش اطلاعات فرم (که در req.body قرار دارند)
             console.log(req.body);
             let result = await creatval.validateAsync(req.body);
             result.Uid = String(new Date().getTime());
-
-            // اضافه کردن URL عکس‌ها به نتیجه
             if (imageUrls.length > 0) {
-                result.images = imageUrls; // اضافه کردن لیست URL عکس‌ها
+                result.images = imageUrls.join(','); 
             }
             console.log(result);
             const newA = await creatannounce(result);

@@ -43,7 +43,7 @@ model property{
   price     Float @default(0)
   room_number  Int @default(0)
   features     String @default("")
-  photo        Json @db.JsonB @default("{}")
+  images        String @default("")
   check Boolean @default(false)
   softDelete Boolean @default(false)
   state_code String  @default("")
@@ -71,7 +71,7 @@ model adminproperty {
   room_number  Int @default(0)
   features     String @default("")
   phone       String @default("")
-  photo        Json @db.JsonB @default("{}")
+  images        String @default("")
   softDelete   Boolean @default(false)
   state_code   String  @default("")
   Uid          String  @unique
