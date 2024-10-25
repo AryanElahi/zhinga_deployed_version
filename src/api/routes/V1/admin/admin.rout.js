@@ -45,6 +45,8 @@ const {
     softDelete
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
+const upload = require('./../../../middlewares/photoUploading'); 
+
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -88,6 +90,28 @@ router.post("/creatAnnouncement", async(req, res, next) => {
     const  newA = await creatannounce(result)
     res.send (newA)
 })
+router.post("/uploadPhotos", (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
+        }
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: 0,
+                message: 'هیچ فایلی آپلود نشد'
+            });
+        }
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        res.status(200).json({
+            success: 1,
+            message: 'عکس‌ها با موفقیت آپلود شدند',
+            files: imageUrls
+        });
+    });
+});
 router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
