@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const upload = require('./../../../middlewares/photoUploading'); 
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
@@ -11,7 +12,7 @@ const {
     check} = require("../../../../services/request/services")
 const {
     uncheckedRequests
-} = require("../../../../services/adminpanel/services")
+} = require("../../../../services/adminpanel/userManagement/services")
 const {
     creatannounce,
     getAllAnnouns,
@@ -40,8 +41,12 @@ const {
     updatedeal,
     deletedeal
 } = require("./../../../../services/adminpanel/deal/CRUD")
+const {
+    promotToAdmin,
+    softDelete
+} = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
-
+require('dotenv').config();
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -77,14 +82,42 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-router.post("/creatAnnouncement", async(req, res, next) => {
-    console.log(req.body)   
-    let result = await creatval.validateAsync(req.body)
-    result.Uid = String(new Date().getTime()) 
-    console.log (result)
-    const  newA = await creatannounce(result)
-    res.send (newA)
-})
+router.post("/creatAnnouncement", async (req, res, next) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).send({
+                success: 0,
+                message: err.message
+            });
+        }
+        try {
+            let imageUrls = [];
+            if (req.files && req.files.length > 0) {
+                imageUrls = req.files.map(file => `${process.env.SERVER_URL}/profile/${file.filename}`);
+            }
+            console.log(req.body);
+            let result = await creatval.validateAsync(req.body);
+            result.Uid = String(new Date().getTime());
+            if (imageUrls.length > 0) {
+                result.images = imageUrls.join(','); 
+            }
+            console.log(result);
+            const newA = await creatannounce(result);
+            res.send({
+                success: 1,
+                data: newA,
+                images: imageUrls
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success: 0,
+                message: error.message
+            });
+        }
+    });
+});
+
 router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
@@ -146,28 +179,7 @@ router.post("/deletedeal", async(req, res, next) => {
     const del = deletedeal(ID)
     res.send(await getAlldeals())
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router
-
-
-
-
-
-
+//user management
 router.get("/alluseres", async (req, res, next) => {
     try {
         res.send (await getAllUsers())
@@ -175,3 +187,25 @@ router.get("/alluseres", async (req, res, next) => {
         next(error)
     }
 })
+router.put("/updateuser", async (req, res) => {
+    try {
+        let result = req.body
+        let phone = req.phone
+        res.send(await updateUser(phone, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
+router.put("/promotToAdmin", async (req, res, next) => {
+    const phone = req.body.phone
+    const PA = await promotToAdmin(phone)
+    res.send(PA)
+})
+router.put("/softDelete", async (req, res, next) => {
+    const phone = req.body.phone
+    const SD = await softDelete(phone)
+    res.send(SD)
+})
+module.exports = router
+
+
