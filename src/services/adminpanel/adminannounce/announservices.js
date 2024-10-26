@@ -9,6 +9,12 @@ async function creatannounce (data){
     })
     return newAnnoun
 }
+async function photo_adding (Uid, Url){
+    return await prisma.adminproperty.update({
+    where: {Uid : Uid},
+    data : {photo : Url}
+    })
+    }
 async function getAllAnnouns () {
     const announs = await prisma.property.findMany()
     console.log(announs)
@@ -49,5 +55,6 @@ module.exports = {
     getAllAnnouns,
     inPrigressStates,
     deleted_or_not_confirmed,
-    search
+    search,
+    photo_adding
 }
