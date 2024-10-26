@@ -94,7 +94,7 @@ router.post("/uploadPhotos", (req, res) => {
     upload(req, res, (err) => {
         if (err) {
             return res.status(400).json({
-                success: 0,
+                succnoess: 0,
                 message: err.message
             });
         }
@@ -200,6 +200,29 @@ router.put("/softDelete", async (req, res, next) => {
     const SD = await softDelete(phone)
     res.send(SD)
 })
+//site setting
+router.post("/uploadPropertyLogos", (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
+        }
+        if (!req.files || req.files.length === 0 || !req.files['propertylogos']) {
+            return res.status(400).json({
+                success: 0,
+                message: 'هیچ فایلی با نام propertylogos آپلود نشد'
+            });
+        }
+        const imageUrls = req.files['propertylogos'].map(file => `http://localhost:3000/photos/${file.filename}`);
+        res.status(200).json({
+            success: 1,
+            message: 'عکس‌ها با موفقیت آپلود شدند',
+            files: imageUrls
+        });
+    });
+});
 module.exports = router
 
 

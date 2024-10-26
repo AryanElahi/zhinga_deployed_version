@@ -38,7 +38,6 @@ async function search(data) {
         where: data,
     });
 
-    // برگرداندن هر دو نتیجه به صورت یک آبجکت
     return {
         user_announs,
         admin_announs
