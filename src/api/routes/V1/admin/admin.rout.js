@@ -121,8 +121,7 @@ router.post("/uploadPhotos", async (req, res, next) => {
                 });
             }
         });
-    });
-    
+});
 router.get("/inprogress", async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
@@ -229,7 +228,7 @@ router.post("/uploadPropertyLogos", (req, res) => {
         const imageUrls = req.files['propertylogos'].map(file => `http://localhost:3000/photos/${file.filename}`);
         res.status(200).json({
             success: 1,
-            message: 'عکس‌ها با موفقیت آپلود شدند',
+            message: "success",
             files: imageUrls
         });
     });

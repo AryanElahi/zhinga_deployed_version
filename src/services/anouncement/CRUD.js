@@ -12,6 +12,12 @@ async function creatAnnouncement(data, userId){
     })
     return newAnnoun
 }
+async function photo_adding (Uid, Url){
+    return await prisma.adminproperty.update({
+    where: {Uid : Uid},
+    data : {photo : Url}
+    })
+    }
 async function getByStateCode (code) {
     return prisma.property.findFirst({
         where: {
@@ -61,5 +67,6 @@ module.exports = {
     deleteAnnoun,
     softdeleteAnnoun,
     getByStateCode,
-    getByUid
+    getByUid,
+    photo_adding
 }
