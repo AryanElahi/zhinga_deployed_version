@@ -29,7 +29,7 @@ model property{
   user User @relation(fields: [userID], references: [phone])
   tour3dRequest Boolean @default(false)
   tour3dlink    String @default("")
-  loan Boolean @default(false)
+  loan Int @default(0)
   type String @default("")
   region String @default("")
   address String @default("")
@@ -47,8 +47,8 @@ model property{
   room_number  Int @default(0)
   features     String @default("")
   photo        Json @db.JsonB @default("{}")
+  phone    String @default("user ID ")
   check Boolean @default(false)
-  softDelete Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
 }
