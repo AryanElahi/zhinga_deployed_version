@@ -49,6 +49,7 @@ model property{
   phone    String @default("user ID ")
 
   check Boolean @default(false)
+  reject Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
 }

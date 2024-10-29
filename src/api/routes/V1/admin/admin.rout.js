@@ -5,11 +5,8 @@ const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
-    getByUid,
     getAll,
-    getchecked,
-    getunchecked,
-    check} = require("../../../../services/request/services")
+    getunchecked} = require("../../../../services/request/services")
 const {
     creatannounce,
     getAllAnnouns,
@@ -17,7 +14,8 @@ const {
     deleted_or_not_confirmed,
     search,
     photo_adding,
-    checkAnnounce
+    checkAnnounce,
+    rejectAnnoun
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_daily_visitors,
@@ -48,7 +46,7 @@ try {
     const user = await getAllUsers()
     const announcount = await getAllAnnouns()
     const inprogress = await inPrigressStates()
-    //const notConfirmed = await deleted_or_not_confirmed()
+    const notConfirmed = await deleted_or_not_confirmed()
     const uncheckedRequests = await getunchecked()
     const allVisitors = await get_all_visitors()
     const dailyVisitors = await get_daily_visitors()
@@ -56,7 +54,7 @@ try {
         "all announcements" : announcount.number.toString(),
         "all users" : user.number.toString(), 
         "in progress ": inprogress.number.toString(),
-        //"deleted or not confirmed" : notConfirmed.number.toString(),
+        "deleted or not confirmed" : notConfirmed.number.toString(),
         "unchecked requests" : uncheckedRequests.number.toString(),
         "all visitors" : allVisitors.number.toString(),
         "daily visitors" : dailyVisitors.toString()
@@ -66,7 +64,6 @@ try {
     next(error)
 }
 })
-
 router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
@@ -137,7 +134,13 @@ router.post("/search", async (req, res, next) => {
 })
 router.post("/varifyannounce", async (req, res, next) => {
     const ID = req.body.Uid
-    const result = await checkAnnounce(ID)
+    const state  = req.body.state
+    const result = await checkAnnounce(ID, state)
+    res.send(result)
+})
+router.post("/rejectannounce", async (req, res, next) => {
+    const ID = req.body.Uid
+    const result = await rejectAnnoun(ID)
     res.send(result)
 })
 //visit part

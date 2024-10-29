@@ -25,7 +25,7 @@ async function inPrigressStates() {
 }
 async function deleted_or_not_confirmed (){
     const announs = await prisma.property.findMany({
-        where : {check : false}
+        where : {reject : true}
     })
     const count = announs.length
     return ({"deleted": announs, "number": count})
@@ -36,14 +36,22 @@ async function search(data) {
     });
     return user_announs;
 }
-async function checkAnnounce (ID){
+async function checkAnnounce (ID, stateCode){
       const updated = await prisma.property.update({
       where: {Uid: ID},
-      data : {check : true}
+      data : {check : true,
+            state_code : stateCode
+      }
       })
     return (updated)
   }
-
+async function rejectAnnoun(ID){
+    const updated = await prisma.property.update({
+    where: {Uid: ID},
+    data : {reject : true}
+    })
+  return (updated)
+}
 
 module.exports = {
     creatannounce,
@@ -51,5 +59,6 @@ module.exports = {
     inPrigressStates,
     deleted_or_not_confirmed,
     search,
-    checkAnnounce
+    checkAnnounce,
+    rejectAnnoun
 }
