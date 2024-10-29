@@ -20,7 +20,7 @@ module.exports = {
             next()
         })
     },
-    varifyadmin: async (req, res, next) => {
+    verifyadmin: async (req, res, next) => {
       if (!req.headers["authorization"]) next (creatError.Unauthorized())
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
