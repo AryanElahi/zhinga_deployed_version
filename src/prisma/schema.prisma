@@ -54,11 +54,13 @@ model property{
   features     String @default("")
   photo        Json @db.JsonB @default("{}")
   phone    String @default("user ID ")
+
   check Boolean @default(false)
   reject Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
 }
+
 model request {
     id Int @default(autoincrement()) @unique
     full_name String @default("")

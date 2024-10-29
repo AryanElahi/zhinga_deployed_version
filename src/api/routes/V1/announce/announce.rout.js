@@ -56,6 +56,7 @@ router.post("/uploadPhotos", async (req, res, next) => {
             });
         }
     });
+
 });
 router.post("/getbystatecode", async (req, res, next) => {
     const state = req.body.state_code
