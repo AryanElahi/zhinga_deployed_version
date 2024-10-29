@@ -48,7 +48,7 @@ try {
     const user = await getAllUsers()
     const announcount = await getAllAnnouns()
     const inprogress = await inPrigressStates()
-    //const notConfirmed = await deleted_or_not_confirmed()
+    const notConfirmed = await deleted_or_not_confirmed()
     const uncheckedRequests = await getunchecked()
     const allVisitors = await get_all_visitors()
     const dailyVisitors = await get_daily_visitors()
@@ -56,7 +56,7 @@ try {
         "all announcements" : announcount.number.toString(),
         "all users" : user.number.toString(), 
         "in progress ": inprogress.number.toString(),
-        //"deleted or not confirmed" : notConfirmed.number.toString(),
+        "deleted or not confirmed" : notConfirmed.number.toString(),
         "unchecked requests" : uncheckedRequests.number.toString(),
         "all visitors" : allVisitors.number.toString(),
         "daily visitors" : dailyVisitors.toString()
