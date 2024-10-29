@@ -1,8 +1,7 @@
-POST  http://localhost:3000/api/V1/admin/updateslider
+POST  http://localhost:3000/api/V1/admin/creatslider
 Content-Type: application/json
 
 {
-  "id" : 1,
-  "Title": "ap",
+  "Title": "aplepo",
   "note": "appartement"
 }

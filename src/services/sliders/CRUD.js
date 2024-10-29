@@ -28,10 +28,10 @@ async function updateslider(id, data){
     })
     }
 async function deleteslider (ID){
-      const updated = await prisma.visit.delete({
+      const deleted = await prisma.slider.delete({
       where: {id: ID}
       })
-    return (updated)
+    return (deleted)
   }
 
 module.exports = {

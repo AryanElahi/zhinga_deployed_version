@@ -263,9 +263,16 @@ router.get("/getAllSliders", async(req, res, next) => {
 router.post("/updateslider", async (req, res) => {
     try {
         let result = req.body
-        console.log(result)
         const id = req.body.id
         res.send( await updateslider(id, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
+router.delete("/deleteslider", async (req, res) => {
+    try {
+        const id = req.body.id
+        res.send( await deleteslider(id))
     } catch (error) {
         if (error) throw error
     }
