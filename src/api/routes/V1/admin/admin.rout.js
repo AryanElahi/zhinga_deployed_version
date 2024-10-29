@@ -39,7 +39,7 @@ const {
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
-
+const upload = require("./../../../middlewares/photoUploading")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -213,6 +213,7 @@ router.put("/promotToAdmin", async (req, res, next) => {
     const PA = await promotToAdmin(phone)
     res.send(PA)
 })
+//slider management
 
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
