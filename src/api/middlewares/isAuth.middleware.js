@@ -16,7 +16,6 @@ module.exports = {
         const token = bearertoken[1]
         JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
             if (err) {return next (creatError.Unauthorized())}
-            console.log(payload)
             req.payload = payload
             next()
         })
