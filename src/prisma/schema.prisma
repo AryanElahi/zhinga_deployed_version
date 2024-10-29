@@ -19,7 +19,6 @@ model User{
   phone String @unique          //require
   admin Boolean @default(false)
   Blocked Boolean @default(false)
-  softDelete Boolean @default(false)
   phoneVarify Boolean @default(false)
   propertys property[]
 }

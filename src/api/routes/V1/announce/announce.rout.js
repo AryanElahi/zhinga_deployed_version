@@ -8,7 +8,6 @@ const {
     getAllAnnouns,
     getByUid,
     updateAnnoun,
-    softdeleteAnnoun,
     deleteAnnoun,
     photo_adding
 } = require("../../../../services/anouncement/CRUD")
@@ -72,10 +71,6 @@ router.post("/getbyUid", async (req, res, next) => {
 router.put("/updateannoun", async (req, res) => {
     let result = await update.validateAsync(req.body)
     res.send (await updateAnnoun(result))
-})
-router.put("/sdelete", async (req, res) => {
-    const Uid = req.body.Uid
-    res.send (await softdeleteAnnoun(Uid))
 })
 router.delete("/hdelete", async (req, res, next) => {
     const Uid = req.body.Uid

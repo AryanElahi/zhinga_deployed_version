@@ -34,7 +34,6 @@ async function getByUid (code) {
 }
 async function getAllAnnouns () {
     return (await prisma.property.findMany({
-        where : {softDelete : false}
 }))
 }
 async function updateAnnoun (result){
@@ -45,14 +44,7 @@ async function updateAnnoun (result){
     data : result
     })
     }
-async function softdeleteAnnoun (ID){
-      const updated = await prisma.property.update({
-      where: {Uid: ID},
-      data : {softDelete : true }
-      })
-      console.log (updated)
-    return (updated)
-  }
+
 async function deleteAnnoun (ID){
       const updated = await prisma.property.delete({
       where: {Uid: ID}
@@ -65,7 +57,6 @@ module.exports = {
     getAllAnnouns,
     updateAnnoun,
     deleteAnnoun,
-    softdeleteAnnoun,
     getByStateCode,
     getByUid,
     photo_adding

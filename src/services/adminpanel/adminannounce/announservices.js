@@ -25,7 +25,7 @@ async function inPrigressStates() {
 }
 async function deleted_or_not_confirmed (){
     const announs = await prisma.property.findMany({
-        where : {softDelete : true}
+        where : {check : false}
     })
     const count = announs.length
     return ({"deleted": announs, "number": count})

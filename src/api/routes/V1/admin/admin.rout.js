@@ -43,7 +43,6 @@ const {
 } = require("./../../../../services/adminpanel/deal/CRUD")
 const {
     promotToAdmin,
-    softDelete
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
@@ -141,6 +140,9 @@ router.post("/search", async (req, res, next) => {
     const result = await search(req.body)
     res.send(result)
 })
+router.post("/varifyannounce", async (req, res, next) => {
+
+})
 //visit part
 router.post("/creatVisit", async(req, res, next) => {
     data = req.body
@@ -211,11 +213,7 @@ router.put("/promotToAdmin", async (req, res, next) => {
     const PA = await promotToAdmin(phone)
     res.send(PA)
 })
-router.put("/softDelete", async (req, res, next) => {
-    const phone = req.body.phone
-    const SD = await softDelete(phone)
-    res.send(SD)
-})
+
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
     upload(req, res, (err) => {

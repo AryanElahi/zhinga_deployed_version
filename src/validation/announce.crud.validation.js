@@ -44,7 +44,6 @@ const update = joi.object ({
     content: joi.any().optional(),
     content: joi.any().optional(),
     check : joi.boolean(),
-    softDelete : joi.boolean(),
     state_code : joi.string(),
     Uid : joi.string()
 })
