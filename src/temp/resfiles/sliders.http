@@ -1,0 +1,7 @@
+POST  http://localhost:3000/api/V1/admin/creatslider
+Content-Type: application/json
+
+{
+  "Title": "aplepo",
+  "note": "appartement"
+}

@@ -1,0 +1,22 @@
+POST  http://localhost:3000/api/V1/announce/creatAnnounce
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAxODkyMDUsImV4cCI6MTc2MTc0NjgwNSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.usRtbk-RB7WSrobjPKtyR6P8NRdVs3_oVay5X11a4Y0
+
+{
+  "type": "appartemen",
+  "region": "appartement",
+  "address": "appartement",
+  "location": "appartement",
+  "usage": "appartement",
+  "document_type": "kjljl",
+  "land_metrage": 9,
+  "useful_metrage": 87,
+  "floor_number": 90 ,
+  "floor": 67,
+  "Unit_in_floor": 9,
+  "year_of_build": 9,
+  "full_name": "appartement",
+  "price": 8999889.7,
+  "room_number": 98,
+  "features": "09181711690"
+}

@@ -22,6 +22,13 @@ model User{
   phoneVarify Boolean @default(false)
   propertys property[]
 }
+model Slider{
+  id Int @default(autoincrement()) @unique
+  photo        Json @db.JsonB @default("{}")
+  Title String @default("") 
+  note String @default("")  
+}
+
 model property{
   id Int @default(autoincrement()) @unique
   userID String

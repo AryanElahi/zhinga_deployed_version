@@ -40,6 +40,13 @@ const {
 const {creatval} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
 const upload = require("./../../../middlewares/photoUploading")
+const {
+    getAllsliders,
+    deleteslider,
+    updateslider,
+    creatslider,
+    photo_adding_slider
+} = require("./../../../../services/sliders/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -214,7 +221,64 @@ router.put("/promotToAdmin", async (req, res, next) => {
     res.send(PA)
 })
 //slider management
+router.post("/creatslider", async(req, res, next) => {
+    data = req.body
+    slider = await creatslider(data)
+    res.send(slider)
 
+})
+router.post("/uploadsliderPhotos", async (req, res, next) => {
+    upload(req, res, async (err) => { 
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
+        }
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: 0,
+                message: 'file doesnt exist'
+            });
+        }
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        try {
+            const adding = await photo_adding_slider(req.body.id , imageUrls)
+            res.status(200).json({
+                success: 1,
+                message: "success",
+                files: imageUrls
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: 0,
+                message: "error while uploading"
+            });
+        }
+    });
+});
+router.get("/getAllSliders", async(req, res, next) => {
+    const slider = await getAllsliders()
+    res.send(slider)
+})
+router.post("/updateslider", async (req, res) => {
+    try {
+        let result = req.body
+        const id = req.body.id
+        res.send( await updateslider(id, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
+router.delete("/deleteslider", async (req, res) => {
+    try {
+        const id = req.body.id
+        res.send( await deleteslider(id))
+    } catch (error) {
+        if (error) throw error
+    }
+})
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
     upload(req, res, (err) => {

@@ -19,7 +19,7 @@ async function updatedeal(Uid, data){
     })
     }
 async function deletedeal (ID){
-      const updated = await prisma.visit.delete({
+      const updated = await prisma.deal.delete({
       where: {Uid: ID}
       })
     return (updated)
