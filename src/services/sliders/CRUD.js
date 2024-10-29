@@ -10,8 +10,9 @@ async function creatslider(data){
     return newslider
 }
 async function photo_adding_slider(id, Url){
-    return await prisma.property.update({
-    where: {id : id},
+    const ID = Number(id)
+    return await prisma.slider.update({
+    where: {id : ID},
     data : {photo : Url}
     })
     }

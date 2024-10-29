@@ -223,7 +223,39 @@ router.post("/creatslider", async(req, res, next) => {
     data = req.body
     slider = await creatslider(data)
     res.send(slider)
+
 })
+router.post("/uploadsliderPhotos", async (req, res, next) => {
+    upload(req, res, async (err) => { 
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
+        }
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: 0,
+                message: 'file doesnt exist'
+            });
+        }
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        try {
+            const adding = await photo_adding_slider(req.body.id , imageUrls)
+            res.status(200).json({
+                success: 1,
+                message: "success",
+                files: imageUrls
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: 0,
+                message: "error while uploading"
+            });
+        }
+    });
+});
 router.get("/getAllSliders", async(req, res, next) => {
     const slider = await getAllsliders()
     res.send(slider)
