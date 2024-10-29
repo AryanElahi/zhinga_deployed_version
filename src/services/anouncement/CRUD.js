@@ -13,7 +13,7 @@ async function creatAnnouncement(data, userId){
     return newAnnoun
 }
 async function photo_adding (Uid, Url){
-    return await prisma.adminproperty.update({
+    return await prisma.property.update({
     where: {Uid : Uid},
     data : {photo : Url}
     })
