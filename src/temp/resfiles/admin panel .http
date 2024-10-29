@@ -5,4 +5,13 @@ Content-Type: application/json
 "Uid" : "1730189241698",
 "state": "9873981739"
 }
-//GET  http://localhost:3000/api/V1/admin/dashboard
+
+GET  http://localhost:3000/api/V1/admin/dashboard
+
+POST  http://localhost:3000/api/V1/admin/rejectannounce
+Content-Type: application/json
+
+{
+"Uid" : "1730189241698",
+"state": "1730193100497"
+}

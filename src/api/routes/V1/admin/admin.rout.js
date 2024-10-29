@@ -16,7 +16,8 @@ const {
     deleted_or_not_confirmed,
     search,
     photo_adding,
-    checkAnnounce
+    checkAnnounce,
+    rejectAnnoun
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_daily_visitors,
@@ -65,7 +66,6 @@ try {
     next(error)
 }
 })
-
 router.get("/notconfirmed", async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
@@ -137,6 +137,11 @@ router.post("/varifyannounce", async (req, res, next) => {
     const ID = req.body.Uid
     const state  = req.body.state
     const result = await checkAnnounce(ID, state)
+    res.send(result)
+})
+router.post("/rejectannounce", async (req, res, next) => {
+    const ID = req.body.Uid
+    const result = await rejectAnnoun(ID)
     res.send(result)
 })
 //visit part
