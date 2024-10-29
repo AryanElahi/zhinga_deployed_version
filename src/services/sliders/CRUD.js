@@ -20,9 +20,11 @@ async function getAllsliders() {
     return (await prisma.slider.findMany())
 }
 async function updateslider(id, data){
-    return await prisma.deal.update({
-    where: {id : id},
-    data : data
+    const ID = Number(id)
+    return await prisma.slider.update({
+    where: {id : ID},
+    data : { Title : data.Title,
+        note : data.note}
     })
     }
 async function deleteslider (ID){

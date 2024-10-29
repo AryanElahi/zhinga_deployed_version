@@ -260,6 +260,16 @@ router.get("/getAllSliders", async(req, res, next) => {
     const slider = await getAllsliders()
     res.send(slider)
 })
+router.post("/updateslider", async (req, res) => {
+    try {
+        let result = req.body
+        console.log(result)
+        const id = req.body.id
+        res.send( await updateslider(id, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
     upload(req, res, (err) => {
