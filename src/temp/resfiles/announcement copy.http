@@ -16,7 +16,6 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkyNzYyN
   "Unit_in_floor": 9,
   "year_of_build": 9,
   "full_name": "appartement",
-  "phone": "9181711690",
   "price": 8999889.7,
   "room_number": 98,
   "features": "09181711690"

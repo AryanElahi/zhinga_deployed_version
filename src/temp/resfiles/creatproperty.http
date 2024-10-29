@@ -1,11 +1,10 @@
-Post  http://localhost:3000/api/V1/admin/creatannouncement
+Post  http://localhost:3000/api/V1/announce/creatAnnounce
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAxODMyOTUsImV4cCI6MTc2MTc0MDg5NSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.QCU_pT-mQ9mSEuNrr0fPDpA7FzXHRW_kA2XKKp_jJRc
 
 {
   "loan" : 0,
   "type" : "appartement",
-  "phone": "09181732456",
   "region" : "appartement",
   "address" : "appartement",
   "location" : "appartement",
@@ -20,9 +19,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAxODMyO
   "full_name" : "appartement",
   "price"     : 9890,
   "room_number"  : 98,
-  "features"     : "9181711690",
-  "phone"     : "9181711690",
-  "state_code" : "32648"
+  "features"     : "9181711690"
 }
 
 

@@ -1,10 +1,9 @@
-Post  http://localhost:3000/api/V1/auth/register
+Post  http://localhost:3000/api/V1/auth/login
 Content-Type: application/json
 
 {
-  "full_name" : "appartement",
   "password" : "appartement",
-  "phone": "09181732456",
+  "phone": "09181711690"
 }
 
 
