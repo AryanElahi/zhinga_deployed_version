@@ -11,9 +11,6 @@ const {
     getunchecked,
     check} = require("../../../../services/request/services")
 const {
-    uncheckedRequests
-} = require("../../../../services/adminpanel/userManagement/services")
-const {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
@@ -23,14 +20,10 @@ const {
     checkAnnounce
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
-    get_ip,
-    get_exact_date,
-    save_visitor,
     get_daily_visitors,
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
-const { not } = require("joi")
 const {
     creatvisit,
     getAllVisits,
@@ -54,18 +47,17 @@ router.get("/dashboard", async (req, res, next) => {
 try {
     const user = await getAllUsers()
     const announcount = await getAllAnnouns()
-    console.log(announcount)
     const inprogress = await inPrigressStates()
-    const notConfirmed = await deleted_or_not_confirmed()
-    const uncheckedRequest = await uncheckedRequests()
+    //const notConfirmed = await deleted_or_not_confirmed()
+    const uncheckedRequests = await getunchecked()
     const allVisitors = await get_all_visitors()
     const dailyVisitors = await get_daily_visitors()
     res.send ({
         "all announcements" : announcount.number.toString(),
         "all users" : user.number.toString(), 
         "in progress ": inprogress.number.toString(),
-        "deleted or not confirmed" : notConfirmed.number.toString(),
-        "unchecked requests" : uncheckedRequest.number.toString(),
+        //"deleted or not confirmed" : notConfirmed.number.toString(),
+        "unchecked requests" : uncheckedRequests.number.toString(),
         "all visitors" : allVisitors.number.toString(),
         "daily visitors" : dailyVisitors.toString()
     })

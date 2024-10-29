@@ -19,12 +19,16 @@ async function getByUid(code) {
     })
 }
 async function getAll() {
-    return (await prisma.request.findMany())
+    const requests = await prisma.request.findMany()
+    const counter = requests.length
+    return ({"users" : requests, "number" : counter} )
 }
 async function getunchecked () {
-    return (await prisma.request.findMany({
+    requests = await prisma.request.findMany({
         where: {status : false}
-    }))
+    })
+    const counter = requests.length
+    return ({"users" : requests, "number" : counter} )
 }
 async function getchecked () {
     return (await prisma.request.findMany({
