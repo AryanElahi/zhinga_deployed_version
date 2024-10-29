@@ -224,6 +224,10 @@ router.post("/creatslider", async(req, res, next) => {
     slider = await creatslider(data)
     res.send(slider)
 })
+router.get("/getAllSliders", async(req, res, next) => {
+    const slider = await getAllsliders()
+    res.send(slider)
+})
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
     upload(req, res, (err) => {
