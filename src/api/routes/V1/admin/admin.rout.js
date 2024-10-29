@@ -18,7 +18,8 @@ const {
     inPrigressStates,
     deleted_or_not_confirmed,
     search,
-    photo_adding
+    photo_adding,
+    checkAnnounce
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_ip,
@@ -141,7 +142,9 @@ router.post("/search", async (req, res, next) => {
     res.send(result)
 })
 router.post("/varifyannounce", async (req, res, next) => {
-
+    const ID = req.body.Uid
+    const result = await checkAnnounce(ID)
+    res.send(result)
 })
 //visit part
 router.post("/creatVisit", async(req, res, next) => {

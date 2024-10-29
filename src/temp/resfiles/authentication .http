@@ -1,0 +1,25 @@
+Post  http://localhost:3000/api/V1/auth/register
+Content-Type: application/json
+
+{
+  "full_name" : "aryan", 
+  "password" : "appartement",
+  "phone": "09181711690"
+}
+Post  http://localhost:3000/api/V1/auth/varify
+Content-Type: application/json
+
+{
+  "phone" : "09181711690", 
+  "code" : 53209
+}
+Post  http://localhost:3000/api/V1/auth/login
+Content-Type: application/json
+
+{
+  "phone" : "09181711690", 
+  "password" : "appartement"
+}
+
+
+

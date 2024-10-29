@@ -36,11 +36,20 @@ async function search(data) {
     });
     return user_announs;
 }
+async function checkAnnounce (ID){
+      const updated = await prisma.property.update({
+      where: {Uid: ID},
+      data : {check : true}
+      })
+    return (updated)
+  }
+
 
 module.exports = {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
     deleted_or_not_confirmed,
-    search
+    search,
+    checkAnnounce
 }
