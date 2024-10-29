@@ -1,7 +1,0 @@
-post http://localhost:3000/api/V1/auth/varify
-Content-type : application/json
-
-{
-    "phone" : "09185326583",
-    "code" : 45338
-}

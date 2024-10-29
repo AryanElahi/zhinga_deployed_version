@@ -1,6 +1,6 @@
 POST  http://localhost:3000/api/V1/announce/creatAnnounce
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjkyNzYyNDcsImV4cCI6MTc2MDgzMzg0NywiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.YegOi_lem_SQPVs3vbK4stLLvI2-psFisdVQVQk5N2k
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAxODkyMDUsImV4cCI6MTc2MTc0NjgwNSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.usRtbk-RB7WSrobjPKtyR6P8NRdVs3_oVay5X11a4Y0
 
 {
   "type": "appartemen",

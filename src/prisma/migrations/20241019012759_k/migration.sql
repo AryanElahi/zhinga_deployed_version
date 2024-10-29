@@ -1,6 +1,0 @@
--- AlterTable
-ALTER TABLE "deal" ADD COLUMN     "Uid" TEXT NOT NULL DEFAULT '';
-
--- AlterTable
-ALTER TABLE "visit" ALTER COLUMN "Uid" SET DEFAULT '',
-ALTER COLUMN "Uid" SET DATA TYPE TEXT;
