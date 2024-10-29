@@ -39,6 +39,13 @@ const {
 const {creatval} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
 const upload = require("./../../../middlewares/photoUploading")
+const {
+    getAllsliders,
+    deleteslider,
+    updateslider,
+    creatslider,
+    photo_adding_slider
+} = require("./../../../../services/sliders/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -212,7 +219,11 @@ router.put("/promotToAdmin", async (req, res, next) => {
     res.send(PA)
 })
 //slider management
-
+router.post("/creatslider", async(req, res, next) => {
+    data = req.body
+    slider = await creatslider(data)
+    res.send(slider)
+})
 //site setting
 router.post("/uploadPropertyLogos", (req, res) => {
     upload(req, res, (err) => {

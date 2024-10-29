@@ -7,9 +7,9 @@ async function creatslider(data){
         data :
             data    
     })
-    return slider
+    return newslider
 }
-async function photo_adding(id, Url){
+async function photo_adding_slider(id, Url){
     return await prisma.property.update({
     where: {id : id},
     data : {photo : Url}
@@ -36,5 +36,5 @@ module.exports = {
     deleteslider,
     updateslider,
     creatslider,
-    photo_adding
+    photo_adding_slider
 }
