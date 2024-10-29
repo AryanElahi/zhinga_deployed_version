@@ -1,6 +1,6 @@
-Post  http://localhost:3000/api/V1/admin/uploadPhotos
+Post  http://localhost:3000/api/V1/admin/creatannouncement
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAxODMyOTUsImV4cCI6MTc2MTc0MDg5NSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.QCU_pT-mQ9mSEuNrr0fPDpA7FzXHRW_kA2XKKp_jJRc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzAyNDQyNjQsImV4cCI6MTc2MTgwMTg2NCwiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.6UlNlctqAs7oPcl92cAU5fiYbJcc1D7goTxElZmQL0k
 
 {
   "loan" : 0,

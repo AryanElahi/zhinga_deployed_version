@@ -4,6 +4,7 @@ const upload = require('./../../../middlewares/photoUploading');
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
+
 const {
     getAll,
     getunchecked} = require("../../../../services/request/services")
@@ -21,7 +22,7 @@ const {
     get_daily_visitors,
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
-const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
+const {verifyAccessToken, verifyRefreshToken, verifyadmin, verifyadmin} = require("../../../middlewares/isAuth.middleware")
 const {
     creatvisit,
     getAllVisits,
@@ -80,21 +81,18 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-router.post("/creatAnnouncement", async(req, res, next) => {
+router.post("/creatAnnouncement", verifyAccessToken, verifyadmin , async(req, res, next) => {
     let result = await creatval.validateAsync(req.body)
     result.check = true
     result.Uid = String(new Date().getTime()) 
-    console.log (result)
     const authheader = req.headers["authorization"]
     const bearertoken = authheader.split(' ')
-    console.log(bearertoken)
     const token = bearertoken[1]
-    console.log(token)
     const userId = await getUserByAccessToken(token)
-    const  newA = await creatannounce(result, userId)
+    const newA = await creatannounce(result, userId)
     res.send (newA)
 })
-router.post("/uploadPhotos", async (req, res, next) => {
+router.post("/uploadPhotos", verifyAccessToken, verifyadmin , async (req, res, next) => {
         upload(req, res, async (err) => { 
             if (err) {
                 return res.status(400).json({
@@ -125,43 +123,42 @@ router.post("/uploadPhotos", async (req, res, next) => {
             }
         });
 });
-
-router.get("/inprogress", async (req, res, next) => {
+router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const inprogress = await inPrigressStates()
     res.send(inprogress)
 })
-router.get("/notconfirmed", async (req, res, next) => {
+router.get("/notconfirmed",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const notconfirmed = await deleted_or_not_confirmed()
     res.send(notconfirmed)
 })
-router.post("/search", async (req, res, next) => {
+router.post("/search",verifyAccessToken, verifyadmin , async (req, res, next) => {
     console.log(req.body)
     const result = await search(req.body)
     res.send(result)
 })
-router.post("/varifyannounce", async (req, res, next) => {
+router.post("/varifyannounce",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const ID = req.body.Uid
     const state  = req.body.state
     const result = await checkAnnounce(ID, state)
     res.send(result)
 })
-router.post("/rejectannounce", async (req, res, next) => {
+router.post("/rejectannounce",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const ID = req.body.Uid
     const result = await rejectAnnoun(ID)
     res.send(result)
 })
 //visit part
-router.post("/creatVisit", async(req, res, next) => {
+router.post("/creatVisit",verifyAccessToken, verifyadmin , async(req, res, next) => {
     data = req.body
     data.Uid = new Date().getTime().toString()
     visit = await creatvisit(data)
     res.send(visit)
 })
-router.get("/getAllVisits", async (req, res, next) => {
+router.get("/getAllVisits",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const visits = await getAllVisits()
     res.send(visits)
 })
-router.post("/updateVisits", async(req, res, next) => {
+router.post("/updateVisits",verifyAccessToken, verifyadmin , async(req, res, next) => {
     ID = req.body.ID
     let requestData = req.body
     delete requestData.ID
@@ -169,23 +166,23 @@ router.post("/updateVisits", async(req, res, next) => {
     visit = await updateVisits(ID ,data)
     res.send(visit)
 })
-router.post("/deleteVisit", async(req, res, next) => {
+router.post("/deleteVisit",verifyAccessToken, verifyadmin , async(req, res, next) => {
     ID = req.body.ID
     const del = deleteVisits(ID)
     res.send(await getAllVisits())
 })
 //deal part
-router.post("/creatdeal", async(req, res, next) => {
+router.post("/creatdeal",verifyAccessToken, verifyadmin , async(req, res, next) => {
     data = req.body
     data.Uid = new Date().getTime().toString()
     deal = await creatdeal(data)
     res.send(deal)
 })
-router.get("/getAlldeals", async (req, res, next) => {
+router.get("/getAlldeals",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const deals = await getAlldeals()
     res.send(deals)
 })
-router.post("/updatedeal", async(req, res, next) => {
+router.post("/updatedeal",verifyAccessToken, verifyadmin , async(req, res, next) => {
     ID = req.body.ID
     let requestData = req.body
     delete requestData.ID
@@ -193,20 +190,20 @@ router.post("/updatedeal", async(req, res, next) => {
     deal = await updatedeal(ID, data)
     res.send(deal)
 })
-router.post("/deletedeal", async(req, res, next) => {
+router.post("/deletedeal",verifyAccessToken, verifyadmin , async(req, res, next) => {
     ID = req.body.ID
     const del = deletedeal(ID)
     res.send(await getAlldeals())
 })
 //user management
-router.get("/alluseres", async (req, res, next) => {
+router.get("/alluseres",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         res.send (await getAllUsers())
     } catch (error) {
         next(error)
     }
 })
-router.put("/updateuser", async (req, res) => {
+router.put("/updateuser",verifyAccessToken, verifyadmin , async (req, res) => {
     try {
         let result = req.body
         let phone = req.phone
@@ -215,19 +212,19 @@ router.put("/updateuser", async (req, res) => {
         if (error) throw error
     }
 })
-router.put("/promotToAdmin", async (req, res, next) => {
+router.put("/promotToAdmin",verifyAccessToken, verifyadmin , async (req, res, next) => {
     const phone = req.body.phone
     const PA = await promotToAdmin(phone)
     res.send(PA)
 })
 //slider management
-router.post("/creatslider", async(req, res, next) => {
+router.post("/creatslider",verifyAccessToken, verifyadmin , async(req, res, next) => {
     data = req.body
     slider = await creatslider(data)
     res.send(slider)
 
 })
-router.post("/uploadsliderPhotos", async (req, res, next) => {
+router.post("/uploadsliderPhotos",verifyAccessToken, verifyadmin , async (req, res, next) => {
     upload(req, res, async (err) => { 
         if (err) {
             return res.status(400).json({
@@ -258,11 +255,11 @@ router.post("/uploadsliderPhotos", async (req, res, next) => {
         }
     });
 });
-router.get("/getAllSliders", async(req, res, next) => {
+router.get("/getAllSliders",verifyAccessToken, verifyadmin , async(req, res, next) => {
     const slider = await getAllsliders()
     res.send(slider)
 })
-router.post("/updateslider", async (req, res) => {
+router.post("/updateslider",verifyAccessToken, verifyadmin , async (req, res) => {
     try {
         let result = req.body
         const id = req.body.id
@@ -271,7 +268,7 @@ router.post("/updateslider", async (req, res) => {
         if (error) throw error
     }
 })
-router.delete("/deleteslider", async (req, res) => {
+router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res) => {
     try {
         const id = req.body.id
         res.send( await deleteslider(id))
