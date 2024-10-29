@@ -18,7 +18,8 @@ const {
     getAllAnnouns,
     inPrigressStates,
     deleted_or_not_confirmed,
-    search
+    search,
+    photo_adding
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_ip,
@@ -43,10 +44,10 @@ const {
 } = require("./../../../../services/adminpanel/deal/CRUD")
 const {
     promotToAdmin,
-    softDelete
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
-require('dotenv').config();
+const {getUserByAccessToken} = require("../../../../services/user/auth")
+
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -82,40 +83,50 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-router.post("/creatAnnouncement", async (req, res, next) => {
-    upload(req, res, async (err) => {
-        if (err) {
-            return res.status(400).send({
-                success: 0,
-                message: err.message
-            });
-        }
-        try {
-            let imageUrls = [];
-            if (req.files && req.files.length > 0) {
-                imageUrls = req.files.map(file => `${process.env.SERVER_URL}/profile/${file.filename}`);
+router.post("/creatAnnouncement", async(req, res, next) => {
+    let result = await creatval.validateAsync(req.body)
+    result.check = true
+    result.Uid = String(new Date().getTime()) 
+    console.log (result)
+    const authheader = req.headers["authorization"]
+    const bearertoken = authheader.split(' ')
+    console.log(bearertoken)
+    const token = bearertoken[1]
+    console.log(token)
+    const userId = await getUserByAccessToken(token)
+    const  newA = await creatannounce(result, userId)
+    res.send (newA)
+})
+router.post("/uploadPhotos", async (req, res, next) => {
+        upload(req, res, async (err) => { 
+            if (err) {
+                return res.status(400).json({
+                    success: 0,
+                    message: err.message
+                });
             }
-            console.log(req.body);
-            let result = await creatval.validateAsync(req.body);
-            result.Uid = String(new Date().getTime());
-            if (imageUrls.length > 0) {
-                result.images = imageUrls.join(','); 
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({
+                    success: 0,
+                    message: 'file doesnt exist'
+                });
             }
-            console.log(result);
-            const newA = await creatannounce(result);
-            res.send({
-                success: 1,
-                data: newA,
-                images: imageUrls
-            });
-
-        } catch (error) {
-            res.status(500).send({
-                success: 0,
-                message: error.message
-            });
-        }
-    });
+            const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+            try {
+                const adding = await photo_adding(req.body.Uid, imageUrls)
+                res.status(200).json({
+                    success: 1,
+                    message: "success",
+                    files: imageUrls
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({
+                    success: 0,
+                    message: "error while uploading"
+                });
+            }
+        });
 });
 
 router.get("/inprogress", async (req, res, next) => {
@@ -130,6 +141,9 @@ router.post("/search", async (req, res, next) => {
     console.log(req.body)
     const result = await search(req.body)
     res.send(result)
+})
+router.post("/varifyannounce", async (req, res, next) => {
+
 })
 //visit part
 router.post("/creatVisit", async(req, res, next) => {
@@ -201,11 +215,30 @@ router.put("/promotToAdmin", async (req, res, next) => {
     const PA = await promotToAdmin(phone)
     res.send(PA)
 })
-router.put("/softDelete", async (req, res, next) => {
-    const phone = req.body.phone
-    const SD = await softDelete(phone)
-    res.send(SD)
-})
+
+//site setting
+router.post("/uploadPropertyLogos", (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
+        }
+        if (!req.files || req.files.length === 0 || !req.files['propertylogos']) {
+            return res.status(400).json({
+                success: 0,
+                message: 'هیچ فایلی با نام propertylogos آپلود نشد'
+            });
+        }
+        const imageUrls = req.files['propertylogos'].map(file => `http://localhost:3000/photos/${file.filename}`);
+        res.status(200).json({
+            success: 1,
+            message: "success",
+            files: imageUrls
+        });
+    });
+});
 module.exports = router
 
 

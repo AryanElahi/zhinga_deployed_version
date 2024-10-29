@@ -19,7 +19,6 @@ model User{
   phone String @unique          //require
   admin Boolean @default(false)
   Blocked Boolean @default(false)
-  softDelete Boolean @default(false)
   phoneVarify Boolean @default(false)
   propertys property[]
 }
@@ -27,6 +26,9 @@ model property{
   id Int @default(autoincrement()) @unique
   userID String
   user User @relation(fields: [userID], references: [phone])
+  tour3dRequest Boolean @default(false)
+  tour3dlink    String @default("")
+  loan Int @default(0)
   type String @default("")
   region String @default("")
   address String @default("")
@@ -43,39 +45,14 @@ model property{
   price     Float @default(0)
   room_number  Int @default(0)
   features     String @default("")
-  images        String @default("")
+  photo        Json @db.JsonB @default("{}")
+  phone    String @default("user ID ")
+
   check Boolean @default(false)
-  softDelete Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
 }
-model adminproperty {
-  id Int @default(autoincrement()) @unique
-  tour3dRequest Boolean @default(false)
-  tour3dlink    String @default("")
-  type String @default("")
-  loan Boolean @default(false)
-  region String @default("")
-  address String @default("")
-  location String @default("")
-  usage    String @default("")
-  document_type String @default("")
-  land_metrage Int @default(0)
-  useful_metrage Int @default(0)
-  floor_number  Int @default(0)
-  floor         Int @default(0)
-  Unit_in_floor Int @default(0)
-  year_of_build Int @default(0)
-  full_name    String @default("")
-  price        Float @default(0)
-  room_number  Int @default(0)
-  features     String @default("")
-  phone       String @default("")
-  images        String @default("")
-  softDelete   Boolean @default(false)
-  state_code   String  @default("")
-  Uid          String  @unique
-}
+
 model request {
     id Int @default(autoincrement()) @unique
     full_name String @default("")

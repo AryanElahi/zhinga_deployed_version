@@ -65,7 +65,7 @@ router.post("/login", async (req, res, next) => {
         }
         else {
         const compare = await isValid(result.password, user.password)
-        if (!user || result.softDelete) throw creatErrors.NotFound("user is not regesterd")
+        if (!user) throw creatErrors.NotFound("user is not regesterd")
         if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)

@@ -23,7 +23,6 @@ const signupVal = joi.object ({
     refreshToken : [joi.string(),
     joi.number()],
     Blocked : joi.boolean(),
-    softDelete : joi.boolean()
 })
 
 const loginVal = joi.object({

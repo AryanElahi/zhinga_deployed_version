@@ -8,39 +8,55 @@ const {
     getAllAnnouns,
     getByUid,
     updateAnnoun,
-    softdeleteAnnoun,
     deleteAnnoun,
+    photo_adding
 } = require("../../../../services/anouncement/CRUD")
 const {getUserByAccessToken} = require ("./../../../../services/user/auth")
 
-router.post("/creatAnnounce", upload.array('images', 10), async (req, res, next) => {
-    try {
-        let imageUrls = [];
-        if (req.files && req.files.length > 0) {
-            imageUrls = req.files.map(file => `${process.env.SERVER_URL}/profile/${file.filename}`);
+router.post ("/creatAnnounce", async (req, res, next) => {
+    let result = await creat.validateAsync(req.body)
+    const authheader = req.headers["authorization"]
+    const bearertoken = authheader.split(' ')
+    console.log(bearertoken)
+    const token = bearertoken[1]
+    console.log(token)
+    const userId = await getUserByAccessToken(token)
+    result.Uid = String(new Date().getTime()) 
+    console.log (result)
+    const  newA = await creatAnnouncement(result, userId)
+    res.send (newA)
+})
+router.post("/uploadPhotos", async (req, res, next) => {
+    upload(req, res, async (err) => { 
+        if (err) {
+            return res.status(400).json({
+                success: 0,
+                message: err.message
+            });
         }
-        let result = await creat.validateAsync(req.body);
-        const authheader = req.headers["authorization"];
-        const bearertoken = authheader.split(' ');
-        const token = bearertoken[1];
-        const userId = await getUserByAccessToken(token);
-        result.Uid = String(new Date().getTime());
-        if (imageUrls.length > 0) {
-            result.images = imageUrls.join(','); 
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({
+                success: 0,
+                message: 'file doesnt exist'
+            });
         }
-        console.log(result);
-        const newA = await creatAnnouncement(result, userId); 
-        res.send({
-            success: 1,
-            data: newA,
-            images: imageUrls 
-        });
-    } catch (error) {
-        res.status(500).send({
-            success: 0,
-            message: error.message
-        });
-    }
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        try {
+            const adding = await photo_adding(req.body.Uid, imageUrls)
+            res.status(200).json({
+                success: 1,
+                message: "success",
+                files: imageUrls
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: 0,
+                message: "error while uploading"
+            });
+        }
+    });
+
 });
 router.post("/getbystatecode", async (req, res, next) => {
     const state = req.body.state_code
@@ -56,10 +72,6 @@ router.post("/getbyUid", async (req, res, next) => {
 router.put("/updateannoun", async (req, res) => {
     let result = await update.validateAsync(req.body)
     res.send (await updateAnnoun(result))
-})
-router.put("/sdelete", async (req, res) => {
-    const Uid = req.body.Uid
-    res.send (await softdeleteAnnoun(Uid))
 })
 router.delete("/hdelete", async (req, res, next) => {
     const Uid = req.body.Uid
