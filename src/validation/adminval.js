@@ -5,7 +5,7 @@ const creatval = joi.object ({
     tour3dlink : joi.string().optional(),
     loan : joi.number(),
     type : joi.string(),
-    regin : joi.string(),
+    region : joi.string(),
     address : joi.string(),
     location : joi.string(),
     usage    : joi.string(),

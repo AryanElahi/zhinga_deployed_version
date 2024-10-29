@@ -46,7 +46,7 @@ const {
     softDelete
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
-const upload = require('./../../../middlewares/photoUploading'); 
+const {getUserByAccessToken} = require("../../../../services/user/auth")
 
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
@@ -84,11 +84,17 @@ router.get("/getAllRequests", async (req, res, next) => {
 })
 //announcement management
 router.post("/creatAnnouncement", async(req, res, next) => {
-    console.log(req.body)   
     let result = await creatval.validateAsync(req.body)
+    result.check = true
     result.Uid = String(new Date().getTime()) 
     console.log (result)
-    const  newA = await creatannounce(result)
+    const authheader = req.headers["authorization"]
+    const bearertoken = authheader.split(' ')
+    console.log(bearertoken)
+    const token = bearertoken[1]
+    console.log(token)
+    const userId = await getUserByAccessToken(token)
+    const  newA = await creatannounce(result, userId)
     res.send (newA)
 })
 router.post("/uploadPhotos", async (req, res, next) => {

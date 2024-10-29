@@ -1,0 +1,11 @@
+Post  http://localhost:3000/api/V1/auth/register
+Content-Type: application/json
+
+{
+  "full_name" : "appartement",
+  "password" : "appartement",
+  "phone": "09181732456",
+}
+
+
+
