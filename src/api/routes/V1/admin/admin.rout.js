@@ -4,11 +4,8 @@ const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
-    getByUid,
     getAll,
-    getchecked,
-    getunchecked,
-    check} = require("../../../../services/request/services")
+    getunchecked} = require("../../../../services/request/services")
 const {
     creatannounce,
     getAllAnnouns,
