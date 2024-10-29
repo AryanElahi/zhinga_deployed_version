@@ -48,6 +48,7 @@ model property{
   photo        Json @db.JsonB @default("{}")
   phone    String @default("user ID ")
   check Boolean @default(false)
+  reject Boolean @default(false)
   state_code String  @default("")
   Uid        String  @unique
 }

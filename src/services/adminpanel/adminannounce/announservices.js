@@ -36,10 +36,12 @@ async function search(data) {
     });
     return user_announs;
 }
-async function checkAnnounce (ID){
+async function checkAnnounce (ID, stateCode){
       const updated = await prisma.property.update({
       where: {Uid: ID},
-      data : {check : true}
+      data : {check : true,
+            state_code : stateCode
+      }
       })
     return (updated)
   }
