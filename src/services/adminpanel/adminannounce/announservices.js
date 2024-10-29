@@ -36,6 +36,12 @@ async function search(data) {
     });
     return user_announs;
 }
+async function photo_adding (Uid, Url){
+    return await prisma.property.update({
+    where: {Uid : Uid},
+    data : {photo : Url}
+    })
+    }
 async function checkAnnounce (ID, stateCode){
       const updated = await prisma.property.update({
       where: {Uid: ID},
@@ -60,5 +66,6 @@ module.exports = {
     deleted_or_not_confirmed,
     search,
     checkAnnounce,
-    rejectAnnoun
+    rejectAnnoun, 
+    photo_adding
 }
