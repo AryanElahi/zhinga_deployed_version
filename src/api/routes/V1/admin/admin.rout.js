@@ -3,6 +3,7 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
+
 const {
     getAll,
     getunchecked} = require("../../../../services/request/services")
@@ -20,7 +21,7 @@ const {
     get_daily_visitors,
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
-const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
+const {verifyAccessToken, verifyRefreshToken, verifyadmin, varifyadmin} = require("../../../middlewares/isAuth.middleware")
 const {
     creatvisit,
     getAllVisits,
@@ -79,18 +80,15 @@ router.get("/getAllRequests", async (req, res, next) => {
     res.send(requests)
 })
 //announcement management
-router.post("/creatAnnouncement", async(req, res, next) => {
+router.post("/creatAnnouncement", varifyadmin , async(req, res, next) => {
     let result = await creatval.validateAsync(req.body)
     result.check = true
     result.Uid = String(new Date().getTime()) 
-    console.log (result)
     const authheader = req.headers["authorization"]
     const bearertoken = authheader.split(' ')
-    console.log(bearertoken)
     const token = bearertoken[1]
-    console.log(token)
     const userId = await getUserByAccessToken(token)
-    const  newA = await creatannounce(result, userId)
+    const newA = await creatannounce(result, userId)
     res.send (newA)
 })
 router.post("/uploadPhotos", async (req, res, next) => {
