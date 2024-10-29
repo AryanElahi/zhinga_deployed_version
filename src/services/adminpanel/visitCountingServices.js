@@ -33,7 +33,6 @@ async function get_daily_visitors () {
         }
     })
     const number = visitors.length
-    console.log(number, visitors, date)
     return number
 
 }

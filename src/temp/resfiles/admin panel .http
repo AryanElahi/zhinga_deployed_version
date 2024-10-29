@@ -4,3 +4,4 @@ Content-Type: application/json
 {
 "Uid" : "1730189241698"
 }
+GET  http://localhost:3000/api/V1/admin/dashboard
