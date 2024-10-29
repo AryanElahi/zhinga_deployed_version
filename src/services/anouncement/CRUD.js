@@ -34,6 +34,7 @@ async function getByUid (code) {
 }
 async function getAllAnnouns () {
     return (await prisma.property.findMany({
+            where: {reject : false}
 }))
 }
 async function updateAnnoun (result){
