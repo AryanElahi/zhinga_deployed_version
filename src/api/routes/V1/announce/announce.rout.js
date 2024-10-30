@@ -13,8 +13,9 @@ const {
     search
 } = require("../../../../services/anouncement/CRUD")
 const {getUserByAccessToken} = require ("./../../../../services/user/auth")
+const {verifyAccessToken} = require("../../../middlewares/isAuth.middleware")
 
-router.post ("/creatAnnounce", async (req, res, next) => {
+router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
     let result = await creat.validateAsync(req.body)
     const authheader = req.headers["authorization"]
     const bearertoken = authheader.split(' ')
@@ -27,7 +28,7 @@ router.post ("/creatAnnounce", async (req, res, next) => {
     const  newA = await creatAnnouncement(result, userId)
     res.send (newA)
 })
-router.post("/uploadPhotos", async (req, res, next) => {
+router.post("/uploadPhotos",verifyAccessToken , async (req, res) => {
     upload(req, res, async (err) => { 
         if (err) {
             return res.status(400).json({
@@ -58,27 +59,27 @@ router.post("/uploadPhotos", async (req, res, next) => {
         }
     });
 });
-router.post("/getbystatecode", async (req, res, next) => {
+router.post("/getbystatecode",verifyAccessToken , async (req, res) => {
     const state = req.body.state_code
     res.send(await getByStateCode(state))
 })
-router.get("/getallannounce", async (req, res, next) => {
+router.get("/getallannounce",verifyAccessToken , async (req, res) => {
     res.send(await getAllAnnouns())
 })
-router.post("/getbyUid", async (req, res, next) => {
+router.post("/getbyUid",verifyAccessToken , async (req, res) => {
     const Uid = req.body.Uid
     res.send(await getByUid(Uid))
 })
-router.put("/updateannoun", async (req, res) => {
+router.put("/updateannoun",verifyAccessToken , async (req, res) => {
     let result = await update.validateAsync(req.body)
     res.send (await updateAnnoun(result))
 })
-router.post("/search" , async (req, res, next) => {
+router.post("/search" ,verifyAccessToken , async (req, res) => {
     console.log(req.body)
     const result = await search(req.body)
     res.send(result)
 })
-router.delete("/hdelete", async (req, res, next) => {
+router.delete("/hdelete",verifyAccessToken , async (req, res) => {
     const Uid = req.body.Uid
     res.send (await deleteAnnoun(Uid))
 })

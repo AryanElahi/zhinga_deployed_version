@@ -91,7 +91,7 @@ router.delete ("/refreshToken", async (req, res, next) => {
         next(error);    }
 })
 
-router.put ("/updateuser", async (req, res) => {
+router.put ("/updateuser",verifyAccessToken, async (req, res) => {
     try {
         let result = await signupVal.validateAsync(req.body)
         if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
