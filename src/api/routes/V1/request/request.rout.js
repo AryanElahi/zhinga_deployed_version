@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const creatErrors = require("http-errors")
+const createError = require("http-errors")
 const {request} = require("../../../../validation/request.validation")
 const { 
     creatRequest,
@@ -12,27 +12,52 @@ const {
 } = require("../../../../services/request/services")
 
 router.post ("/creatrequest", async (req, res, next) => {
-    let result = await request.validateAsync(req.body)  
-    result.Uid = String(new Date().getTime()) 
-    console.log (result)
-    const  newA = await creatRequest(result)
-    res.send (newA)
+    try {
+        let result = await request.validateAsync(req.body)  
+        result.Uid = String(new Date().getTime()) 
+        console.log (result)
+        const  newA = await creatRequest(result)
+        res.send (newA)        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
 })
 router.get("/getAll", async (req, res, next) => {
-    res.send(await getAll())
+    try {
+        res.send(await getAll())
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
 })
 router.get("/getchecked", async (req, res, next) => {
-    res.send(await getchecked())
+    try {
+        res.send(await getchecked())        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
 })
 router.get("/getunchecked", async (req, res, next) => {
-    res.send(await getunchecked())
+    try {
+        res.send(await getunchecked())        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
 })
 router.post("/getbyUid", async (req, res, next) => {
-    const Uid = req.body.Uid
-    res.send(await getByUid(Uid))
+    try {
+        const Uid = req.body.Uid
+        res.send(await getByUid(Uid))        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
 })
 router.put("/check", async (req, res) => {
-    res.send (await check(req.body.Uid))
+    try {
+        res.send (await check(req.body.Uid))        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+
 })
 
 module.exports = router
