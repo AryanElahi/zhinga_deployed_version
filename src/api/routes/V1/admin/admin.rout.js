@@ -22,7 +22,7 @@ const {
     get_daily_visitors,
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
-const {verifyAccessToken, verifyRefreshToken, verifyadmin, verifyadmin} = require("../../../middlewares/isAuth.middleware")
+const {verifyAccessToken, verifyRefreshToken, verifyadmin} = require("../../../middlewares/isAuth.middleware")
 const {
     creatvisit,
     getAllVisits,
@@ -48,6 +48,7 @@ const {
     creatslider,
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
+const { initiateSetting, logoAdding, aboutUpdating } = require("../../../../services/setting/services")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -277,28 +278,44 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res) 
     }
 })
 //site setting
-router.post("/uploadPropertyLogos", (req, res) => {
-    upload(req, res, (err) => {
+router.post("/initiateSetting", async (req, res) => {
+    res.send (await initiateSetting(req.body))
+})
+router.post("/uploadLogo", (req, res) => {
+    upload(req, res, async (err) => { 
         if (err) {
             return res.status(400).json({
                 success: 0,
                 message: err.message
             });
         }
-        if (!req.files || req.files.length === 0 || !req.files['propertylogos']) {
+        if (!req.files || req.files.length === 0) {
             return res.status(400).json({
                 success: 0,
-                message: 'هیچ فایلی با نام propertylogos آپلود نشد'
+                message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files['propertylogos'].map(file => `http://localhost:3000/photos/${file.filename}`);
-        res.status(200).json({
-            success: 1,
-            message: "success",
-            files: imageUrls
-        });
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        try {
+            const adding = await logoAdding(imageUrls)
+            res.status(200).json({
+                success: 1,
+                message: "success",
+                files: imageUrls
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: 0,
+                message: "error while uploading"
+            });
+        }
     });
 });
+router.post("/aboutUpdating", async (req, res) => {
+    const updated = await aboutUpdating(req.body)
+    res.send (updated)
+})
 module.exports = router
-
+aboutUpdating
 
