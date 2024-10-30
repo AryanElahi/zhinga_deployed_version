@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
+const upload = require('./../../../middlewares/photoUploading'); 
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
