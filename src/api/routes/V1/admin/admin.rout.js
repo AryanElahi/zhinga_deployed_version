@@ -321,17 +321,17 @@ router.post("/aboutUpdating",verifyAccessToken, verifyadmin , async (req, res) =
     res.send (updated)
 })
 //team
-router.post("/creatteam" , async(req, res, next) => {
+router.post("/creatteam" ,verifyAccessToken, verifyadmin , async(req, res, next) => {
     data = req.body
     team = await creatteam(data)
     res.send(team)
 
 })
-router.get("/getAllteam" , async(req, res, next) => {
+router.get("/getAllteam" ,verifyAccessToken, verifyadmin , async(req, res, next) => {
     const team = await getAllteam()
     res.send(team)
 })
-router.post("/updateteam" , async (req, res) => {
+router.post("/updateteam" ,verifyAccessToken, verifyadmin , async (req, res) => {
     try {
         let result = req.body
         const id = req.body.id
@@ -340,7 +340,7 @@ router.post("/updateteam" , async (req, res) => {
         if (error) throw error
     }
 })
-router.delete("/deleteteam" , async (req, res) => {
+router.delete("/deleteteam" ,verifyAccessToken, verifyadmin , async (req, res) => {
     try {
         const id = req.body.id
         res.send(await deleteteam(id))
@@ -349,5 +349,4 @@ router.delete("/deleteteam" , async (req, res) => {
     }
 })
 module.exports = router
-aboutUpdating
 
