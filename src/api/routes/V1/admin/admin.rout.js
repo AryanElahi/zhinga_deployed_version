@@ -3,7 +3,6 @@ const router = express.Router()
 const creatErrors = require("http-errors")
 const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
-
 const {
     getAll,
     getunchecked} = require("../../../../services/request/services")
@@ -48,6 +47,12 @@ const {
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
 const { initiateSetting, logoAdding, aboutUpdating } = require("../../../../services/setting/services")
+const {
+    creatteam,
+    getAllteam,
+    updateteam,
+    deleteteam
+} = require("./../../../../services/setting/teamCRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -277,10 +282,10 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res) 
     }
 })
 //site setting
-router.post("/initiateSetting", async (req, res) => {
+router.post("/initiateSetting",verifyAccessToken, verifyadmin , async (req, res) => {
     res.send (await initiateSetting(req.body))
 })
-router.post("/uploadLogo", (req, res) => {
+router.post("/uploadLogo",verifyAccessToken, verifyadmin , (req, res) => {
     upload(req, res, async (err) => { 
         if (err) {
             return res.status(400).json({
@@ -311,9 +316,37 @@ router.post("/uploadLogo", (req, res) => {
         }
     });
 });
-router.post("/aboutUpdating", async (req, res) => {
+router.post("/aboutUpdating",verifyAccessToken, verifyadmin , async (req, res) => {
     const updated = await aboutUpdating(req.body)
     res.send (updated)
+})
+//team
+router.post("/creatteam" , async(req, res, next) => {
+    data = req.body
+    team = await creatteam(data)
+    res.send(team)
+
+})
+router.get("/getAllteam" , async(req, res, next) => {
+    const team = await getAllteam()
+    res.send(team)
+})
+router.post("/updateteam" , async (req, res) => {
+    try {
+        let result = req.body
+        const id = req.body.id
+        res.send( await updateteam(id, result))
+    } catch (error) {
+        if (error) throw error
+    }
+})
+router.delete("/deleteteam" , async (req, res) => {
+    try {
+        const id = req.body.id
+        res.send(await deleteteam(id))
+    } catch (error) {
+        if (error) throw error1
+    }
 })
 module.exports = router
 aboutUpdating
