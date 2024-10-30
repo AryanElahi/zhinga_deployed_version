@@ -3,7 +3,7 @@ const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
-const creatErrors = require ("http-errors")
+const createErrors = require ("http-errors")
 const { client, connectRedis, disconnectRedis } = require("./../../loader/redis")
 
 async function doesExistphone(phone) {
@@ -12,7 +12,6 @@ const Exist = await prisma.user.findUnique({
         phone: phone
     }
     })
-    console.log (Exist)
     if (Exist) return (true)
     if (!Exist) return (false)
 }
@@ -77,7 +76,7 @@ async function getUserByAccessToken(AccessToken){
   return new Promise((resolve, reject) => {
     JWT.verify(AccessToken, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
       if (err) {
-        reject(creatErrors.InternalServerError())
+        reject(createErrors.InternalServerError())
         return
       }
       const phone = payload.aud.toString()
@@ -115,8 +114,7 @@ module.exports = {
     
         JWT.sign(payload, secret, options, async (err, token) => {
           if (err) {
-            console.log(err.message);
-            return reject(creatError.InternalServerError());
+            return reject(createError.InternalServerError());
           }
           try {
             await connectRedis();
@@ -126,7 +124,7 @@ module.exports = {
             resolve(token);
           } catch (err) {
             console.error('Error:', err);
-            reject(creatError.InternalServerError());
+            reject(createError.InternalServerError());
           } finally {
             await disconnectRedis();
           }
@@ -144,8 +142,7 @@ module.exports = {
           }
           JWT.sign(payload, secret, options, (err, token) => {
             if (err) {
-              console.log(err.message)
-              reject(creatError.InternalServerError())
+              reject(createError.InternalServerError())
               return
             }
             resolve(token)

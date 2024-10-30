@@ -1,6 +1,6 @@
 const express = require("express")
 const morgan = require("morgan")
-const creatErrors = require("http-errors")
+const createErrors = require("http-errors")
 const routes = require("../api/routes")
 require("dotenv").config()
 const {save_visitor} = require("./../services/adminpanel/visitCountingServices")
@@ -18,7 +18,7 @@ const expressLoader = async (app) => {
     app.use(notFoundHandler);
     app.use(errorHandler);
 //    app.use(async(req, res, next) => {
-//        next(creatErrors.NotFound())
+//        next(createErrors.NotFound())
 //        })
 //    app.use( async (err, req, res, next) => {
 //    res.status(err.status || 500)

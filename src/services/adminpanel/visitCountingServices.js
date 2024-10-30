@@ -22,7 +22,6 @@ async function save_visitor (req) {
     const visitor = await prisma.visitor.create({
         data : data
     })
-    console.log(visitor)
     return visitor
 }
 async function get_daily_visitors () {

@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken")
-const creatError = require("http-errors")
+const createError = require("http-errors")
 const { process } = require("@hapi/joi/lib/errors")
 const env = require("dotenv")
 const { reject } = require("bcrypt/promises")
@@ -10,18 +10,18 @@ const { HttpStatusCode } = require("axios")
 
 module.exports = {
     verifyAccessToken: (req, res, next) => {
-        if (!req.headers["authorization"]) next (creatError.Unauthorized())
+        if (!req.headers["authorization"]) next (createError.Unauthorized())
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
         const token = bearertoken[1]
         JWT.verify(token, "sdljkdlkjasdlkdjsalkdjsakldsajklajsd" , (err, payload) => {
-            if (err) {return next (creatError.Unauthorized())}
+            if (err) {return next (createError.Unauthorized())}
             req.payload = payload
             next()
         })
     },
     verifyadmin: async (req, res, next) => {
-      if (!req.headers["authorization"]) next (creatError.Unauthorized())
+      if (!req.headers["authorization"]) next (createError.Unauthorized())
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
         const token = bearertoken[1]
@@ -38,9 +38,9 @@ module.exports = {
           JWT.verify(refreshToken, "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a", async (err, payload) => {
             if (err) {
               if (err.name === 'TokenExpiredError') {
-                return reject(creatError.Unauthorized('Refresh token expired'));
+                return reject(createError.Unauthorized('Refresh token expired'));
               } else {
-                return reject(creatError.Unauthorized('Invalid refresh token'));
+                return reject(createError.Unauthorized('Invalid refresh token'));
               }
             }
             const phone = payload.aud;
@@ -48,13 +48,13 @@ module.exports = {
               await connectRedis();
               const storedToken = await client.get(phone);
               if (!storedToken || storedToken !== refreshToken) {
-                return reject(creatError.Unauthorized('Token mismatch'));
+                return reject(createError.Unauthorized('Token mismatch'));
               }
               await disconnectRedis(); 
               resolve(phone);
             } catch (redisErr) {
               console.error('Redis error:', redisErr);
-              reject(creatError.InternalServerError('Redis error occurred'));
+              reject(createError.InternalServerError('Redis error occurred'));
             } finally {
               try {
                 await disconnectRedis();

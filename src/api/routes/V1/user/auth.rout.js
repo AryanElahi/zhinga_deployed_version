@@ -16,12 +16,10 @@ const { client , connectRedis, disconnectRedis } = require("./../../../../loader
 router.post ("/register", async (req, res, next) => {
     try {
         const result = await signupVal.validateAsync (req.body)
-        if (await doesExistphone(result.phone) === true) throw creatErrors.Conflict("phone already exists")
+        if (await doesExistphone(result.phone) === true) throw createErrors.Conflict("phone already exists")
         result.password = await hashPassword(result.password)
         await creatUser(result)
-        console.log(await getUserByPhone(result.phone))
         const phone = result.phone
-        console.log(phone)
         const code = getRandomInt()
         await sendSMS(code, phone)
         await saveCodeInDB(code, phone)
@@ -69,8 +67,8 @@ router.post("/login", async (req, res, next) => {
         }
         else {
         const compare = await isValid(result.password, user.password)
-        if (!user) throw creatErrors.NotFound("user is not regesterd")
-        if (compare === false) throw creatErrors.Unauthorized("username or password is not correct")
+        if (!user) throw createErrors.NotFound("user is not regesterd")
+        if (compare === false) throw createErrors.Unauthorized("username or password is not correct")
         const refreshToken = await signRefreshToken(user.phone)
         const AccessToken = await signAccessToken(user.phone)
         res.send({refreshToken, AccessToken})
@@ -85,7 +83,7 @@ router.post("/login", async (req, res, next) => {
 router.delete ("/refreshToken", async (req, res, next) => {
     try {
         const {refreshToken} = req.body
-        if (!refreshToken) throw creatErrors.BadRequest()
+        if (!refreshToken) throw createErrors.BadRequest()
         const phone = await verifyRefreshToken(refreshToken)
         const AccessToken = await signAccessToken(phone)
         const RefreshToken = await signRefreshToken(phone)
@@ -98,7 +96,7 @@ router.delete ("/refreshToken", async (req, res, next) => {
 router.put ("/updateuser",verifyAccessToken, async (req, res, next) => {
     try {
         let result = await signupVal.validateAsync(req.body)
-        if (!req.headers["authorization"]) next (creatErrors.Unauthorized())
+        if (!req.headers["authorization"]) next (createErrors.Unauthorized())
         const authheader = req.headers["authorization"]
         let phone = await getUserByAccessToken(authheader)
         res.send(await updateUser(phone, result))
@@ -112,15 +110,14 @@ router.delete ("/logout", async (req, res, next) => {
     try {
         const { refreshToken } = req.body;
         if (!refreshToken) {
-            throw creatErrors.BadRequest("Refresh token is required!");
+            throw createErrors.BadRequest("Refresh token is required!");
         }
         const phone = await verifyRefreshToken(refreshToken);
         try {
             await connectRedis();
             const result = await client.del(phone)
-            console.log(result)
             if (result === 0) {
-                throw creatErrors.NotFound("Refresh token not found or already deleted.");
+                throw createErrors.NotFound("Refresh token not found or already deleted.");
             }
             await disconnectRedis();
             res.sendStatus(204);

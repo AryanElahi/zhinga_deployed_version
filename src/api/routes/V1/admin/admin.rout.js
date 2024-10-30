@@ -166,7 +166,6 @@ router.get("/notconfirmed",verifyAccessToken, verifyadmin , async (req, res, nex
 });
 router.post("/search",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
-        console.log(req.body)
         const result = await search(req.body)
         res.send(result)
     } 

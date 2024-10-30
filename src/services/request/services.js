@@ -1,10 +1,9 @@
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
-const creatErrors = require ("http-errors")
+const createErrorrrrs = require ("http-errors")
 
 
 async function creatRequest(data){
-    console.log(data)
     const neww = await prisma.request.create({
         data :
             data          

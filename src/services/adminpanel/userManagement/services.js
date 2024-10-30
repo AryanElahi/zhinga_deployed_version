@@ -3,7 +3,7 @@ const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
 const bcrypt = require("bcrypt")
 const JWT = require("jsonwebtoken")
-const creatErrors = require ("http-errors")
+const createErrors = require ("http-errors")
 const { client, connectRedis, disconnectRedis } = require("./../../../loader/redis")
 
 async function promotToAdmin(phone) {

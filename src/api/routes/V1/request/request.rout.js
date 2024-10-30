@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
 const {request} = require("../../../../validation/request.validation")
+const {verifyAccessToken, verifyadmin} = require("../../../middlewares/isAuth.middleware")
 const { 
     creatRequest,
     getByUid, 
@@ -15,7 +16,6 @@ router.post ("/creatrequest", async (req, res, next) => {
     try {
         let result = await request.validateAsync(req.body)  
         result.Uid = String(new Date().getTime()) 
-        console.log (result)
         const  newA = await creatRequest(result)
         res.send (newA)        
     } catch (error) {

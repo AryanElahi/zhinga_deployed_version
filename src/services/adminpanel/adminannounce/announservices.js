@@ -12,7 +12,6 @@ async function creatannounce (data, userId){
 }
 async function getAllAnnouns () {
     const announs = await prisma.property.findMany()
-    console.log(announs)
     const counter = announs.length
     return ({"announce": announs, "number": counter})
 }

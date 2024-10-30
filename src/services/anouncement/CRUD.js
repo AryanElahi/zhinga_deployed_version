@@ -1,10 +1,9 @@
 const {PrismaClient} = require("@prisma/client")
 const prisma = new PrismaClient()
-const creatErrors = require ("http-errors")
+const createErrors = require ("http-errors")
 
 
 async function creatAnnouncement(data, userId){
-    console.log(data)
     data.userID = userId
     const newAnnoun = await prisma.property.create({
         data :
@@ -39,7 +38,6 @@ async function getAllAnnouns () {
 }
 async function updateAnnoun (result){
     const code = await getByUid(result.Uid)
-    console.log(code.state_code, result)
     return await prisma.property.update({
     where: {Uid : code.Uid},
     data : result

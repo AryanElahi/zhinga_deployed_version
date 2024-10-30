@@ -20,12 +20,9 @@ router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
         let result = await creat.validateAsync(req.body)
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
-        console.log(bearertoken)
         const token = bearertoken[1]
-        console.log(token)
         const userId = await getUserByAccessToken(token)
         result.Uid = String(new Date().getTime()) 
-        console.log (result)
         const  newA = await creatAnnouncement(result, userId)
         res.send (newA)        
     } catch (error) {
@@ -101,7 +98,6 @@ router.put("/updateannoun",verifyAccessToken , async (req, res, next) => {
 })
 router.post("/search" ,verifyAccessToken , async (req, res, next) => {
     try {
-        console.log(req.body)
         const result = await search(req.body)
         res.send(result)        
     } catch (error) {
