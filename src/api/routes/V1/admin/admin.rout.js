@@ -21,7 +21,7 @@ const {
     get_daily_visitors,
     get_all_visitors
 }= require ("../../../../services/adminpanel/visitCountingServices")
-const {verifyAccessToken, verifyRefreshToken, verifyadmin, verifyadmin} = require("../../../middlewares/isAuth.middleware")
+const {verifyAccessToken, verifyRefreshToken, verifyadmin} = require("../../../middlewares/isAuth.middleware")
 const {
     creatvisit,
     getAllVisits,
@@ -47,6 +47,7 @@ const {
     creatslider,
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
+const { initiateSetting } = require("../../../../services/setting/services")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -276,7 +277,10 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res) 
     }
 })
 //site setting
-router.post("/uploadPropertyLogos", (req, res) => {
+router.post("/initiateSetting", async (req, res) => {
+    res.send (await initiateSetting(req.body))
+})
+router.post("/uploadLogo", (req, res) => {
     upload(req, res, (err) => {
         if (err) {
             return res.status(400).json({

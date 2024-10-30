@@ -28,6 +28,21 @@ model Slider{
   Title String @default("") 
   note String @default("")  
 }
+model team {
+  id Int @default(autoincrement()) @unique
+  name String @default("")
+  job String @default("")
+  email String @default("")
+  phone String @default("") @unique
+
+}
+model setting{
+  id Int @default(autoincrement()) @unique
+  logo        Json @db.JsonB @default("{}")
+  about String @default("")
+  goals String @default("")
+}
+
 
 model property{
   id Int @default(autoincrement()) @unique
