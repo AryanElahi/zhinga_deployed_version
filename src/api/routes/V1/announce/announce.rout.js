@@ -9,7 +9,8 @@ const {
     getByUid,
     updateAnnoun,
     deleteAnnoun,
-    photo_adding
+    photo_adding,
+    search
 } = require("../../../../services/anouncement/CRUD")
 const {getUserByAccessToken} = require ("./../../../../services/user/auth")
 
@@ -72,6 +73,11 @@ router.post("/getbyUid", async (req, res, next) => {
 router.put("/updateannoun", async (req, res) => {
     let result = await update.validateAsync(req.body)
     res.send (await updateAnnoun(result))
+})
+router.post("/search" , async (req, res, next) => {
+    console.log(req.body)
+    const result = await search(req.body)
+    res.send(result)
 })
 router.delete("/hdelete", async (req, res, next) => {
     const Uid = req.body.Uid
