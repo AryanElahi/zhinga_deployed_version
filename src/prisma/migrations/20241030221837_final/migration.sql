@@ -10,6 +10,31 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "Slider" (
+    "id" SERIAL NOT NULL,
+    "photo" JSONB NOT NULL DEFAULT '{}',
+    "Title" TEXT NOT NULL DEFAULT '',
+    "note" TEXT NOT NULL DEFAULT ''
+);
+
+-- CreateTable
+CREATE TABLE "team" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL DEFAULT '',
+    "job" TEXT NOT NULL DEFAULT '',
+    "email" TEXT NOT NULL DEFAULT '',
+    "phone" TEXT NOT NULL DEFAULT ''
+);
+
+-- CreateTable
+CREATE TABLE "setting" (
+    "id" SERIAL NOT NULL,
+    "logo" JSONB NOT NULL DEFAULT '{}',
+    "about" TEXT NOT NULL DEFAULT '',
+    "goals" TEXT NOT NULL DEFAULT ''
+);
+
+-- CreateTable
 CREATE TABLE "property" (
     "id" SERIAL NOT NULL,
     "userID" TEXT NOT NULL,
@@ -35,6 +60,7 @@ CREATE TABLE "property" (
     "photo" JSONB NOT NULL DEFAULT '{}',
     "phone" TEXT NOT NULL DEFAULT 'user ID ',
     "check" BOOLEAN NOT NULL DEFAULT false,
+    "reject" BOOLEAN NOT NULL DEFAULT false,
     "state_code" TEXT NOT NULL DEFAULT '',
     "Uid" TEXT NOT NULL
 );
@@ -51,7 +77,6 @@ CREATE TABLE "request" (
     "location" TEXT NOT NULL DEFAULT '',
     "message" TEXT NOT NULL DEFAULT '',
     "status" BOOLEAN NOT NULL DEFAULT false,
-    "check" BOOLEAN NOT NULL DEFAULT false,
     "Uid" TEXT NOT NULL
 );
 
@@ -93,6 +118,15 @@ CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Slider_id_key" ON "Slider"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "team_id_key" ON "team"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "setting_id_key" ON "setting"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "property_id_key" ON "property"("id");
