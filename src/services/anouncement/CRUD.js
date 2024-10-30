@@ -52,6 +52,12 @@ async function deleteAnnoun (ID){
       })
     return (updated)
   }
+  async function search(data) {
+    const user_announs = await prisma.property.findMany({
+        where: data
+    });
+    return user_announs;
+}
 
 module.exports = {
     creatAnnouncement,
@@ -60,5 +66,6 @@ module.exports = {
     deleteAnnoun,
     getByStateCode,
     getByUid,
-    photo_adding
+    photo_adding,
+    search
 }
