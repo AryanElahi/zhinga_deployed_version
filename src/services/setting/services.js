@@ -10,12 +10,22 @@ async function initiateSetting (data){
     return newAnnoun
 }
 async function logoAdding(Url){
+    const ID = Number(id)
     return await prisma.setting.update({
     where: {id : 1},
-    data : {logo : Url}
+    data : {photo : Url}
     })
     }
+async function aboutUpdating(data){
+    return await prisma.setting.update({
+        where: {id : 1},
+        data : {about : data.about,
+                goals : data.goals
+        }
+        })
+        }
 module.exports = {
     initiateSetting,
-    logoAdding
+    logoAdding,
+    aboutUpdating
 }

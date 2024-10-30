@@ -47,7 +47,7 @@ const {
     creatslider,
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
-const { initiateSetting, logoAdding } = require("../../../../services/setting/services")
+const { initiateSetting, logoAdding, aboutUpdating } = require("../../../../services/setting/services")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -311,6 +311,10 @@ router.post("/uploadLogo", (req, res) => {
         }
     });
 });
+router.post("/aboutUpdating", async (req, res) => {
+    const updated = await aboutUpdating(req.body)
+    res.send (updated)
+})
 module.exports = router
-
+aboutUpdating
 
