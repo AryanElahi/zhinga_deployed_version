@@ -47,7 +47,7 @@ const {
     creatslider,
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
-const { initiateSetting } = require("../../../../services/setting/services")
+const { initiateSetting, logoAdding } = require("../../../../services/setting/services")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -281,25 +281,34 @@ router.post("/initiateSetting", async (req, res) => {
     res.send (await initiateSetting(req.body))
 })
 router.post("/uploadLogo", (req, res) => {
-    upload(req, res, (err) => {
+    upload(req, res, async (err) => { 
         if (err) {
             return res.status(400).json({
                 success: 0,
                 message: err.message
             });
         }
-        if (!req.files || req.files.length === 0 || !req.files['propertylogos']) {
+        if (!req.files || req.files.length === 0) {
             return res.status(400).json({
                 success: 0,
-                message: 'هیچ فایلی با نام propertylogos آپلود نشد'
+                message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files['propertylogos'].map(file => `http://localhost:3000/photos/${file.filename}`);
-        res.status(200).json({
-            success: 1,
-            message: "success",
-            files: imageUrls
-        });
+        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        try {
+            const adding = await logoAdding(imageUrls)
+            res.status(200).json({
+                success: 1,
+                message: "success",
+                files: imageUrls
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: 0,
+                message: "error while uploading"
+            });
+        }
     });
 });
 module.exports = router
