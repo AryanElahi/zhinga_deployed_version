@@ -1,9 +1,0 @@
-Post  http://localhost:3000/api/V1/auth/login
-Content-Type: application/json
-
-{
-  "password" : "appartement",
-  "phone": "09181711690"
-}
-
-

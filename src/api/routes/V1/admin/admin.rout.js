@@ -39,7 +39,6 @@ const {
 } = require("./../../../../services/adminpanel/userManagement/services")
 const {creatval} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
-const upload = require("./../../../middlewares/photoUploading")
 const {
     getAllsliders,
     deleteslider,
