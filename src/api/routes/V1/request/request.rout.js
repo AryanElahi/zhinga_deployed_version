@@ -22,28 +22,28 @@ router.post ("/creatrequest", async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.get("/getAll", async (req, res, next) => {
+router.get("/getAll",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         res.send(await getAll())
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.get("/getchecked", async (req, res, next) => {
+router.get("/getchecked",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         res.send(await getchecked())        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.get("/getunchecked", async (req, res, next) => {
+router.get("/getunchecked",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         res.send(await getunchecked())        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.post("/getbyUid", async (req, res, next) => {
+router.post("/getbyUid",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const Uid = req.body.Uid
         res.send(await getByUid(Uid))        
@@ -51,7 +51,7 @@ router.post("/getbyUid", async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.put("/check", async (req, res) => {
+router.put("/check",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         res.send (await check(req.body.Uid))        
     } catch (error) {
