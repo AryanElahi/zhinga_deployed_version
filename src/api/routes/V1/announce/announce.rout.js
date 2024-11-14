@@ -64,25 +64,9 @@ router.post("/uploadPhotos",verifyAccessToken , async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 });
-router.post("/getbystatecode",verifyAccessToken , async (req, res, next) => {
-    try {
-        const state = req.body.state_code
-        res.send(await getByStateCode(state))        
-    } catch (error) {
-        next(createError(500, "An unexpected error occurred"));
-    }
-})
 router.get("/getallannounce",verifyAccessToken , async (req, res, next) => {
     try {
         res.send(await getAllAnnouns())        
-    } catch (error) {
-        next(createError(500, "An unexpected error occurred"));
-    }
-})
-router.post("/getbyUid",verifyAccessToken , async (req, res, next) => {
-    try {
-        const Uid = req.body.Uid
-        res.send(await getByUid(Uid))        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
@@ -114,3 +98,5 @@ router.delete("/hdelete",verifyAccessToken , async (req, res, next) => {
 })
 
 module.exports = router
+
+

@@ -53,6 +53,10 @@ const {
     updateteam,
     deleteteam
 } = require("./../../../../services/setting/teamCRUD")
+const { 
+    getByStateCode,
+    getByUid
+} = require("../../../../services/anouncement/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -173,7 +177,6 @@ router.post("/search",verifyAccessToken, verifyadmin , async (req, res, next) =>
         next(createError(500, "An unexpected error occurred"));
     }
 });
-
 router.post("/varifyannounce",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
     const ID = req.body.Uid
@@ -195,6 +198,22 @@ router.post("/rejectannounce",verifyAccessToken, verifyadmin , async (req, res, 
         next(createError(500, "An unexpected error occurred"));
     }
 });
+router.post("/getbyUid",verifyAccessToken, verifyadmin , async (req, res, next) => {
+    try {
+        const Uid = req.body.Uid
+        res.send(await getByUid(Uid))        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.post("/getbystatecode",verifyAccessToken, verifyadmin  , async (req, res, next) => {
+    try {
+        const state = req.body.state_code
+        res.send(await getByStateCode(state))        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
 //visit part
 router.post("/creatVisit",verifyAccessToken, verifyadmin , async(req, res, next) => {
     try {
