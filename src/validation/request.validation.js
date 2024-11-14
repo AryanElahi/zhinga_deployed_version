@@ -11,7 +11,7 @@ const request = joi.object ({
     lowest_price : joi.number(),
     hieghest_price : joi.number(),
     location : joi.string(),
-    Message : joi.string().optional()
+    message : joi.string().optional()
 })
 module.exports = { 
     request

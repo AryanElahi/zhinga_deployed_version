@@ -12,12 +12,13 @@ const {
     check
 } = require("../../../../services/request/services")
 
-router.post ("/creatrequest", async (req, res, next) => {
+router.post("/creatrequest", async (req, res, next) => {
     try {
-        let result = await request.validateAsync(req.body)  
+        let result = await request.validateAsync(req.body) 
+        console.log("aksljd") 
         result.Uid = String(new Date().getTime()) 
         const  newA = await creatRequest(result)
-        res.send (newA)        
+        res.send("request has been recived")        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
