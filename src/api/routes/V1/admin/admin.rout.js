@@ -55,7 +55,8 @@ const {
 } = require("./../../../../services/setting/teamCRUD")
 const { 
     getByStateCode,
-    getByUid
+    getByUid,
+    updateAnnoun
 } = require("../../../../services/anouncement/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
@@ -210,6 +211,14 @@ router.post("/getbystatecode",verifyAccessToken, verifyadmin  , async (req, res,
     try {
         const state = req.body.state_code
         res.send(await getByStateCode(state))        
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, next) => {
+    try {
+        let result = await update.validateAsync(req.body)
+        res.send (await updateAnnoun(result))
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
