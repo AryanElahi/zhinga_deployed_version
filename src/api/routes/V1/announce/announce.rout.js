@@ -24,7 +24,7 @@ router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
         const userId = await getUserByAccessToken(token)
         result.Uid = String(new Date().getTime()) 
         const  newA = await creatAnnouncement(result, userId)
-        res.send (newA)        
+        res.send ("announcement has been created")        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
