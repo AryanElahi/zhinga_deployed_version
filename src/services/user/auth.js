@@ -84,7 +84,7 @@ async function updateUser (phone, result){
 async function getUserByAccessToken(accessToken) {
   // Function to verify the access token and extract the user's phone number
   return new Promise((resolve, reject) => {
-    JWT.verify(accessToken, process.env.ACCESS , (err, payload) => {
+    JWT.verify(accessToken, "5b29b663001ba6bd03a27b417dd8392d405a26a770b84b335628044b31ade046", (err, payload) => {
       if (err) {
         console.error("JWT verification error:", err.message);
         return reject(createErrors.InternalServerError("Invalid or expired access token"));
@@ -118,7 +118,7 @@ module.exports = {
     signRefreshToken: (phone) => {
       return new Promise((resolve, reject) => {
         const payload = {};
-        const secret = process.env.REFRESH     ;
+        const secret = "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a"     ;
         const options = {
           expiresIn: '1y',
           issuer: 'pickurpage.com',
@@ -147,7 +147,7 @@ module.exports = {
     signAccessToken: (phone) => {
         return new Promise((resolve, reject) => {
           const payload = {}
-          const secret = process.env.ACCESS
+          const secret = "5b29b663001ba6bd03a27b417dd8392d405a26a770b84b335628044b31ade046"
           const options = {
             expiresIn: '1y',
             issuer: 'pickurpage.com',
