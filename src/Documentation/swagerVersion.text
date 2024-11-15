@@ -1,0 +1,1328 @@
+openapi: 3.0.0
+info:
+  title: User Authentication API
+  version: 1.0.0
+  description: API for user registration, phone number verification, authentication, and logout.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+paths:
+  /api/V1/auth/register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      tags:
+        - User Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                  example: "aryan"
+                password:
+                  type: string
+                  example: "12345678"
+                phone:
+                  type: string
+                  example: "09181711690"
+      responses:
+        '200':
+          description: Registration successful
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "register successful"
+        '500':
+          description: "error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred while registering"
+
+  /api/V1/auth/verify:
+    post:
+      summary: Verify phone number with a code
+      operationId: verifyPhone
+      tags:
+        - User Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  example: "09181711690"
+                code:
+                  type: integer
+                  example: 85906
+      responses:
+        '200':
+          description: Phone number has been successfully verified
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "phone has been verified"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred while verifying the phone"
+
+  /api/V1/auth/login:
+    post:
+      summary: User login
+      operationId: loginUser
+      tags:
+        - User Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  example: "09181711690"
+                password:
+                  type: string
+                  example: "12345678"
+      responses:
+        '200':
+          description: Successfully logged in and tokens issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refreshToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred during login"
+
+  /api/V1/auth/newcode:
+    post:
+      summary: Request a new verification code for phone number
+      operationId: requestNewVerificationCode
+      tags:
+        - User Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  example: "09181711690"
+      responses:
+        '200':
+          description: Successfully requested a new verification code
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "ok"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+
+  /api/V1/auth/logout:
+    delete:
+      summary: User logout
+      operationId: logoutUser
+      tags:
+        - User Authentication
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      responses:
+        '204':
+          description: Successfully logged out, refresh token invalidated
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred during logout"
+
+  /api/V1/auth/updateuser:
+    put:
+      summary: Update user information
+      operationId: updateUser
+      tags:
+        - User Authentication
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                  example: "anno"
+                password:
+                  type: string
+                  example: "1235678"
+                phone:
+                  type: string
+                  example: "09181711690"
+      responses:
+        '200':
+          description: Successfully updated user information
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "user has been updated"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred while updating user information"
+
+  /auth/getAnnouncements:
+    get:
+      summary: Get Announcements
+      operationId: getAnnouncements
+      tags:
+        - User Authentication
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Successful response with announcements list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+              example: []
+        '500':
+          description: Server error.
+  /api/V1/request/creatrequest:
+    post:
+      summary: Create a new request
+      description: Creates a new request with details like name, phone, region, type, price range, location, and message.
+      operationId: createRequest
+      tags:
+        - Request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                  description: The full name of the requester.
+                  example: "aryan"
+                phone:
+                  type: string
+                  description: The phone number of the requester.
+                  example: "09181711690"
+                region:
+                  type: string
+                  description: The region where the request applies.
+                  example: "abidare"
+                type:
+                  type: string
+                  description: The type of request, e.g., commercial or residential.
+                  example: "comercial"
+                lowest_price:
+                  type: integer
+                  description: The minimum price range.
+                  example: 200
+                highest_price:
+                  type: integer
+                  description: The maximum price range.
+                  example: 400
+                location:
+                  type: string
+                  description: The specific location for the request.
+                  example: "near"
+                message:
+                  type: string
+                  description: Additional message or details about the request.
+                  example: "nothing"
+      responses:
+        '200':
+          description: Request received successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "request has been received"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/request/getAll:
+    get:
+      summary: Get All Requests
+      description: Retrieves a list of all user requests.
+      operationId: getAllRequests
+      tags:
+        - Request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzE1OTU4MzEsImV4cCI6MTc2MzE1MzQzMSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.cAQukQo5E_O6SgOMMf_82V0qhp5AJlMMzXq4lfiFLOw
+      responses:
+        '200':
+          description: Successfully retrieved list of user requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        full_name:
+                          type: string
+                          example: "aryan"
+                        phone:
+                          type: string
+                          example: "09181711690"
+                        region:
+                          type: string
+                          example: "abidare"
+                        type:
+                          type: string
+                          example: "comercial"
+                        lowest_price:
+                          type: integer
+                          example: 200
+                        highest_price:
+                          type: integer
+                          example: 400
+                        location:
+                          type: string
+                          example: "near"
+                        message:
+                          type: string
+                          example: "nothing"
+                        status:
+                          type: boolean
+                          example: false
+                        Uid:
+                          type: string
+                          example: "1731595403330"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/request/getchecked:
+    get:
+      summary: Get Checked Requests
+      description: Retrieves a list of all user requests that have been checked.
+      operationId: getCheckedRequests
+      tags:
+        - Request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzE1OTU4MzEsImV4cCI6MTc2MzE1MzQzMSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.cAQukQo5E_O6SgOMMf_82V0qhp5AJlMMzXq4lfiFLOw
+      responses:
+        '200':
+          description: Successfully retrieved list of checked requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    full_name:
+                      type: string
+                      example: "aryan"
+                    phone:
+                      type: string
+                      example: "09181711690"
+                    region:
+                      type: string
+                      example: "abidare"
+                    type:
+                      type: string
+                      example: "comercial"
+                    lowest_price:
+                      type: integer
+                      example: 200
+                    highest_price:
+                      type: integer
+                      example: 400
+                    location:
+                      type: string
+                      example: "near"
+                    message:
+                      type: string
+                      example: "nothing"
+                    status:
+                      type: boolean
+                      example: true
+                    Uid:
+                      type: string
+                      example: "1731595403330"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/request/getunchecked:
+    get:
+      summary: Get Unchecked Requests
+      description: Retrieves a list of all  requests that have not been checked.
+      operationId: getUncheckedRequests
+      tags:
+        - Request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzE1OTU4MzEsImV4cCI6MTc2MzE1MzQzMSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.cAQukQo5E_O6SgOMMf_82V0qhp5AJlMMzXq4lfiFLOw
+      responses:
+        '200':
+          description: Successfully retrieved list of unchecked requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    full_name:
+                      type: string
+                      example: "aryan"
+                    phone:
+                      type: string
+                      example: "09181711690"
+                    region:
+                      type: string
+                      example: "abidare"
+                    type:
+                      type: string
+                      example: "comercial"
+                    lowest_price:
+                      type: integer
+                      example: 200
+                    highest_price:
+                      type: integer
+                      example: 400
+                    location:
+                      type: string
+                      example: "near"
+                    message:
+                      type: string
+                      example: "nothing"
+                    status:
+                      type: boolean
+                      example: false
+                    Uid:
+                      type: string
+                      example: "1731595403330"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/request/getbyUid:
+    post:
+      summary: Get Request by Uid
+      description: Retrieves a specific user request by its unique identifier (Uid).
+      operationId: getRequestByUid
+      tags:
+        - Request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier for the request
+                  example: "1731595440335"
+      responses:
+        '200':
+          description: Successfully retrieved the request by Uid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  full_name:
+                    type: string
+                    example: "aryan"
+                  phone:
+                    type: string
+                    example: "09181711690"
+                  region:
+                    type: string
+                    example: "abidare"
+                  type:
+                    type: string
+                    example: "comercial"
+                  lowest_price:
+                    type: integer
+                    example: 200
+                  highest_price:
+                    type: integer
+                    example: 400
+                  location:
+                    type: string
+                    example: "near"
+                  message:
+                    type: string
+                    example: "nothing"
+                  status:
+                    type: boolean
+                    example: true
+                  Uid:
+                    type: string
+                    example: "1731595440335"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/request/check:
+    put:
+      summary: Check a Request by Uid
+      description: Marks a specific user request as checked by its unique identifier (Uid).
+      operationId: checkRequestByUid
+      tags:
+        - Request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier for the request
+                  example: "1731595440335"
+      responses:
+        '200':
+          description: Successfully marked the request as checked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  full_name:
+                    type: string
+                    example: "aryan"
+                  phone:
+                    type: string
+                    example: "09181711690"
+                  region:
+                    type: string
+                    example: "abidare"
+                  type:
+                    type: string
+                    example: "comercial"
+                  lowest_price:
+                    type: integer
+                    example: 200
+                  highest_price:
+                    type: integer
+                    example: 400
+                  location:
+                    type: string
+                    example: "near"
+                  message:
+                    type: string
+                    example: "nothing"
+                  status:
+                    type: boolean
+                    example: true
+                  Uid:
+                    type: string
+                    example: "1731595440335"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/announce/creatAnnounce:
+    post:
+      summary: Create a New Announcement
+      description: Creates a new announcement with details such as loan amount, type, region, address, and features.
+      operationId: createAnnouncement
+      tags:
+        - Announcement
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                loan:
+                  type: integer
+                  description: The loan amount.
+                  example: 2199
+                type:
+                  type: string
+                  description: The type of the announcement.
+                  example: "any"
+                region:
+                  type: string
+                  description: The region of the property.
+                  example: "any"
+                address:
+                  type: string
+                  description: The address of the property.
+                  example: "any"
+                location:
+                  type: string
+                  description: The location details.
+                  example: "any"
+                usage:
+                  type: string
+                  description: The usage of the property.
+                  example: "any"
+                document_type:
+                  type: string
+                  description: The type of document for the property.
+                  example: "any"
+                land_metrage:
+                  type: integer
+                  description: Land metrage in square meters.
+                  example: 200
+                useful_metrage:
+                  type: integer
+                  description: Useful metrage in square meters.
+                  example: 150
+                floor_number:
+                  type: integer
+                  description: Total number of floors in the building.
+                  example: 2
+                floor:
+                  type: integer
+                  description: The specific floor number.
+                  example: 1
+                Unit_in_floor:
+                  type: integer
+                  description: Number of units on the floor.
+                  example: 1
+                year_of_build:
+                  type: integer
+                  description: Year the building was constructed.
+                  example: 1998
+                full_name:
+                  type: string
+                  description: Full name of the owner or contact.
+                  example: "any"
+                price:
+                  type: integer
+                  description: The price of the property.
+                  example: 20000
+                room_number:
+                  type: integer
+                  description: Number of rooms in the property.
+                  example: 4
+                features:
+                  type: string
+                  description: Additional features or notes.
+                  example: "any"
+      responses:
+        '200':
+          description: Announcement created successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "announcement has been created"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/announce/getallannounce:
+    get:
+      summary: Get All Announcements
+      description: Retrieves a list of all announcements.
+      operationId: getAllAnnouncements
+      tags:
+        - Announcement
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Successfully retrieved list of announcements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    userID:
+                      type: string
+                      example: "09181711690"
+                    tour3dRequest:
+                      type: boolean
+                      example: false
+                    tour3dlink:
+                      type: string
+                      example: ""
+                    loan:
+                      type: integer
+                      example: 2199
+                    type:
+                      type: string
+                      example: "any"
+                    region:
+                      type: string
+                      example: "any"
+                    address:
+                      type: string
+                      example: "any"
+                    location:
+                      type: string
+                      example: "any"
+                    usage:
+                      type: string
+                      example: "any"
+                    document_type:
+                      type: string
+                      example: "any"
+                    land_metrage:
+                      type: integer
+                      example: 200
+                    useful_metrage:
+                      type: integer
+                      example: 150
+                    floor_number:
+                      type: integer
+                      example: 2
+                    floor:
+                      type: integer
+                      example: 1
+                    Unit_in_floor:
+                      type: integer
+                      example: 1
+                    year_of_build:
+                      type: integer
+                      example: 1998
+                    full_name:
+                      type: string
+                      example: "any"
+                    price:
+                      type: integer
+                      example: 20000
+                    room_number:
+                      type: integer
+                      example: 4
+                    features:
+                      type: string
+                      example: "any"
+                    photo:
+                      type: object
+                      description: Photo metadata or object
+                    phone:
+                      type: string
+                      example: "user ID"
+                    check:
+                      type: boolean
+                      example: false
+                    reject:
+                      type: boolean
+                      example: false
+                    state_code:
+                      type: string
+                      example: ""
+                    Uid:
+                      type: string
+                      example: "1731598770627"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/announce/search:
+    post:
+      summary: Search Announcements
+      description: Searches announcements based on provided criteria.
+      operationId: searchAnnouncements
+      tags:
+        - Announcement
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: Unique identifier for the search criteria.
+                  example: 1
+                userID:
+                  type: string
+                  description: User ID associated with the announcement.
+                  example: "09181711690"
+                tour3dRequest:
+                  type: boolean
+                  description: Specifies if a 3D tour is requested.
+                  example: false
+                tour3dlink:
+                  type: string
+                  description: Link for the 3D tour, if available.
+                  example: ""
+      responses:
+        '200':
+          description: Successfully retrieved search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    userID:
+                      type: string
+                      example: "09181711690"
+                    tour3dRequest:
+                      type: boolean
+                      example: false
+                    tour3dlink:
+                      type: string
+                      example: ""
+                    loan:
+                      type: integer
+                      example: 2199
+                    type:
+                      type: string
+                      example: "any"
+                    region:
+                      type: string
+                      example: "any"
+                    address:
+                      type: string
+                      example: "any"
+                    location:
+                      type: string
+                      example: "any"
+                    usage:
+                      type: string
+                      example: "any"
+                    document_type:
+                      type: string
+                      example: "any"
+                    land_metrage:
+                      type: integer
+                      example: 200
+                    useful_metrage:
+                      type: integer
+                      example: 150
+                    floor_number:
+                      type: integer
+                      example: 2
+                    floor:
+                      type: integer
+                      example: 1
+                    Unit_in_floor:
+                      type: integer
+                      example: 1
+                    year_of_build:
+                      type: integer
+                      example: 1998
+                    full_name:
+                      type: string
+                      example: "any"
+                    price:
+                      type: integer
+                      example: 20000
+                    room_number:
+                      type: integer
+                      example: 4
+                    features:
+                      type: string
+                      example: "any"
+                    photo:
+                      type: object
+                      description: Photo metadata or object
+                    phone:
+                      type: string
+                      example: "user ID"
+                    check:
+                      type: boolean
+                      example: false
+                    reject:
+                      type: boolean
+                      example: false
+                    state_code:
+                      type: string
+                      example: ""
+                    Uid:
+                      type: string
+                      example: "1731598770627"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/announce/hdelete:
+    delete:
+      summary: Delete an Announcement by Uid
+      description: Deletes a specific announcement using its unique identifier (Uid).
+      operationId: deleteAnnouncementByUid
+      tags:
+        - Announcement
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier of the announcement to delete.
+                  example: "1731598775985"
+      responses:
+        '200':
+          description: Successfully deleted the announcement
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "the annonce has been deleted"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+  /api/V1/announce/getbyUid:
+    post:
+      summary: Get Announcement by Uid
+      description: Retrieves a specific announcement using its unique identifier (Uid).
+      operationId: getAnnouncementByUid
+      tags:
+        - Announcement
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier of the announcement.
+                  example: "1731598770627"
+      responses:
+        '200':
+          description: Successfully retrieved the announcement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  userID:
+                    type: string
+                    example: "09181711690"
+                  tour3dRequest:
+                    type: boolean
+                    example: false
+                  tour3dlink:
+                    type: string
+                    example: ""
+                  loan:
+                    type: integer
+                    example: 2199
+                  type:
+                    type: string
+                    example: "any"
+                  region:
+                    type: string
+                    example: "any"
+                  address:
+                    type: string
+                    example: "any"
+                  location:
+                    type: string
+                    example: "any"
+                  usage:
+                    type: string
+                    example: "any"
+                  document_type:
+                    type: string
+                    example: "any"
+                  land_metrage:
+                    type: integer
+                    example: 200
+                  useful_metrage:
+                    type: integer
+                    example: 150
+                  floor_number:
+                    type: integer
+                    example: 2
+                  floor:
+                    type: integer
+                    example: 1
+                  Unit_in_floor:
+                    type: integer
+                    example: 1
+                  year_of_build:
+                    type: integer
+                    example: 1998
+                  full_name:
+                    type: string
+                    example: "any"
+                  price:
+                    type: integer
+                    example: 20000
+                  room_number:
+                    type: integer
+                    example: 4
+                  features:
+                    type: string
+                    example: "any"
+                  photo:
+                    type: object
+                    description: Photo metadata or object
+                  phone:
+                    type: string
+                    example: "user ID"
+                  check:
+                    type: boolean
+                    example: false
+                  reject:
+                    type: boolean
+                    example: false
+                  state_code:
+                    type: string
+                    example: ""
+                  Uid:
+                    type: string
+                    example: "1731598770627"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
