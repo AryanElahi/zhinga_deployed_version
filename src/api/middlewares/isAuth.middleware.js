@@ -14,7 +14,7 @@ module.exports = {
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
         const token = bearertoken[1]
-        JWT.verify(token, "5b29b663001ba6bd03a27b417dd8392d405a26a770b84b335628044b31ade046"
+        JWT.verify(token, process.env.ACCESS
           , (err, payload) => {
             if (err) {return next (createError.Unauthorized())}
             req.payload = payload
@@ -37,7 +37,7 @@ module.exports = {
   verifyRefreshToken: (refreshToken) => {
     return new Promise((resolve, reject) => {
       // Verify the JWT token
-      JWT.verify(refreshToken, "80a3236d80c07f007bc56c5c30598a9ea4876f7bab2e69cc777e22f96ccead6a" , async (err, payload) => {
+      JWT.verify(refreshToken, process.env.REFRESH , async (err, payload) => {
         if (err) {
           console.error('JWT Verification Error:', err);  // Debugging log for JWT errors
           if (err.name === 'TokenExpiredError') {
