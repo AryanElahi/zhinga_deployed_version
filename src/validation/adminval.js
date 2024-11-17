@@ -25,6 +25,33 @@ const creatval = joi.object ({
     state_code:  joi.string(),
 
 })
+const update = joi.object ({
+    Uid : joi.string() ,
+    tour3dRequest: joi.bool().optional(),
+    tour3dlink : joi.string().optional(),
+    loan : joi.number().optional(),
+    type : joi.string().optional(),
+    region : joi.string().optional(),
+    address : joi.string().optional(),
+    location : joi.string().optional(),
+    usage    : joi.string().optional(),
+    document_type : joi.string().optional(),
+    land_metrage : joi.number().optional(),
+    useful_metrage : joi.number().optional(),
+    floor_number : joi.number().optional(),
+    floor : joi.number().optional(),
+    Unit_in_floor : joi.number().optional(),
+    year_of_build : joi.number().optional(),
+    full_name : joi.string().optional(),
+    price     : joi.number().optional(),
+    room_number  : joi.number().optional(),
+    features     : joi.string().optional(),
+    phone    :joi.string().optional()
+    .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
+    state_code:  joi.string().optional(),
+
+})
 module.exports = { 
-    creatval
+    creatval,
+    update
 }

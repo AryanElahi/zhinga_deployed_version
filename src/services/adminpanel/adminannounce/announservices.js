@@ -29,11 +29,26 @@ async function deleted_or_not_confirmed (){
     const count = announs.length
     return ({"deleted": announs, "number": count})
 }
+async function updateAnnoun (result){
+    const code = await getByUid(result.Uid)
+    return await prisma.property.update({
+    where: {Uid : code.Uid},
+    data : result
+    })
+    }
+
 async function search(data) {
     const user_announs = await prisma.property.findMany({
         where: data
     });
     return user_announs;
+}
+async function getByUid (code) {
+    return prisma.property.findUnique({
+        where: {
+            Uid : code
+        }
+    })
 }
 async function photo_adding (Uid, Url){
     return await prisma.property.update({
@@ -66,5 +81,7 @@ module.exports = {
     search,
     checkAnnounce,
     rejectAnnoun, 
-    photo_adding
+    updateAnnoun ,
+    photo_adding,
+    getByUid
 }

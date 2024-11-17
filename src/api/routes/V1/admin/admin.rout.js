@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
 const upload = require('./../../../middlewares/photoUploading'); 
-const {signupVal, loginVal} = require("../../../../validation/announce.crud.validation")
 const {getAllUsers,updateUser} = require("../../../../services/user/auth")
 const {
     getAll,
@@ -15,7 +14,9 @@ const {
     search,
     photo_adding,
     checkAnnounce,
-    rejectAnnoun
+    rejectAnnoun,
+    updateAnnoun,
+    getByUid
 } = require("../../../../services/adminpanel/adminannounce/announservices")
 const {
     get_daily_visitors,
@@ -37,7 +38,7 @@ const {
 const {
     promotToAdmin,
 } = require("./../../../../services/adminpanel/userManagement/services")
-const {creatval} = require("./../../../../validation/adminval")
+const {creatval, update} = require("./../../../../validation/adminval")
 const {getUserByAccessToken} = require("../../../../services/user/auth")
 const {
     getAllsliders,
@@ -55,8 +56,6 @@ const {
 } = require("./../../../../services/setting/teamCRUD")
 const { 
     getByStateCode,
-    getByUid,
-    updateAnnoun
 } = require("../../../../services/anouncement/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
@@ -183,9 +182,10 @@ router.post("/varifyannounce",verifyAccessToken, verifyadmin , async (req, res, 
     const ID = req.body.Uid
     const state  = req.body.state
     const result = await checkAnnounce(ID, state)
-    res.send(result) 
+    res.send("the announcement has been aproved") 
     } 
     catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
@@ -193,7 +193,7 @@ router.post("/rejectannounce",verifyAccessToken, verifyadmin , async (req, res, 
     try {
         const ID = req.body.Uid
         const result = await rejectAnnoun(ID)
-        res.send(result) 
+        res.send("the announcement has been rejected") 
     } 
     catch (error) {
         next(createError(500, "An unexpected error occurred"));
@@ -218,8 +218,9 @@ router.post("/getbystatecode",verifyAccessToken, verifyadmin  , async (req, res,
 router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         let result = await update.validateAsync(req.body)
-        res.send (await updateAnnoun(result))
+        res.send ("The announcement has been updated successfully")
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
