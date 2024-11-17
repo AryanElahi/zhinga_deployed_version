@@ -185,7 +185,6 @@ router.post("/varifyannounce",verifyAccessToken, verifyadmin , async (req, res, 
     res.send("the announcement has been aproved") 
     } 
     catch (error) {
-        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
@@ -220,7 +219,6 @@ router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, nex
         let result = await update.validateAsync(req.body)
         res.send ("The announcement has been updated successfully")
     } catch (error) {
-        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
@@ -230,7 +228,7 @@ router.post("/creatVisit",verifyAccessToken, verifyadmin , async(req, res, next)
         data = req.body
         data.Uid = new Date().getTime().toString()
         visit = await creatvisit(data)
-        res.send(visit)
+        res.send("the visit has been added successfully")
     } 
     catch (error) {
         next(createError(500, "An unexpected error occurred"));
@@ -244,7 +242,7 @@ router.get("/getAllVisits",verifyAccessToken, verifyadmin , async (req, res, nex
         next(createError(500, "An unexpected error occurred"));
     }
 });
-router.post("/updateVisits",verifyAccessToken, verifyadmin , async(req, res, next) => {
+router.put("/updateVisits",verifyAccessToken, verifyadmin , async(req, res, next) => {
     try {
         ID = req.body.ID
         let requestData = req.body
@@ -253,14 +251,15 @@ router.post("/updateVisits",verifyAccessToken, verifyadmin , async(req, res, nex
         visit = await updateVisits(ID ,data)
         res.send(visit)        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
-router.post("/deleteVisit",verifyAccessToken, verifyadmin , async(req, res, next) => {
+router.delete("/deleteVisit",verifyAccessToken, verifyadmin , async(req, res, next) => {
     try {
         ID = req.body.ID
         const del = deleteVisits(ID)
-        res.send(await getAllVisits())        
+        res.send("the record has been deleted successfully")        
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
