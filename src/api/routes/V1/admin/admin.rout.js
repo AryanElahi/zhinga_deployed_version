@@ -463,8 +463,9 @@ router.post("/creatteam" ,verifyAccessToken, verifyadmin , async(req, res, next)
     try {
         data = req.body
         team = await creatteam(data)
-        res.send(team)        
+        res.send(" team member has been added")        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
@@ -488,7 +489,7 @@ router.post("/updateteam" ,verifyAccessToken, verifyadmin , async (req, res, nex
 router.delete("/deleteteam" ,verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const id = req.body.id
-        res.send(await deleteteam(id))
+        res.send("team member has been deleted")
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
