@@ -9,10 +9,9 @@ async function initiateSetting (data){
     return newAnnoun
 }
 async function logoAdding(Url){
-    const ID = Number(id)
     return await prisma.setting.update({
     where: {id : 1},
-    data : {photo : Url}
+    data : {logo : Url}
     })
     }
 async function aboutUpdating(data){

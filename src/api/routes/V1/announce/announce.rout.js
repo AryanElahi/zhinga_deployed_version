@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
 const {creat, update} = require("../../../../validation/announce.crud.validation")
+const upload = require('./../../../middlewares/photoUploading'); 
+
 const { 
     creatAnnouncement,
     getByStateCode,
@@ -61,6 +63,7 @@ router.post("/uploadPhotos",verifyAccessToken , async (req, res, next) => {
             }
         });        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });

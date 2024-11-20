@@ -10,8 +10,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
-
 paths:
   /api/V1/auth/register:
     post:
@@ -1326,3 +1324,2886 @@ paths:
                   message:
                     type: string
                     example: "An unexpected error occurred"
+  /api/V1/admin/dashboard:
+    get:
+      summary: Retrieve admin dashboard statistics
+      description: Fetches various statistics for the admin dashboard.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with dashboard statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  all announcements:
+                    type: string
+                    example: "1"
+                  all users:
+                    type: string
+                    example: "1"
+                  in progress:
+                    type: string
+                    example: "1"
+                  deleted or not confirmed:
+                    type: string
+                    example: "0"
+                  unchecked requests:
+                    type: string
+                    example: "6"
+                  all visitors:
+                    type: string
+                    example: "0"
+                  daily visitors:
+                    type: string
+                    example: "0"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+  /api/V1/admin/notconfirmed:
+    get:
+      summary: Retrieve deleted or not confirmed items
+      description: Fetches a list of items that are deleted or not confirmed, along with their count.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with the list of deleted or not confirmed items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: array
+                    items:
+                      type: string
+                    example: []
+                  number:
+                    type: integer
+                    example: 0
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+  /api/V1/admin/getAllRequests:
+    get:
+      summary: Retrieve all user requests
+      description: Fetches a list of all user requests, including their details and statuses.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with all user requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        full_name:
+                          type: string
+                          example: "aryan"
+                        phone:
+                          type: string
+                          example: "09181711690"
+                        region:
+                          type: string
+                          example: "abidare"
+                        type:
+                          type: string
+                          example: "comercial"
+                        lowest_price:
+                          type: integer
+                          example: 200
+                        hieghest_price:
+                          type: integer
+                          example: 400
+                        location:
+                          type: string
+                          example: "near"
+                        message:
+                          type: string
+                          example: "nothing"
+                        status:
+                          type: boolean
+                          example: false
+                        Uid:
+                          type: string
+                          example: "1731595441489"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/creatAnnouncement:
+    post:
+      summary: Create a new announcement
+      description: Allows an admin to create a new announcement with detailed information.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Request payload for creating an announcement
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tour3dRequest:
+                  type: boolean
+                  example: false
+                tour3dlink:
+                  type: string
+                  example: "any"
+                loan:
+                  type: integer
+                  example: 2199
+                type:
+                  type: string
+                  example: "any"
+                region:
+                  type: string
+                  example: "any"
+                address:
+                  type: string
+                  example: "any"
+                location:
+                  type: string
+                  example: "any"
+                usage:
+                  type: string
+                  example: "any"
+                document_type:
+                  type: string
+                  example: "any"
+                land_metrage:
+                  type: integer
+                  example: 200
+                useful_metrage:
+                  type: integer
+                  example: 150
+                floor_number:
+                  type: integer
+                  example: 2
+                floor:
+                  type: integer
+                  example: 1
+                Unit_in_floor:
+                  type: integer
+                  example: 1
+                year_of_build:
+                  type: integer
+                  example: 1998
+                full_name:
+                  type: string
+                  example: "any"
+                price:
+                  type: integer
+                  example: 20000
+                room_number:
+                  type: integer
+                  example: 4
+                features:
+                  type: string
+                  example: "any"
+                phone:
+                  type: string
+                  example: "09181716745"
+                state_code:
+                  type: string
+                  example: "any"
+      responses:
+        '200':
+          description: Announcement created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 4
+                  userID:
+                    type: string
+                    example: "09181711690"
+                  tour3dRequest:
+                    type: boolean
+                    example: false
+                  tour3dlink:
+                    type: string
+                    example: "any"
+                  loan:
+                    type: integer
+                    example: 2199
+                  type:
+                    type: string
+                    example: "any"
+                  region:
+                    type: string
+                    example: "any"
+                  address:
+                    type: string
+                    example: "any"
+                  location:
+                    type: string
+                    example: "any"
+                  usage:
+                    type: string
+                    example: "any"
+                  document_type:
+                    type: string
+                    example: "any"
+                  land_metrage:
+                    type: integer
+                    example: 200
+                  useful_metrage:
+                    type: integer
+                    example: 150
+                  floor_number:
+                    type: integer
+                    example: 2
+                  floor:
+                    type: integer
+                    example: 1
+                  Unit_in_floor:
+                    type: integer
+                    example: 1
+                  year_of_build:
+                    type: integer
+                    example: 1998
+                  full_name:
+                    type: string
+                    example: "any"
+                  price:
+                    type: integer
+                    example: 20000
+                  room_number:
+                    type: integer
+                    example: 4
+                  features:
+                    type: string
+                    example: "any"
+                  phone:
+                    type: string
+                    example: "09181716745"
+                  check:
+                    type: boolean
+                    example: true
+                  reject:
+                    type: boolean
+                    example: false
+                  state_code:
+                    type: string
+                    example: "any"
+                  photo:
+                    type: object
+                    additionalProperties: true
+                  Uid:
+                    type: string
+                    example: "1731856016972"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/inprogress:
+    get:
+      summary: Retrieve in-progress announcements
+      description: Fetches all announcements that are currently marked as "in progress."
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with in-progress announcements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inprogress:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        userID:
+                          type: string
+                          example: "09181711690"
+                        tour3dRequest:
+                          type: boolean
+                          example: false
+                        tour3dlink:
+                          type: string
+                          example: ""
+                        loan:
+                          type: integer
+                          example: 2199
+                        type:
+                          type: string
+                          example: "any"
+                        region:
+                          type: string
+                          example: "any"
+                        address:
+                          type: string
+                          example: "any"
+                        location:
+                          type: string
+                          example: "any"
+                        usage:
+                          type: string
+                          example: "any"
+                        document_type:
+                          type: string
+                          example: "any"
+                        land_metrage:
+                          type: integer
+                          example: 200
+                        useful_metrage:
+                          type: integer
+                          example: 150
+                        floor_number:
+                          type: integer
+                          example: 2
+                        floor:
+                          type: integer
+                          example: 1
+                        Unit_in_floor:
+                          type: integer
+                          example: 1
+                        year_of_build:
+                          type: integer
+                          example: 1998
+                        full_name:
+                          type: string
+                          example: "any"
+                        price:
+                          type: integer
+                          example: 20000
+                        room_number:
+                          type: integer
+                          example: 4
+                        features:
+                          type: string
+                          example: "any"
+                        photo:
+                          type: object
+                          additionalProperties: true
+                        phone:
+                          type: string
+                          example: "user ID"
+                        check:
+                          type: boolean
+                          example: false
+                        reject:
+                          type: boolean
+                          example: false
+                        state_code:
+                          type: string
+                          example: ""
+                        Uid:
+                          type: string
+                          example: "1731598770627"
+                  number:
+                    type: integer
+                    example: 1
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/notconfirmedannouncements:
+    get:
+      summary: Retrieve not confirmed announcements
+      description: Fetches a list of announcements that are not confirmed and their count.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with the list of not confirmed announcements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: array
+                    items:
+                      type: string
+                    example: []
+                  number:
+                    type: integer
+                    example: 0
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/search:
+    post:
+      summary: Search announcements
+      description: Allows admins to search for announcements by providing specific criteria.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Search criteria for filtering announcements
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tour3dRequest:
+                  type: boolean
+                  example: false
+                tour3dlink:
+                  type: string
+                  example: "any"
+                loan:
+                  type: integer
+                  example: 2199
+                type:
+                  type: string
+                  example: "any"
+                region:
+                  type: string
+                  example: "any"
+                address:
+                  type: string
+                  example: "any"
+                location:
+                  type: string
+                  example: "any"
+                land_metrage:
+                  type: integer
+                  example: 200
+                useful_metrage:
+                  type: integer
+                  example: 150
+                floor_number:
+                  type: integer
+                  example: 2
+                floor:
+                  type: integer
+                  example: 1
+                Unit_in_floor:
+                  type: integer
+                  example: 1
+                year_of_build:
+                  type: integer
+                  example: 1998
+                full_name:
+                  type: string
+                  example: "any"
+                price:
+                  type: integer
+                  example: 20000
+                room_number:
+                  type: integer
+                  example: 4
+      responses:
+        '200':
+          description: Successful response with matching announcements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 4
+                    userID:
+                      type: string
+                      example: "09181711690"
+                    tour3dRequest:
+                      type: boolean
+                      example: false
+                    tour3dlink:
+                      type: string
+                      example: "any"
+                    loan:
+                      type: integer
+                      example: 2199
+                    type:
+                      type: string
+                      example: "any"
+                    region:
+                      type: string
+                      example: "any"
+                    address:
+                      type: string
+                      example: "any"
+                    location:
+                      type: string
+                      example: "any"
+                    usage:
+                      type: string
+                      example: "any"
+                    document_type:
+                      type: string
+                      example: "any"
+                    land_metrage:
+                      type: integer
+                      example: 200
+                    useful_metrage:
+                      type: integer
+                      example: 150
+                    floor_number:
+                      type: integer
+                      example: 2
+                    floor:
+                      type: integer
+                      example: 1
+                    Unit_in_floor:
+                      type: integer
+                      example: 1
+                    year_of_build:
+                      type: integer
+                      example: 1998
+                    full_name:
+                      type: string
+                      example: "any"
+                    price:
+                      type: integer
+                      example: 20000
+                    room_number:
+                      type: integer
+                      example: 4
+                    features:
+                      type: string
+                      example: "any"
+                    photo:
+                      type: object
+                      additionalProperties: true
+                    phone:
+                      type: string
+                      example: "09181716745"
+                    check:
+                      type: boolean
+                      example: true
+                    reject:
+                      type: boolean
+                      example: false
+                    state_code:
+                      type: string
+                      example: "any"
+                    Uid:
+                      type: string
+                      example: "1731856016972"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/varifyannounce:
+    post:
+      summary: Verify an announcement
+      description: Allows admins to verify and approve a specific announcement by providing its UID and state.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: UID of the announcement and its state to be verified
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier of the announcement
+                  example: "1731598770627"
+                state:
+                  type: string
+                  description: State or status code for the announcement verification
+                  example: "3894723498"
+      responses:
+        '200':
+          description: Successful verification of the announcement
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "the announcement has been approved"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '400':
+          description: Bad Request - Missing or invalid data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid UID or state"
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  api/V1/admin/rejectannounce:
+    post:
+      summary: Reject an announcement
+      description: Allows admins to reject a specific announcement by providing its UID.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: UID of the announcement to be rejected
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier of the announcement to reject
+                  example: "1731598770627"
+      responses:
+        '200':
+          description: Successful rejection of the announcement
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "the announcement has been rejected"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '400':
+          description: Bad Request - Missing or invalid UID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid UID"
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  /api/V1/admin/getbyUid:
+    post:
+      summary: Get Announcement by UID
+      description: Retrieves the details of a specific announcement using its unique identifier (UID).
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: UID of the announcement to retrieve
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Uid:
+                  type: string
+                  description: Unique identifier of the announcement
+                  example: "1731598770627"
+      responses:
+        '200':
+          description: Successfully retrieved the announcement details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  userID:
+                    type: string
+                    example: "09181711690"
+                  tour3dRequest:
+                    type: boolean
+                    example: false
+                  tour3dlink:
+                    type: string
+                    example: ""
+                  loan:
+                    type: integer
+                    example: 2199
+                  type:
+                    type: string
+                    example: "any"
+                  region:
+                    type: string
+                    example: "any"
+                  address:
+                    type: string
+                    example: "any"
+                  location:
+                    type: string
+                    example: "any"
+                  usage:
+                    type: string
+                    example: "any"
+                  document_type:
+                    type: string
+                    example: "any"
+                  land_metrage:
+                    type: integer
+                    example: 200
+                  useful_metrage:
+                    type: integer
+                    example: 150
+                  floor_number:
+                    type: integer
+                    example: 2
+                  floor:
+                    type: integer
+                    example: 1
+                  Unit_in_floor:
+                    type: integer
+                    example: 1
+                  year_of_build:
+                    type: integer
+                    example: 1998
+                  full_name:
+                    type: string
+                    example: "any"
+                  price:
+                    type: integer
+                    example: 20000
+                  room_number:
+                    type: integer
+                    example: 4
+                  features:
+                    type: string
+                    example: "any"
+                  photo:
+                    type: object
+                    additionalProperties: true
+                  phone:
+                    type: string
+                    example: "user ID"
+                  check:
+                    type: boolean
+                    example: true
+                  reject:
+                    type: boolean
+                    example: true
+                  state_code:
+                    type: string
+                    example: "3894723498"
+                  Uid:
+                    type: string
+                    example: "1731598770627"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '400':
+          description: Bad Request - Missing or invalid UID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid UID"
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  api/V1/admin/getbystatecode:
+    post:
+      summary: Get Announcement by State Code
+      description: Retrieves the details of a specific announcement using its unique state code.
+      tags:
+        - Admin
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: State code of the announcement to retrieve
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state_code:
+                  type: string
+                  description: Unique state code of the announcement
+                  example: "3894723498"
+      responses:
+        '200':
+          description: Successfully retrieved the announcement details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  userID:
+                    type: string
+                    example: "09181711690"
+                  tour3dRequest:
+                    type: boolean
+                    example: false
+                  tour3dlink:
+                    type: string
+                    example: ""
+                  loan:
+                    type: integer
+                    example: 2199
+                  type:
+                    type: string
+                    example: "any"
+                  region:
+                    type: string
+                    example: "any"
+                  address:
+                    type: string
+                    example: "any"
+                  location:
+                    type: string
+                    example: "any"
+                  usage:
+                    type: string
+                    example: "any"
+                  document_type:
+                    type: string
+                    example: "any"
+                  land_metrage:
+                    type: integer
+                    example: 200
+                  useful_metrage:
+                    type: integer
+                    example: 150
+                  floor_number:
+                    type: integer
+                    example: 2
+                  floor:
+                    type: integer
+                    example: 1
+                  Unit_in_floor:
+                    type: integer
+                    example: 1
+                  year_of_build:
+                    type: integer
+                    example: 1998
+                  full_name:
+                    type: string
+                    example: "any"
+                  price:
+                    type: integer
+                    example: 20000
+                  room_number:
+                    type: integer
+                    example: 4
+                  features:
+                    type: string
+                    example: "any"
+                  photo:
+                    type: object
+                    additionalProperties: true
+                  phone:
+                    type: string
+                    example: "user ID"
+                  check:
+                    type: boolean
+                    example: true
+                  reject:
+                    type: boolean
+                    example: true
+                  state_code:
+                    type: string
+                    example: "3894723498"
+                  Uid:
+                    type: string
+                    example: "1731598770627"
+        '401':
+          description: Unauthorized - Invalid or missing bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '400':
+          description: Bad Request - Missing or invalid state code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid state code"
+        '500':
+          description: Internal Server Error - An unexpected error occurred on the server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+  api/V1/admin/updateannoun:
+        put:
+            summary: Update Announcement
+            description: Updates the details of a specific announcement using its unique UID.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Provide the UID and updated details of the announcement
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Uid:
+                                    type: string
+                                    description: Unique identifier of the announcement
+                                    example: "1731598770627"
+                                tour3dRequest:
+                                    type: boolean
+                                    description: Indicates if a 3D tour is requested
+                                    example: true
+                                tour3dlink:
+                                    type: string
+                                    description: Link for the 3D tour
+                                    example: "any"
+                                loan:
+                                    type: integer
+                                    description: Loan amount
+                                    example: 0
+                                type:
+                                    type: string
+                                    description: Type of the announcement
+                                    example: "any"
+                                region:
+                                    type: string
+                                    description: Region of the announcement
+                                    example: "any"
+                                address:
+                                    type: string
+                                    description: Address of the announcement
+                                    example: "any"
+                                location:
+                                    type: string
+                                    description: Location of the announcement
+                                    example: "any"
+                                usage:
+                                    type: string
+                                    description: Usage of the announcement
+                                    example: "any"
+                                document_type:
+                                    type: string
+                                    description: Document type associated with the announcement
+                                    example: "any"
+                                land_metrage:
+                                    type: integer
+                                    description: Land size in square meters
+                                    example: 200
+                                useful_metrage:
+                                    type: integer
+                                    description: Usable area in square meters
+                                    example: 150
+                                floor_number:
+                                    type: integer
+                                    description: Total number of floors in the building
+                                    example: 2
+                                floor:
+                                    type: integer
+                                    description: Specific floor of the unit
+                                    example: 1
+                                Unit_in_floor:
+                                    type: integer
+                                    description: Number of units on the floor
+                                    example: 1
+                                year_of_build:
+                                    type: integer
+                                    description: Year the building was constructed
+                                    example: 1998
+                                full_name:
+                                    type: string
+                                    description: Full name of the owner or responsible person
+                                    example: "any"
+                                price:
+                                    type: integer
+                                    description: Price of the property
+                                    example: 20000
+                                room_number:
+                                    type: integer
+                                    description: Number of rooms in the unit
+                                    example: 4
+                                features:
+                                    type: string
+                                    description: Additional features or notes
+                                    example: "any"
+                                phone:
+                                    type: string
+                                    description: Contact phone number
+                                    example: "09181716745"
+                                state_code:
+                                    type: string
+                                    description: State code for the announcement
+                                    example: "any"
+            responses:
+                '200':
+                    description: Successfully updated the announcement
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: "The announcement has been updated successfully"
+                '400':
+                    description: Bad Request - Missing or invalid data
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: "Failed to update the announcement"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '500':
+                    description: Internal Server Error - An unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  api/V1/admin/creatVisit:
+        post:
+            summary: Create a new Visit
+            description: Adds a new visit entry with details such as name, address, date, phone, and description.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Details of the visit to be created
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    description: UID or name related to the visit
+                                    example: "1731598770627"
+                                address:
+                                    type: string
+                                    description: Address for the visit
+                                    example: "any"
+                                date:
+                                    type: string
+                                    description: Date of the visit
+                                    example: "any"
+                                phone:
+                                    type: string
+                                    description: Contact phone number
+                                    example: "09181716745"
+                                description:
+                                    type: string
+                                    description: Additional details or description of the visit
+                                    example: "any"
+            responses:
+                '200':
+                    description: Successfully created the visit
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: "The visit has been added successfully"
+                '400':
+                    description: Bad Request - Missing or invalid data
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: "Failed to create the visit"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '500':
+                    description: Internal Server Error - An unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  api/V1/admin/updateVisits:
+        put:
+            summary: Update Visit Details
+            description: Updates the details of a specific visit using its unique ID.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Provide the unique ID and updated details of the visit
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                ID:
+                                    type: string
+                                    description: Unique identifier of the visit
+                                    example: "1731859808277"
+                                name:
+                                    type: string
+                                    description: Name or UID related to the visit
+                                    example: "1731598770627"
+                                address:
+                                    type: string
+                                    description: Updated address for the visit
+                                    example: "anyyyyyyyy"
+                                date:
+                                    type: string
+                                    description: Updated date of the visit
+                                    example: "any"
+                                phone:
+                                    type: string
+                                    description: Updated contact phone number
+                                    example: "09181716745"
+                                description:
+                                    type: string
+                                    description: Updated additional details or description of the visit
+                                    example: "any"
+            responses:
+                '200':
+                    description: Successfully updated the visit details
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        example: 1
+                                    name:
+                                        type: string
+                                        example: "1731598770627"
+                                    phone:
+                                        type: string
+                                        example: "09181716745"
+                                    description:
+                                        type: string
+                                        example: "any"
+                                    date:
+                                        type: string
+                                        example: "any"
+                                    address:
+                                        type: string
+                                        example: "anyyyyyyyy"
+                                    Uid:
+                                        type: string
+                                        example: "1731859808277"
+                '400':
+                    description: Bad Request - Missing or invalid data
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Invalid ID or details"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '500':
+                    description: Internal Server Error - An unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  api/V1/admin/getAllVisits:
+        get:
+            summary: Retrieve All Visits
+            description: Fetches a list of all visits with their details.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: Successfully retrieved the list of visits
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: integer
+                                            description: Unique ID of the visit
+                                            example: 2
+                                        name:
+                                            type: string
+                                            description: UID or name related to the visit
+                                            example: "1731598770627"
+                                        phone:
+                                            type: string
+                                            description: Contact phone number
+                                            example: "09181716745"
+                                        description:
+                                            type: string
+                                            description: Additional details or description of the visit
+                                            example: "any"
+                                        date:
+                                            type: string
+                                            description: Date of the visit
+                                            example: "any"
+                                        address:
+                                            type: string
+                                            description: Address of the visit
+                                            example: "any"
+                                        Uid:
+                                            type: string
+                                            description: Unique identifier of the visit
+                                            example: "1731859835953"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '500':
+                    description: Internal Server Error - An unexpected error occurred
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  api/V1/admin/deleteVisit:
+        delete:
+            summary: Delete a Visit by ID
+            description: Deletes a specific visit by its unique ID.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: The ID of the visit to delete
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                ID:
+                                    type: string
+                                    description: Unique ID of the visit to delete
+                                    example: "1731859808277"
+            responses:
+                '200':
+                    description: The visit record has been deleted successfully
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                                example: "the record has been deleted successfully"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '400':
+                    description: Bad Request - Missing or invalid visit ID
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Invalid visit ID"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/creatdeal:
+        post:
+            summary: Create a Deal
+            description: Creates a new deal with the specified details.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Details of the deal to create
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                seller:
+                                    type: string
+                                    description: Name of the seller
+                                    example: "any"
+                                region:
+                                    type: string
+                                    description: Region of the deal
+                                    example: "any"
+                                type:
+                                    type: string
+                                    description: Type of the deal
+                                    example: "any"
+                                number:
+                                    type: string
+                                    description: Number or identifier related to the deal
+                                    example: "any"
+                                client:
+                                    type: string
+                                    description: Name of the client
+                                    example: "any"
+                                price:
+                                    type: integer
+                                    description: Price of the deal
+                                    example: 425613
+                                commission:
+                                    type: integer
+                                    description: Commission related to the deal
+                                    example: 768234
+                                date:
+                                    type: string
+                                    description: Date of the deal
+                                    example: "any"
+                                note:
+                                    type: string
+                                    description: Additional notes about the deal
+                                    example: "any"
+            responses:
+                '200':
+                    description: Successfully created the deal
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                                example: "deal has been created successfully"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Unauthorized"
+                '400':
+                    description: Bad Request - Missing or invalid deal details
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Invalid deal details"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/updatedeal:
+        post:
+            summary: Update a Deal
+            description: Updates the details of a specific deal using its unique ID.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: Details of the deal to update
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                ID:
+                                    type: string
+                                    description: Unique ID of the deal to update
+                                    example: "1732092474073"
+                                seller:
+                                    type: string
+                                    description: Name of the seller
+                                    example: "any"
+                                region:
+                                    type: string
+                                    description: Region of the deal
+                                    example: "any"
+                                type:
+                                    type: string
+                                    description: Type of the deal
+                                    example: "any"
+                                number:
+                                    type: string
+                                    description: Number or identifier related to the deal
+                                    example: "any"
+                                client:
+                                    type: string
+                                    description: Name of the client
+                                    example: "any"
+                                price:
+                                    type: integer
+                                    description: Price of the deal
+                                    example: 42513
+                                commission:
+                                    type: integer
+                                    description: Commission related to the deal
+                                    example: 93
+                                date:
+                                    type: string
+                                    description: Date of the deal
+                                    example: "any"
+                                note:
+                                    type: string
+                                    description: Additional notes about the deal
+                                    example: "any"
+            responses:
+                '200':
+                    description: Successfully updated the deal
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        example: 1
+                                    seller:
+                                        type: string
+                                        example: "any"
+                                    region:
+                                        type: string
+                                        example: "any"
+                                    type:
+                                        type: string
+                                        example: "any"
+                                    number:
+                                        type: string
+                                        example: "any"
+                                    client:
+                                        type: string
+                                        example: "any"
+                                    price:
+                                        type: integer
+                                        example: 42513
+                                    commission:
+                                        type: integer
+                                        example: 93
+                                    date:
+                                        type: string
+                                        example: "any"
+                                    note:
+                                        type: string
+                                        example: "any"
+                                    Uid:
+                                        type: string
+                                        example: "1732092474073"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                '400':
+                    description: Bad Request - Missing or invalid deal details
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Invalid deal details"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/deletedeal:
+        delete:
+            summary: Delete a Deal
+            description: Deletes a deal based on the provided ID.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                description: ID of the deal to delete
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                ID:
+                                    type: string
+                                    description: Unique identifier of the deal
+                                    example: "1732092474073"
+            responses:
+                '200':
+                    description: Successfully deleted the deal and returned the remaining deals
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: integer
+                                            description: Internal ID of the deal
+                                            example: 2
+                                        seller:
+                                            type: string
+                                            description: Name of the seller
+                                            example: "any"
+                                        region:
+                                            type: string
+                                            description: Region of the deal
+                                            example: "any"
+                                        type:
+                                            type: string
+                                            description: Type of the deal
+                                            example: "any"
+                                        number:
+                                            type: string
+                                            description: Deal number
+                                            example: "any"
+                                        client:
+                                            type: string
+                                            description: Client name
+                                            example: "any"
+                                        price:
+                                            type: integer
+                                            description: Deal price
+                                            example: 425613
+                                        commission:
+                                            type: integer
+                                            description: Commission amount
+                                            example: 93
+                                        date:
+                                            type: string
+                                            description: Date of the deal
+                                            example: "any"
+                                        note:
+                                            type: string
+                                            description: Additional notes about the deal
+                                            example: "any"
+                                        Uid:
+                                            type: string
+                                            description: Unique identifier of the deal
+                                            example: "1732092509427"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Unauthorized"
+                '400':
+                    description: Bad Request - Missing or invalid deal ID
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Invalid ID"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/getAlldeals:
+        get:
+            summary: Retrieve All Deals
+            description: Fetches a list of all deals from the system.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: Successfully retrieved all deals
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: integer
+                                            description: Internal ID of the deal
+                                            example: 2
+                                        seller:
+                                            type: string
+                                            description: Name of the seller
+                                            example: "any"
+                                        region:
+                                            type: string
+                                            description: Region of the deal
+                                            example: "any"
+                                        type:
+                                            type: string
+                                            description: Type of the deal
+                                            example: "any"
+                                        number:
+                                            type: string
+                                            description: Deal number
+                                            example: "any"
+                                        client:
+                                            type: string
+                                            description: Client name
+                                            example: "any"
+                                        price:
+                                            type: integer
+                                            description: Deal price
+                                            example: 425613
+                                        commission:
+                                            type: integer
+                                            description: Commission amount
+                                            example: 93
+                                        date:
+                                            type: string
+                                            description: Date of the deal
+                                            example: "any"
+                                        note:
+                                            type: string
+                                            description: Additional notes about the deal
+                                            example: "any"
+                                        Uid:
+                                            type: string
+                                            description: Unique identifier of the deal
+                                            example: "1732092509427"
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Unauthorized"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/alluseres:
+        get:
+            summary: Retrieve All Users
+            description: Fetches a list of all registered users and their details.
+            tags:
+                - Admin
+            parameters:
+                - name: Authorization
+                  in: header
+                  description: Bearer token for authentication
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: Successfully retrieved all users
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    users:
+                                        type: array
+                                        description: List of users
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                    description: User ID
+                                                    example: 2
+                                                full_name:
+                                                    type: string
+                                                    description: Full name of the user
+                                                    example: "aryan"
+                                                password:
+                                                    type: string
+                                                    description: Encrypted password of the user
+                                                    example: "$2b$10$6XNqCKALEZZxgzXqc79TCeRhrIzAQWfVPI/dkOSm1Yew920TNK8B6"
+                                                phone:
+                                                    type: string
+                                                    description: Phone number of the user
+                                                    example: "09181711690"
+                                                admin:
+                                                    type: boolean
+                                                    description: Indicates if the user is an admin
+                                                    example: true
+                                                Blocked:
+                                                    type: boolean
+                                                    description: Indicates if the user is blocked
+                                                    example: false
+                                                phoneVarify:
+                                                    type: boolean
+                                                    description: Indicates if the phone number is verified
+                                                    example: true
+                                    number:
+                                        type: integer
+                                        description: Total number of users
+                                        example: 1
+                '401':
+                    description: Unauthorized - Invalid or missing bearer token
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Unauthorized"
+                '500':
+                    description: Internal Server Error - An unexpected error occurred on the server
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: "Internal Server Error"
+  /api/V1/admin/updateuser:
+    put:
+      summary: Update User Details
+      description: Updates a user's details including their full name, password, and phone number.
+      tags:
+        - Admin
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - full_name
+                - password
+                - phone
+              properties:
+                full_name:
+                  type: string
+                  description: Full name of the user.
+                  example: "anno"
+                password:
+                  type: string
+                  description: User's password.
+                  example: "12356778"
+                phone:
+                  type: string
+                  description: User's phone number.
+                  example: "09185326583"
+      responses:
+        200:
+          description: User successfully updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: User ID.
+                    example: 1
+                  full_name:
+                    type: string
+                    description: Updated full name of the user.
+                    example: "anno"
+                  password:
+                    type: string
+                    description: Updated password of the user.
+                    example: "12356778"
+                  phone:
+                    type: string
+                    description: Updated phone number of the user.
+                    example: "09185326583"
+                  admin:
+                    type: boolean
+                    description: Indicates if the user is an admin.
+                    example: false
+                  Blocked:
+                    type: boolean
+                    description: Indicates if the user account is blocked.
+                    example: false
+                  phoneVarify:
+                    type: boolean
+                    description: Indicates if the phone number is verified.
+                    example: true
+        400:
+          description: Bad Request. The provided data is invalid.
+        401:
+          description: Unauthorized. Bearer token is missing or invalid.
+        500:
+          description: Internal Server Error.
+  /api/V1/admin/promotToAdmin:
+    put:
+      summary: Promote User to Admin
+      description: Promotes a user to admin based on their phone number.
+      tags:
+        - Admin
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+              properties:
+                phone:
+                  type: string
+                  description: Phone number of the user to be promoted to admin.
+                  example: "09185326583"
+      responses:
+        200:
+          description: User successfully promoted to admin.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: User ID.
+                    example: 1
+                  full_name:
+                    type: string
+                    description: Full name of the user.
+                    example: "anno"
+                  password:
+                    type: string
+                    description: User's password.
+                    example: "12356778"
+                  phone:
+                    type: string
+                    description: User's phone number.
+                    example: "09185326583"
+                  admin:
+                    type: boolean
+                    description: Indicates if the user is now an admin.
+                    example: true
+                  Blocked:
+                    type: boolean
+                    description: Indicates if the user account is blocked.
+                    example: false
+                  phoneVarify:
+                    type: boolean
+                    description: Indicates if the phone number is verified.
+                    example: true
+        400:
+          description: Bad Request. The phone number is not found or invalid.
+        401:
+          description: Unauthorized. Bearer token is missing or invalid.
+        500:
+          description: Internal Server Error.
+  /api/V1/admin/creatslider:
+    post:
+      summary: Create Slider
+      description: Creates a new slider with a title and note.
+      tags:
+        - Admin
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Title
+                - note
+              properties:
+                Title:
+                  type: string
+                  description: Title of the slider.
+                  example: "09185326583"
+                note:
+                  type: string
+                  description: A note or description associated with the slider.
+                  example: "any"
+      responses:
+        200:
+          description: Slider created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the created slider.
+                    example: 1
+                  photo:
+                    type: object
+                    description: Associated photo data (if any).
+                    example: {}
+                  Title:
+                    type: string
+                    description: Title of the slider.
+                    example: "09185326583"
+                  note:
+                    type: string
+                    description: Note of the slider.
+                    example: "any"
+        400:
+          description: Bad Request. Missing or invalid parameters.
+        401:
+          description: Unauthorized. Bearer token is missing or invalid.
+        500:
+          description: Internal Server Error.
+  /api/V1/admin/updateslider:
+    post:
+      summary: Update Slider
+      description: Updates an existing slider by modifying its title and note.
+      tags:
+        - Admin
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - Title
+                - note
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the slider to be updated.
+                  example: 1
+                Title:
+                  type: string
+                  description: The new title for the slider.
+                  example: "any"
+                note:
+                  type: string
+                  description: The new note for the slider.
+                  example: "any"
+      responses:
+        200:
+          description: Slider updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the updated slider.
+                    example: 1
+                  photo:
+                    type: object
+                    description: Associated photo data (if any).
+                    example: {}
+                  Title:
+                    type: string
+                    description: The updated title of the slider.
+                    example: "any"
+                  note:
+                    type: string
+                    description: The updated note of the slider.
+                    example: "any"
+        400:
+          description: Bad Request. Missing or invalid parameters.
+        401:
+          description: Unauthorized. Bearer token is missing or invalid.
+        500:
+          description: Internal Server Error
+  /api/V1/admin/deleteslider:
+    delete:
+      summary: Delete a slider by ID
+      description: This endpoint allows an admin to delete a slider by its ID.
+      operationId: deleteSlider
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the slider to be deleted.
+                  example: 2
+      responses:
+        '200':
+          description: Slider has been deleted successfully
+          content:
+            text/html:
+              example: |
+                The slider has been deleted successfully
+        '400':
+          description: Bad Request. The provided slider ID may be invalid.
+        '401':
+          description: Unauthorized. Token may be missing or invalid.
+        '500':
+          description: Internal Server Error. Something went wrong while deleting the slider.
+      security:
+        - BearerAuth: []
+  /api/V1/admin/initiateSetting:
+    post:
+      summary: Initiate site settings
+      description: This endpoint allows an admin to initialize the site settings.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                about:
+                  type: string
+                  example: "any"
+                goals:
+                  type: string
+                  example: "any"
+      responses:
+        '200':
+          description: Site has been initiated successfully
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/aboutUpdating:
+    post:
+      summary: Update "About" section
+      description: This endpoint allows an admin to update the "about" and "goals" section of the site.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                about:
+                  type: string
+                  example: "any"
+                goals:
+                  type: string
+                  example: "updated any"
+      responses:
+        '200':
+          description: Successfully updated the "about" section
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  logo:
+                    type: object
+                    example: {}
+                  about:
+                    type: string
+                    example: "any"
+                  goals:
+                    type: string
+                    example: "updated any"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/creatteam:
+    post:
+      summary: Add a team member
+      description: This endpoint allows an admin to add a new team member.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "name"
+                job:
+                  type: string
+                  example: "any"
+                email:
+                  type: string
+                  format: email
+                  example: "updated any"
+                phone:
+                  type: string
+                  example: "updated any"
+      responses:
+        '200':
+          description: Team member has been added successfully
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/updateteam:
+    post:
+      summary: Update a team member
+      description: This endpoint allows an admin to update the details of an existing team member.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The unique ID of the team member to update
+                  example: 1
+                name:
+                  type: string
+                  description: The name of the team member
+                  example: "name"
+                job:
+                  type: string
+                  description: The job title of the team member
+                  example: "any"
+                email:
+                  type: string
+                  format: email
+                  description: The email of the team member
+                  example: "updated any"
+                phone:
+                  type: string
+                  description: The phone number of the team member
+                  example: "updated any"
+      responses:
+        '200':
+          description: Team member details updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "name"
+                  job:
+                    type: string
+                    example: "any"
+                  email:
+                    type: string
+                    format: email
+                    example: "updated any"
+                  phone:
+                    type: string
+                    example: "updated any"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/deleteteam:
+    delete:
+      summary: Delete a team member
+      description: This endpoint allows an admin to delete a team member by their ID.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The unique ID of the team member to delete
+                  example: 2
+      responses:
+        '200':
+          description: Team member has been deleted successfully
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/getAllSliders:
+    get:
+      summary: Retrieve all sliders
+      description: This endpoint allows an admin to retrieve all sliders.
+      tags:
+        - Admin
+      responses:
+        '200':
+          description: Successfully retrieved all sliders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique ID of the slider
+                      example: 2
+                    photo:
+                      type: object
+                      description: Photo object associated with the slider
+                      example: {}
+                    Title:
+                      type: string
+                      description: Title of the slider
+                      example: "09185326583"
+                    note:
+                      type: string
+                      description: Notes about the slider
+                      example: "any"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/getAllteam:
+    get:
+      summary: Retrieve all team members
+      description: This endpoint allows an admin to retrieve all team members.
+      tags:
+        - Admin
+      responses:
+        '200':
+          description: Successfully retrieved all team members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique ID of the team member
+                      example: 2
+                    name:
+                      type: string
+                      description: Name of the team member
+                      example: "name"
+                    job:
+                      type: string
+                      description: Job title of the team member
+                      example: "any"
+                    email:
+                      type: string
+                      format: email
+                      description: Email of the team member
+                      example: "updated any"
+                    phone:
+                      type: string
+                      description: Phone number of the team member
+                      example: "updated any"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/uploadPhotos:
+    post:
+      summary: Upload photos
+      description: This endpoint allows an admin to upload photos to the server.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: string
+                  format: binary
+                  description: The photo file to upload.
+                Uid:
+                  type: string
+                  description: Unique identifier for the upload.
+                  example: "1731598770627"
+      responses:
+        '200':
+          description: Successfully uploaded photo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    description: Indicates success (1 for success).
+                    example: 1
+                  message:
+                    type: string
+                    description: Status message.
+                    example: "success"
+                  files:
+                    type: array
+                    items:
+                      type: string
+                      description: URLs of the uploaded files.
+                      example: "http://localhost:3000/photos/images_1732114669889.png"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /api/V1/admin/uploadsliderPhotos:
+    post:
+      summary: Upload slider photos
+      description: This endpoint allows an admin to upload photos for a specific slider.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: string
+                  format: binary
+                  description: The photo file to upload for the slider.
+                id:
+                  type: integer
+                  description: The unique ID of the slider.
+                  example: 2
+      responses:
+        '200':
+          description: Successfully uploaded slider photo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    description: Indicates success (1 for success).
+                    example: 1
+                  message:
+                    type: string
+                    description: Status message.
+                    example: "success"
+                  files:
+                    type: array
+                    items:
+                      type: string
+                      description: URLs of the uploaded files.
+                      example: "http://localhost:3000/photos/images_1732114908951.png"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+  /apiV1/admin/uploadLogo:
+    post:
+      summary: Upload Logo
+      description: Endpoint to upload a logo image.
+      tags:
+        - Admin
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: string
+                  format: binary
+                  description: The logo image file to upload.
+      responses:
+        '200':
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 1
+                  message:
+                    type: string
+                    example: "success"
+                  files:
+                    type: array
+                    items:
+                      type: string
+                      example: "http://localhost:3000/photos/images_1732115507548.webp"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "error message"
+  /apiV1/announce/uploadPhotos:
+    post:
+      summary: Upload Announcement Photos
+      description: Endpoint to upload photos for announcements.
+      tags:
+        - Announcement
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: The photos to upload. Multiple files are supported.
+                Uid:
+                  type: string
+                  description: User ID associated with the photos.
+      responses:
+        '200':
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 1
+                  message:
+                    type: string
+                    example: "success"
+                  files:
+                    type: array
+                    items:
+                      type: string
+                      example: "http://localhost:3000/photos/images_1732115999124.webp"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: "error message"
