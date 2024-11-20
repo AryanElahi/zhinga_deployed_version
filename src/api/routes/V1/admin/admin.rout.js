@@ -270,7 +270,7 @@ router.post("/creatdeal",verifyAccessToken, verifyadmin , async(req, res, next) 
         data = req.body
         data.Uid = new Date().getTime().toString()
         deal = await creatdeal(data)
-        res.send(deal)        
+        res.send("deal has been created successfully")        
     } 
     catch (error) {
         next(createError(500, "An unexpected error occurred"));
@@ -293,10 +293,11 @@ router.post("/updatedeal",verifyAccessToken, verifyadmin , async(req, res, next)
         deal = await updatedeal(ID, data)
         res.send(deal)        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.post("/deletedeal",verifyAccessToken, verifyadmin , async(req, res, next) => {
+router.delete("/deletedeal",verifyAccessToken, verifyadmin , async(req, res, next) => {
     try {
         ID = req.body.ID
         const del = deletedeal(ID)

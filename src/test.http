@@ -1,38 +1,7 @@
-PUT http://localhost:3000/api/V1/admin/updateannoun
+DELETE http://localhost:3000/api/V1/admin/deletedeal
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzE4NTU5NDMsImV4cCI6MTc2MzQxMzU0MywiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.Gi3drpPOjrnJNKkqzFvF3VhaaqFKZ0xce1Txl4NWMME
 
 {
-  "Uid": "1731598770627",
-  "tour3dRequest": true,
-  "tour3dlink": "any",
-  "loan": 0,
-  "type": "any",
-  "region": "any",
-  "address": "any",
-  "location": "any",
-  "usage": "any",
-  "document_type": "any",
-  "land_metrage": 200,
-  "useful_metrage": 150,
-  "floor_number": 2,
-  "floor": 1,
-  "Unit_in_floor": 1,
-  "year_of_build": 1998,
-  "full_name": "any",
-  "price": 20000,
-  "room_number": 4,
-  "features": "any",
-  "phone": "09181716745", 
-  "state_code": "any"
+  "ID" : "1732092474073"
 }
-
-HTTP/1.1 200 OK
-X-Powered-By: Express
-Content-Type: text/html; charset=utf-8
-Content-Length: 46
-ETag: W/"2e-xeAvU1U5TZI/zxsg3J9ewTFO4N4"
-Date: Sun, 17 Nov 2024 16:03:34 GMT
-Connection: close
-
-The announcement has been updated successfully
