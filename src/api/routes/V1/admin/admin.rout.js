@@ -317,9 +317,12 @@ router.get("/alluseres",verifyAccessToken, verifyadmin , async (req, res, next) 
 router.put("/updateuser",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         let result = req.body
-        let phone = req.phone
+        console.log(req.body.phone)
+        let phone = req.body.phone
+        delete result.phone
         res.send(await updateUser(phone, result))
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
@@ -339,6 +342,7 @@ router.post("/creatslider",verifyAccessToken, verifyadmin , async(req, res, next
         slider = await creatslider(data)
         res.send(slider)        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
@@ -397,7 +401,7 @@ router.post("/updateslider",verifyAccessToken, verifyadmin , async (req, res, ne
 router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const id = req.body.id
-        res.send( await deleteslider(id))
+        res.send("the slider has been deleted successfully")
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }

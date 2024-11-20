@@ -72,6 +72,7 @@ async function isValid(pass, dpass) {
 
 async function updateUser (phone, result){
   try {
+    console.log(phone)
     const updated = await prisma.user.update({
     where: {phone: phone},
     data : result
