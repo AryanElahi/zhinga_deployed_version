@@ -14,7 +14,7 @@ module.exports = {
         const authheader = req.headers["authorization"]
         const bearertoken = authheader.split(' ')
         const token = bearertoken[1]
-        JWT.verify(token, "5b29b663001ba6bd03a27b417dd8392d405a26a770b84b335628044b31ade046"
+        JWT.verify(token, "5b29b663001ba6bd03417dd8392d405a26a770b84b335628044b31ade046"
           , (err, payload) => {
             if (err) {return next (createError.Unauthorized())}
             req.payload = payload
