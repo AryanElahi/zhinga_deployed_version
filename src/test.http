@@ -1,8 +1,9 @@
-post http://localhost:3000/api/V1/admin/initiateSetting
+post http://185.231.115.236:3000/api/V1/auth/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzE4NTU5NDMsImV4cCI6MTc2MzQxMzU0MywiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.Gi3drpPOjrnJNKkqzFvF3VhaaqFKZ0xce1Txl4NWMME
+
 
 {
-  "about": "any",
-  "goals" : "any "
+"full_name": "aryan",
+"phone":	"09185326583",
+"password" : "90471"
 }
