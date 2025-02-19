@@ -10,7 +10,7 @@ const { errorHandler, notFoundHandler } = require("./../api/middlewares/errorHan
 const expressLoader = async (app) => {
     // تنظیمات CORS
     const corsOptions = {
-        origin: 'http://your-frontend-url.com',  // آدرس فرانت‌اند خود را اینجا قرار بده
+        origin: 'http://localhost:3000',  // آدرس فرانت‌اند در لوکال‌هاست
         methods: ['GET', 'POST', 'PUT', 'DELETE'],  // متدهای مجاز
         allowedHeaders: ['Content-Type', 'Authorization'],  // هدرهای مجاز
         credentials: true,  // اگر نیاز به ارسال کوکی یا اعتبار سنجی است
