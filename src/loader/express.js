@@ -8,17 +8,11 @@ const { save_visitor } = require("./../services/adminpanel/visitCountingServices
 const { errorHandler, notFoundHandler } = require("./../api/middlewares/errorHandeler");
 
 const expressLoader = async (app) => {
-    // تنظیمات CORS
-    //const corsOptions = {
-    //   origin: 'http://localhost:3000',  // آدرس فرانت‌اند در لوکال‌هاست
-    //    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // متدهای مجاز
-    //    allowedHeaders: ['Content-Type', 'Authorization'],  // هدرهای مجاز
-    //    credentials: true,  // اگر نیاز به ارسال کوکی یا اعتبار سنجی است
-    //};
-
-    // اضافه کردن CORS به اپلیکیشن
-    app.use(cors());
-
+    app.use(cors({
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+    }));
     app.use(morgan("dev"));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -38,3 +32,4 @@ const expressLoader = async (app) => {
 };
 
 module.exports = expressLoader;
+   
