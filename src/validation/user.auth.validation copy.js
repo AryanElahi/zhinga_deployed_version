@@ -13,7 +13,6 @@ const codephone = joi.object ({
 })
 const signupVal = joi.object ({
     full_name : joi.string()
-    .min(5)
     .required(),
     password : joi.string()
     .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
