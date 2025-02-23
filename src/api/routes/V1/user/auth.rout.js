@@ -32,7 +32,7 @@ router.post ("/register", async (req, res, next) => {
         next(createError(500, "An unexpected error occurred while registering"));
     }
 })
-router.post ("/varify", async (req, res, next) => {
+router.post ("/verify", async (req, res, next) => {
     try {
         let result = await codephone.validateAsync (req.body)
         const phone = result.phone
