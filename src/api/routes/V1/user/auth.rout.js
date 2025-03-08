@@ -77,7 +77,7 @@ router.post("/login", async (req, res, next) => {
         if (compare === true ) {
             const refreshToken = await signRefreshToken(user.phone)
             const AccessToken = await signAccessToken(user.phone)
-            res.send({refreshToken, AccessToken})
+            res.send({refreshToken, AccessToken, user })
         }
         else {
             res.status(403).send("user or password is incorecet")
