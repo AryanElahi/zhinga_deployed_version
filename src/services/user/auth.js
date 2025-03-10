@@ -82,6 +82,18 @@ async function updateUser (phone, result){
     if (error) return(error)
   }
 }
+async function resetpass (phone, new_pass){
+  try {
+    console.log(phone)
+    const updated = await prisma.user.update({
+    where: {phone: phone},
+    data : {password : new_pass}
+    })
+  return (updated)
+  } catch (error) {
+    if (error) return(error)
+  }
+}
 async function getUserByAccessToken(accessToken) {
   // Function to verify the access token and extract the user's phone number
   return new Promise((resolve, reject) => {
@@ -163,5 +175,6 @@ module.exports = {
           })
         })
       },
-    userPhoneVarify
+    userPhoneVarify,
+    resetpass
 }

@@ -1,9 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const createError = require("http-errors")
-const {signupVal, loginVal, phone, codephone, updateVal} = require("../../../../validation/user.auth.validation copy")
+const {signupVal, loginVal, phone, codephone, updateVal, resetpassval} = require("../../../../validation/user.auth.validation copy")
 const {doesExistphone, hashPassword, signRefreshToken, creatUser, 
-     getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify, getUserAnnounce} = require("../../../../services/user/auth")
+     getUserByPhone, isValid, signAccessToken, getUserByAccessToken, updateUser, userPhoneVarify, getUserAnnounce, resetpass} = require("../../../../services/user/auth")
 const {verifyAccessToken, verifyRefreshToken} = require("../../../middlewares/isAuth.middleware")
 const {    
     generateNewCodeForThisNumber,
@@ -25,6 +25,43 @@ router.post ("/register", async (req, res, next) => {
         await sendSMS(code, phone)
         await saveCodeInDB(code, phone)
         res.send("regester successful")
+    } catch (error) {
+        console.log(error)
+        if (error.Conflict === true) error.status = 400
+        if (error.isJoi === true) error.status = 422
+        next(createError(500, "An unexpected error occurred while registering"));
+    }
+})
+router.post ("/sendforgetpass", async (req, res, next) => {
+    try {
+        const result = await resetpassval.validateAsync (req.body)
+        const phonen = result.phone
+        const code = getRandomInt()
+        await sendSMS(code, phonen)
+        await saveCodeInDB(code, phonen)
+        res.send("code has been sended successful")
+    } catch (error) {
+        console.log(error)
+        if (error.isJoi === true) error.status = 422
+        next(createError(500, "An unexpected error occurred while registering"));
+    }
+})
+router.post ("/setnewpass", async (req, res, next) => {
+    try {
+        let result = await resetpassval.validateAsync(req.body)
+        const new_pass = result.password
+        const phone = result.phone
+        const code = result.code
+        result.password = await hashPassword(new_pass)
+        const status = await CheckIfCorrect(code, phone)
+        if (status == 1) {
+            const update = await resetpass(phone, result.password)
+        } if ( status == 2 ){
+            res.status(400).send("code is not true")
+        } if ( status == 3) {
+            res.status(403).send("code expired")
+        }
+    res.send("regester successful")
     } catch (error) {
         console.log(error)
         if (error.Conflict === true) error.status = 400
@@ -75,9 +112,10 @@ router.post("/login", async (req, res, next) => {
         if (!user) throw createError.NotFound("user is not regesterd")
         console.log(compare)
         if (compare === true ) {
+            const name = user.full_name
             const refreshToken = await signRefreshToken(user.phone)
             const AccessToken = await signAccessToken(user.phone)
-            res.send({refreshToken, AccessToken, user })
+            res.send({refreshToken, AccessToken, name })
         }
         else {
             res.status(403).send("user or password is incorecet")

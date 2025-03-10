@@ -1,8 +1,8 @@
-post http://185.231.115.236:3000/api/V1/auth/login
+post http://localhost:3000/api/V1/auth/sendforgetpass
 Content-Type: application/json
 
 
 {
 "phone":"09185326583",
-"password" : "1kjlk"
+"code" :
 }

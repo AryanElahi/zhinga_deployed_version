@@ -11,6 +11,14 @@ const codephone = joi.object ({
     code : joi.number()
     .min(5)
 })
+const resetpassval = joi.object ({
+    phone : joi.string()
+    .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
+    code : joi.number()
+    .min(5),
+    password : joi.string()
+    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+})
 const signupVal = joi.object ({
     full_name : joi.string()
     .required(),
@@ -43,5 +51,6 @@ module.exports = {
     updateVal,
     loginVal,
     codephone,
-    phone
+    phone,
+    resetpassval
 }
