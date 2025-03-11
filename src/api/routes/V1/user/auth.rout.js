@@ -61,7 +61,7 @@ router.post ("/setnewpass", async (req, res, next) => {
         } if ( status == 3) {
             res.status(403).send("code expired")
         }
-    res.send("regester successful")
+    res.send("password has been changed successfully ")
     } catch (error) {
         console.log(error)
         if (error.Conflict === true) error.status = 400
@@ -113,9 +113,10 @@ router.post("/login", async (req, res, next) => {
         console.log(compare)
         if (compare === true ) {
             const name = user.full_name
+            const phone = user.phone
             const refreshToken = await signRefreshToken(user.phone)
             const AccessToken = await signAccessToken(user.phone)
-            res.send({refreshToken, AccessToken, name })
+            res.send({refreshToken, AccessToken, name, phone })
         }
         else {
             res.status(403).send("user or password is incorecet")
