@@ -409,7 +409,9 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res, 
 //site setting
 router.post("/initiateSetting",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
-        res.send ("the site has been initiated successfully")
+        const init = await initiateSetting(req.body)
+        console.log(init)
+        res.send("the site has been initiated successfully")
     } catch (error) {
         next(createError(500, "An unexpected error occurred"));
     }
