@@ -407,16 +407,16 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res, 
     }
 })
 //site setting
-router.post("/initiateSetting",verifyAccessToken, verifyadmin , async (req, res, next) => {
-    try {
-        const init = await initiateSetting(req.body)
-        console.log(init)
-        res.send("the site has been initiated successfully")
-    } catch (error) {
-        next(createError(500, "An unexpected error occurred"));
-    }
-})
-router.post("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next) => {
+//router.post("/initiateSetting",verifyAccessToken, verifyadmin , async (req, res, next) => {
+//    try {
+//        const init = await initiateSetting(req.body)
+//        console.log(init)
+//        res.send("the site has been initiated successfully")
+//    } catch (error) {
+//        next(createError(500, "An unexpected error occurred"));
+//    }
+// })
+router.put("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         upload(req, res, async (err) => { 
             if (err) {
@@ -452,7 +452,7 @@ router.post("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next
         }
 
 });
-router.post("/aboutUpdating",verifyAccessToken, verifyadmin , async (req, res, next ) => {
+router.put("/aboutUpdating",verifyAccessToken, verifyadmin , async (req, res, next ) => {
     try {
         const updated = await aboutUpdating(req.body)
         res.send (updated)        
