@@ -22,8 +22,14 @@ async function aboutUpdating(data){
         }
         })
         }
+async function get_about(data){
+    return await prisma.setting.findFirst({
+            where: {id : 1}
+            })
+            }
 module.exports = {
     initiateSetting,
     logoAdding,
-    aboutUpdating
+    aboutUpdating,
+    get_about
 }

@@ -47,7 +47,7 @@ const {
     creatslider,
     photo_adding_slider
 } = require("./../../../../services/sliders/CRUD")
-const { initiateSetting, logoAdding, aboutUpdating } = require("../../../../services/setting/services")
+const { initiateSetting, logoAdding, aboutUpdating, get_about } = require("../../../../services/setting/services")
 const {
     creatteam,
     getAllteam,
@@ -416,6 +416,14 @@ router.delete("/deleteslider",verifyAccessToken, verifyadmin , async (req, res, 
 //        next(createError(500, "An unexpected error occurred"));
 //    }
 // })
+router.get("/getabout",verifyAccessToken, verifyadmin , async(req, res, next) => {
+    try {
+        const about = await get_about()
+        res.send(about)
+    } catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
 router.put("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         upload(req, res, async (err) => { 
