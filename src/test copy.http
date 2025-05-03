@@ -1,23 +1,5 @@
-post http://185.231.115.236:3000/api/V1/announce/creatAnnounce
+
+get http://localhost:3000/api/V1/admin/getabout
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDA0OTA1MjcsImV4cCI6MTc3MjA0ODEyNywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.f1lub0IYKFbmA8Er1tcvWsJHoSYt47jX1xaumOaCy1Q
 
-{
-    "loan" : 21123,
-    "type" : "sell",
-    "region" :"dsdsl",
-    "address" : "dsdsl",
-    "location" : "dsdsl",
-    "usage"    : "dsdsl",
-    "document_type" :"dsdsl",
-    "land_metrage" :  12433,
-    "useful_metrage" : 31232,
-    "floor_number" : 1,
-    "floor" : 2,
-    "Unit_in_floor" : 1,
-    "year_of_build" : 1999,
-    "full_name" : "dsdsl",
-    "price"     : 43124341,
-    "room_number"  : 1,
-    "features"     : "dsdsl"
-}
