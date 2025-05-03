@@ -1,9 +1,12 @@
-post http://localhost:3000/api/V1/auth/register
+post http://185.231.115.236:3000/api/V1/admin/initiatesetting
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDA0OTA1MjcsImV4cCI6MTc3MjA0ODEyNywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.f1lub0IYKFbmA8Er1tcvWsJHoSYt47jX1xaumOaCy1Q
 
 {
-"phone":"09181711690",
-"full_name": "jhjdskj",
-"password" : "123"
+    "phone": "09181711690",
+    "password": "123"
 }
+//{
+//"about":"test",
+//"goals" : "test"
+//}
