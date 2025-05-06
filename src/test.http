@@ -4,7 +4,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDY1NjE4N
 
 {
   "loan": true,
-  "loanـamount": 500000000,
   "type": "آپارتمان",
   "region": "تهران، منطقه 5",
   "address": "تهران، خیابان آزادی، کوچه بهار، پلاک 12",
