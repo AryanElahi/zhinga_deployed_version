@@ -51,7 +51,8 @@ model property{
   user User @relation(fields: [userID], references: [phone])
   tour3dRequest Boolean @default(false)
   tour3dlink    String @default("")
-  loan Int @default(0)
+  loan Boolean @default(false)
+  loanـamount Int @default(0)
   type String @default("")
   region String @default("")
   address String @default("")
@@ -70,7 +71,6 @@ model property{
   features     String @default("")
   photo        Json @db.JsonB @default("{}")
   phone    String @default("user ID ")
-
   check Boolean @default(false)
   reject Boolean @default(false)
   state_code String  @default("")

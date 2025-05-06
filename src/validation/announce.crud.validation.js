@@ -2,6 +2,7 @@ const joi = require("joi")
 
 const creat = joi.object ({
     loan : joi.number().required(),
+    loan_amount : joi.number(),
     type : joi.string().required(),
     region : joi.string().required(),
     address : joi.string().required(),
