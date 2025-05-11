@@ -52,7 +52,6 @@ model property{
   tour3dRequest Boolean @default(false)
   tour3dlink    String @default("")
   loan Boolean @default(false)
-  loanـamount Int @default(0)
   type String @default("")
   region String @default("")
   address String @default("")

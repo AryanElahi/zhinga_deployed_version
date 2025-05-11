@@ -4,7 +4,6 @@ const creatval = joi.object ({
     tour3dRequest: joi.bool().optional(),
     tour3dlink : joi.string().optional(),
     loan : joi.bool(),
-    loan_amount : joi.number(),
     type : joi.string(),
     region : joi.string(),
     address : joi.string(),
