@@ -112,6 +112,7 @@ router.post("/creatAnnouncement", verifyAccessToken, verifyadmin , async(req, re
     res.send (newA)
     }
     catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
