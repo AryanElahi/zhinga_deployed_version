@@ -220,6 +220,7 @@ router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, nex
         let result = await update.validateAsync(req.body)
         res.send ("The announcement has been updated successfully")
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
