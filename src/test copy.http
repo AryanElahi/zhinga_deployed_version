@@ -1,9 +1,4 @@
+get http://localhost:3000/api/V1/announce/getallannounce
 
-get http://localhost:3000/api/V1/admin/login
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDA0OTA1MjcsImV4cCI6MTc3MjA0ODEyNywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.f1lub0IYKFbmA8Er1tcvWsJHoSYt47jX1xaumOaCy1Q
-
-{
-    "phone": "09181711690",
-    "password": "123"
-}
+//Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDA0OTA1MjcsImV4cCI6MTc3MjA0ODEyNywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.f1lub0IYKFbmA8Er1tcvWsJHoSYt47jX1xaumOaCy1Q

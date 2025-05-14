@@ -218,6 +218,7 @@ router.post("/getbystatecode",verifyAccessToken, verifyadmin  , async (req, res,
 router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         let result = await update.validateAsync(req.body)
+        let updated = await updateAnnoun(result)
         res.send ("The announcement has been updated successfully")
     } catch (error) {
         console.log(error)

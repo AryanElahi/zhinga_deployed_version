@@ -1,11 +1,10 @@
-post http://185.231.115.236:3000/api/V1/admin/creatAnnouncement
+put http://185.231.115.236:3000/api/V1/admin/updateannoun
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDY1NjE4NDgsImV4cCI6MTc3ODExOTQ0OCwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.6kUC_L0Az_HK-MhUdqFBEziBU-RJnAxadSbYfji6NYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDcxMTI2NDksImV4cCI6MTc3ODY3MDI0OSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.INd8WcPFGz4M7Mqp9PNUrVeE_qGvSHEek4K3WO3di3c
 
 {
-  "loan": true,
+  "Uid" :"1746249464892",
   "type": "آپارتمان",
-  "region": "تهران، منطقه 5",
   "address": "تهران، خیابان آزادی، کوچه بهار، پلاک 12",
   "location": "35.6895,51.3890",
   "usage": "مسکونی",

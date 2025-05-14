@@ -74,6 +74,7 @@ router.get("/getallannounce" , async (req, res, next) => {
     try {
         res.send(await getAllAnnouns())        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
