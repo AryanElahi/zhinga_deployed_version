@@ -59,7 +59,7 @@ async function deleteAnnoun (ID){
       ...rest,
       ...(full_name && {
         full_name: {
-          startsWith: full_name,
+          contains: full_name,
           mode: 'insensitive'
         }
       })
@@ -71,6 +71,7 @@ async function deleteAnnoun (ID){
   
     return user_announs;
   }
+  
   
 
 
