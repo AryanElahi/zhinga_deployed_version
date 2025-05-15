@@ -62,6 +62,7 @@ async function deleteAnnoun (ID){
           contains: full_name,
           mode: 'insensitive'
         }
+        
       })
     };
   
