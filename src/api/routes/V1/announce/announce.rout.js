@@ -20,23 +20,17 @@ const {verifyAccessToken} = require("../../../middlewares/isAuth.middleware")
 router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
     try {
         let result = await creat.validateAsync(req.body)
-        console.log("test")
         const authheader = req.headers["authorization"]
-        console.log("test")
         const bearertoken = authheader.split(' ')
-        console.log("test")
         const token = bearertoken[1]
-        console.log("test")
         const userId = await getUserByAccessToken(token)
-        console.log("test")
         result.Uid = String(new Date().getTime()) 
-        console.log("test")
         const  newA = await creatAnnouncement(result, userId)
         const message = "announcement has been created:"
         console.log(newA)
         res.send({message, newA})
-        console.log("test")
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
@@ -80,6 +74,7 @@ router.get("/getallannounce" , async (req, res, next) => {
     try {
         res.send(await getAllAnnouns())        
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })

@@ -112,6 +112,7 @@ router.post("/creatAnnouncement", verifyAccessToken, verifyadmin , async(req, re
     res.send (newA)
     }
     catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
@@ -217,8 +218,10 @@ router.post("/getbystatecode",verifyAccessToken, verifyadmin  , async (req, res,
 router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         let result = await update.validateAsync(req.body)
+        let updated = await updateAnnoun(result)
         res.send ("The announcement has been updated successfully")
     } catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 })
