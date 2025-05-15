@@ -37,12 +37,26 @@ async function updateAnnoun (result){
     })
     }
 
-async function search(data) {
-    const user_announs = await prisma.property.findMany({
-        where: data
+  async function search(data) {
+    const { full_name, ...rest } = data;
+  
+    const where = {
+      ...rest,
+      ...(full_name && {
+        full_name: {
+          contains: full_name,
+          mode: 'insensitive'
+        }
+        
+      })
+    };
+  
+    const user_announs = await prisma.property.findFirst({
+      where
     });
+  
     return user_announs;
-}
+  }
 async function getByUid (code) {
     return prisma.property.findUnique({
         where: {
