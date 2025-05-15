@@ -50,12 +50,25 @@ async function deleteAnnoun (ID){
       })
     return (updated)
   }
-  async function search(data) {
-    const user_announs = await prisma.property.findFirst({
-        where: data
-    });
-    return user_announs;
+
+
+async function search(data) {
+  const where = { ...data };
+
+  if (data.full_name) {
+    where.full_name = {
+      startsWith: data.full_name,
+      mode: 'insensitive'
+    };
+  }
+
+  const user_announs = await prisma.property.findFirst({
+    where
+  });
+
+  return user_announs;
 }
+
 
 module.exports = {
     creatAnnouncement,
