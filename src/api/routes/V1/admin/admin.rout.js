@@ -10,6 +10,7 @@ const {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
+    confirmed,
     deleted_or_not_confirmed,
     search,
     photo_adding,
@@ -158,6 +159,16 @@ router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next)
         res.send(inprogress)
     } 
     catch (error) {
+        next(createError(500, "An unexpected error occurred"));
+    }
+});
+router.get("/confirmed_announce",verifyAccessToken, verifyadmin , async (req, res, next) => {
+    try {
+        const confirm = await confirmed()
+        res.send(confirm)
+    } 
+    catch (error) {
+        console.log(error)
         next(createError(500, "An unexpected error occurred"));
     }
 });
