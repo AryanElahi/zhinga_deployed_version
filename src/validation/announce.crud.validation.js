@@ -18,7 +18,8 @@ const creat = joi.object ({
     full_name : joi.string().required(),
     price     : joi.number().required(),
     room_number  : joi.number().required(),
-    features     : joi.string().required()
+    features     : joi.string().required(),
+    description     : joi.string()
 })
 const update = joi.object ({
     loan : joi.number(),
