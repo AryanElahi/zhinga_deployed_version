@@ -1,29 +1,4 @@
-put http://185.231.115.236:3000/api/V1/admin/updateannoun
+get http://185.231.115.236:3000/api/V1/admin/confirmed_announce
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDcxMTI2NDksImV4cCI6MTc3ODY3MDI0OSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.INd8WcPFGz4M7Mqp9PNUrVeE_qGvSHEek4K3WO3di3c
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDcxMTI2NDksImV4cCI6MTc3ODY3MDI0OSwiYXVkIjoiMDkxODE3MTE2OTAiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.INd8WcPFGz4M7Mqp9PNUrVeE_qGvSHEek4K3WO3di3c
 
-{
-  "Uid" :"1746598219895",
-  "type": "آپارتمان",
-  "address": "تهران، خیابان آزادی، کوچه بهار، پلاک 12",
-  "location": "35.6895,51.3890",
-  "usage": "مسکونی",
-  "document_type": "سند رسمی",
-  "land_metrage": 150,
-  "useful_metrage": 120,
-  "floor_number": 5,
-  "floor": 3,
-  "Unit_in_floor": 2,
-  "year_of_build": 1395,
-  "full_name": "ساختمان بهارستان",
-  "price": 3500000000,
-  "room_number": 3,
-  "features": "پارکینگ,آسانسور,انباری",
-  "phone": "09123456789",
-  "state_code": "TEH123"
-}
-
-//{
-//"about":"test",
-//"goals" : "test"
-//}

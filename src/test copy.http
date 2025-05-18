@@ -1,4 +1,9 @@
-get http://185.231.115.236:3000/api/V1/announce/getallannounce
+post http://185.231.115.236:3000/api/V1/auth/register
+Content-Type: application/json
 
-//Content-Type: application/json
-//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDA0OTA1MjcsImV4cCI6MTc3MjA0ODEyNywiYXVkIjoiMDkxODUzMjY1ODMiLCJpc3MiOiJwaWNrdXJwYWdlLmNvbSJ9.f1lub0IYKFbmA8Er1tcvWsJHoSYt47jX1xaumOaCy1Q
+{
+    "full_name": " lkjds",
+    "phone" : "09181711690",
+    "password" : "askljaslk"
+
+}
