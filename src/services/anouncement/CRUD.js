@@ -66,7 +66,7 @@ async function deleteAnnoun (ID){
       })
     };
   
-    const user_announs = await prisma.property.findFirst({
+    const user_announs = await prisma.property.findMany({
       where
     });
   
