@@ -162,6 +162,7 @@ router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next)
         next(createError(500, "An unexpected error occurred"));
     }
 });
+// not an admin rout, need to transfer to announce rout
 router.get("/confirmed_announce", async (req, res, next) => {
     try {
         const confirm = await confirmed()
@@ -172,6 +173,7 @@ router.get("/confirmed_announce", async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 });
+// end the rout 
 router.get("/notconfirmedannouncements",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const notconfirmed = await deleted_or_not_confirmed()
