@@ -1,9 +1,7 @@
-post http://185.231.115.236:3000/api/V1/auth/register
+post http://localhost:3000/api/V1/admin/creatregion
 Content-Type: application/json
 
 {
-    "full_name": " lkjds",
-    "phone" : "09181711690",
-    "password" : "askljaslk"
-
+    "name" : "شالمان"
 }
+

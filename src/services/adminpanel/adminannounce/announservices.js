@@ -63,7 +63,7 @@ async function updateAnnoun (result){
           })
         };
       
-        const user_announs = await prisma.property.findFirst({
+        const user_announs = await prisma.property.findMany({
           where
         });
       
