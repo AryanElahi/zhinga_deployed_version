@@ -525,7 +525,7 @@ router.delete("/deleteteam" ,verifyAccessToken, verifyadmin , async (req, res, n
     }
 })
 //region
-router.post("/creatregion"  , async(req, res, next) => {
+router.post("/creatregion",verifyAccessToken, verifyadmin  , async(req, res, next) => {
     try {
         data = req.body
         console.log(data)
@@ -536,7 +536,7 @@ router.post("/creatregion"  , async(req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.get("/getAllregions" , async(req, res, next) => {
+router.get("/getAllregions",verifyAccessToken, verifyadmin , async(req, res, next) => {
     try {
         const regions = await getAllregions()
         console.log(regions)
@@ -546,7 +546,7 @@ router.get("/getAllregions" , async(req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.delete("/deleteregion" , async (req, res, next) => {
+router.delete("/deleteregion",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const id = req.body.id 
         console.log(id)
