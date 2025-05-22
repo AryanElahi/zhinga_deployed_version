@@ -18,11 +18,12 @@ async function getAllregions() {
 //    data : data
 //    })
 //    }
-async function deleteregion (ID){
+async function deleteregion (id){
+      console.log(id)
       const updated = await prisma.region.delete({
-      where: {id: ID}
+      where: {id : id }
       })
-    return (updated)
+    //return (updated)
   }
 
 module.exports = {

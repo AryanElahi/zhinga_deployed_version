@@ -528,8 +528,9 @@ router.delete("/deleteteam" ,verifyAccessToken, verifyadmin , async (req, res, n
 router.post("/creatregion"  , async(req, res, next) => {
     try {
         data = req.body
+        console.log(data)
         region = await creatregion(data)
-        res.send(" region has been added", region)        
+        res.status(200).send(region);       
     } catch (error) {
         console.log(error)
         next(createError(500, "An unexpected error occurred"));
@@ -538,6 +539,7 @@ router.post("/creatregion"  , async(req, res, next) => {
 router.get("/getAllregions" , async(req, res, next) => {
     try {
         const regions = await getAllregions()
+        console.log(regions)
         res.send(regions)        
     } catch (error) {
         console.log(error)
@@ -547,7 +549,8 @@ router.get("/getAllregions" , async(req, res, next) => {
 router.delete("/deleteregion" , async (req, res, next) => {
     try {
         const id = req.body.id 
-        const region = await deleteregion()
+        console.log(id)
+        const region = await deleteregion(id)
         res.send("region has been deleted")
     } catch (error) {
         console.log(error)
