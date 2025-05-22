@@ -39,7 +39,6 @@ const update = joi.object ({
     price     : joi.number(),
     room_number  : joi.number(),
     features     : joi.string(),
-    state_code : joi.string(),
     Uid : joi.string()
 })
 module.exports = { 
