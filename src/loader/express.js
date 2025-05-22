@@ -6,6 +6,7 @@ const routes = require("../api/routes");
 require("dotenv").config();
 const { save_visitor } = require("./../services/adminpanel/visitCountingServices");
 const { errorHandler, notFoundHandler } = require("./../api/middlewares/errorHandeler");
+const path = require('path');
 
 const expressLoader = async (app) => {
     app.use(cors({
@@ -16,7 +17,8 @@ const expressLoader = async (app) => {
     app.use(morgan("dev"));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-
+    const photosPath = '/var/www/backend/zhinga_deployed_version/src/photos';
+    app.use('/photos', express.static(photosPath));
     app.get("/", async (req, res, next) => {
         await save_visitor(req);
         res.send("Home Rout");
