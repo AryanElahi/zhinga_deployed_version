@@ -62,7 +62,8 @@ CREATE TABLE "property" (
     "check" BOOLEAN NOT NULL DEFAULT false,
     "reject" BOOLEAN NOT NULL DEFAULT false,
     "state_code" TEXT NOT NULL DEFAULT '',
-    "Uid" TEXT NOT NULL
+    "Uid" TEXT NOT NULL,
+    "description" TEXT NOT NULL DEFAULT ''
 );
 
 -- CreateTable

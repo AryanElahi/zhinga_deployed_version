@@ -22,6 +22,13 @@ async function inPrigressStates() {
     const count = announs.length
     return ({"inprogress": announs, "number": count})
 }
+async function confirmed() {
+    const announs = await prisma.property.findMany({
+        where : {check : true}
+    })
+    const count = announs.length
+    return ({"confirmed": announs, "number": count})
+}
 async function deleted_or_not_confirmed (){
     const announs = await prisma.property.findMany({
         where : {reject : true}
@@ -56,7 +63,7 @@ async function updateAnnoun (result){
           })
         };
       
-        const user_announs = await prisma.property.findFirst({
+        const user_announs = await prisma.property.findMany({
           where
         });
       
@@ -96,6 +103,7 @@ async function rejectAnnoun(ID){
 }
 
 module.exports = {
+    confirmed,
     creatannounce,
     getAllAnnouns,
     inPrigressStates,

@@ -23,6 +23,7 @@ const creatval = joi.object ({
     phone    :joi.string()
     .pattern(RegExp("^(?:([0-9]{1})*[- .(]*([0-9]{3})[- .)]*[0-9]{3}[- .]*[0-9]{4})+$")),
     state_code:  joi.string(),
+    description :  joi.string(),
 
 })
 const update = joi.object ({
