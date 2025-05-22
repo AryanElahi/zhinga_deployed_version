@@ -381,7 +381,7 @@ router.post("/uploadsliderPhotos",verifyAccessToken, verifyadmin , async (req, r
                 message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        const imageUrls = req.files.map(file => `http://185.231.115.236:3000/photos/${file.filename}`);
         try {
             const adding = await photo_adding_slider(req.body.id , imageUrls)
             res.status(200).json({
@@ -459,7 +459,7 @@ router.put("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next)
                 message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        const imageUrls = req.files.map(file => `http://185.231.115.236:3000/photos/${file.filename}`);
         try {
             const adding = await logoAdding(imageUrls)
             res.status(200).json({
