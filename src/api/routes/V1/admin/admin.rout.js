@@ -162,7 +162,7 @@ router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next)
         next(createError(500, "An unexpected error occurred"));
     }
 });
-router.get("/confirmed_announce",verifyAccessToken, verifyadmin , async (req, res, next) => {
+router.get("/confirmed_announce", async (req, res, next) => {
     try {
         const confirm = await confirmed()
         res.send(confirm)
