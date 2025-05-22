@@ -58,6 +58,10 @@ const {
 const { 
     getByStateCode,
 } = require("../../../../services/anouncement/CRUD")
+const {creatregion,
+    getAllregions,
+    deleteregion
+} = require("../../../../services/adminpanel/region/CRUD")
 //Dashboard started
 router.get("/dashboard", async (req, res, next) => {
 try {
@@ -520,5 +524,36 @@ router.delete("/deleteteam" ,verifyAccessToken, verifyadmin , async (req, res, n
         next(createError(500, "An unexpected error occurred"));
     }
 })
+//region
+router.post("/creatregion"  , async(req, res, next) => {
+    try {
+        data = req.body
+        region = await creatregion(data)
+        res.send(" region has been added", region)        
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.get("/getAllregions" , async(req, res, next) => {
+    try {
+        const regions = await getAllregions()
+        res.send(regions)        
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.delete("/deleteregion" , async (req, res, next) => {
+    try {
+        const id = req.body.id 
+        const region = await deleteregion()
+        res.send("region has been deleted")
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+
 module.exports = router
 

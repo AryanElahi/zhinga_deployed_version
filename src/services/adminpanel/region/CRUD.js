@@ -20,7 +20,7 @@ async function getAllregions() {
 //    }
 async function deleteregion (ID){
       const updated = await prisma.region.delete({
-      where: {Uid: ID}
+      where: {id: ID}
       })
     return (updated)
   }
