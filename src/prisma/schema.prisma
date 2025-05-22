@@ -121,5 +121,4 @@ model visitor {
 model region {
   id Int @default(autoincrement()) @unique
   name String @default("")
-  ip String
 }
