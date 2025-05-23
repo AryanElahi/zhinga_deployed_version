@@ -1,7 +1,2 @@
-post http://localhost:3000/api/V1/admin/creatregion
+get http://185.231.115.236:3000/api/V1/announce/getallannounce
 Content-Type: application/json
-
-{
-    "name" : "شالمان"
-}
-

@@ -10,14 +10,17 @@ const {
     getAllAnnouns,
     getByUid,
     updateAnnoun,
+    confirmed,
     deleteAnnoun,
     photo_adding,
     search
 } = require("../../../../services/anouncement/CRUD")
 const {getUserByAccessToken} = require ("./../../../../services/user/auth")
 const {verifyAccessToken} = require("../../../middlewares/isAuth.middleware")
-
-router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
+const {
+    getAllregions,
+} = require("../../../../services/adminpanel/region/CRUD")
+    router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
     try {
         let result = await creat.validateAsync(req.body)
         const authheader = req.headers["authorization"]
@@ -49,7 +52,7 @@ router.post("/uploadPhotos",verifyAccessToken , async (req, res, next) => {
                     message: 'file doesnt exist'
                 });
             }
-            const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+            const imageUrls = req.files.map(file => `http://185.231.115.236:3000/photos/${file.filename}`);
             try {
                 const adding = await photo_adding(req.body.Uid, imageUrls)
                 res.status(200).json({
@@ -103,7 +106,26 @@ router.delete("/hdelete",verifyAccessToken , async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-
+router.get("/getAllregions", async(req, res, next) => {
+    try {
+        const regions = await getAllregions()
+        console.log(regions)
+        res.send(regions)        
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.get("/confirmed_announce", async (req, res, next) => {
+    try {
+        const confirm = await confirmed()
+        res.send(confirm)
+    } 
+    catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+});
 module.exports = router
 
 

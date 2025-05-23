@@ -4044,7 +4044,7 @@ paths:
                     items:
                       type: string
                       description: URLs of the uploaded files.
-                      example: "http://localhost:3000/photos/images_1732114669889.png"
+                      example: "http://185.231.115.236:3000/photos/images_1732114669889.png"
         '400':
           description: Bad Request
         '401':
@@ -4095,7 +4095,7 @@ paths:
                     items:
                       type: string
                       description: URLs of the uploaded files.
-                      example: "http://localhost:3000/photos/images_1732114908951.png"
+                      example: "http://185.231.115.236:3000/photos/images_1732114908951.png"
         '400':
           description: Bad Request
         '401':
@@ -4139,7 +4139,7 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: "http://localhost:3000/photos/images_1732115507548.webp"
+                      example: "http://185.231.115.236:3000/photos/images_1732115507548.webp"
         '400':
           description: Invalid request
           content:
@@ -4193,7 +4193,7 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: "http://localhost:3000/photos/images_1732115999124.webp"
+                      example: "http://185.231.115.236:3000/photos/images_1732115999124.webp"
         '400':
           description: Invalid request
           content:

@@ -10,7 +10,6 @@ const {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
-    confirmed,
     deleted_or_not_confirmed,
     search,
     photo_adding,
@@ -59,7 +58,6 @@ const {
     getByStateCode,
 } = require("../../../../services/anouncement/CRUD")
 const {creatregion,
-    getAllregions,
     deleteregion
 } = require("../../../../services/adminpanel/region/CRUD")
 //Dashboard started
@@ -166,18 +164,6 @@ router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next)
         next(createError(500, "An unexpected error occurred"));
     }
 });
-// not an admin rout, need to transfer to announce rout
-router.get("/confirmed_announce", async (req, res, next) => {
-    try {
-        const confirm = await confirmed()
-        res.send(confirm)
-    } 
-    catch (error) {
-        console.log(error)
-        next(createError(500, "An unexpected error occurred"));
-    }
-});
-// end the rout 
 router.get("/notconfirmedannouncements",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const notconfirmed = await deleted_or_not_confirmed()
@@ -381,7 +367,7 @@ router.post("/uploadsliderPhotos",verifyAccessToken, verifyadmin , async (req, r
                 message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        const imageUrls = req.files.map(file => `http://185.231.115.236:3000/photos/${file.filename}`);
         try {
             const adding = await photo_adding_slider(req.body.id , imageUrls)
             res.status(200).json({
@@ -459,7 +445,7 @@ router.put("/uploadLogo",verifyAccessToken, verifyadmin , async (req, res, next)
                 message: 'file doesnt exist'
             });
         }
-        const imageUrls = req.files.map(file => `http://localhost:3000/photos/${file.filename}`);
+        const imageUrls = req.files.map(file => `http://185.231.115.236:3000/photos/${file.filename}`);
         try {
             const adding = await logoAdding(imageUrls)
             res.status(200).json({
@@ -531,16 +517,6 @@ router.post("/creatregion",verifyAccessToken, verifyadmin  , async(req, res, nex
         console.log(data)
         region = await creatregion(data)
         res.status(200).send(region);       
-    } catch (error) {
-        console.log(error)
-        next(createError(500, "An unexpected error occurred"));
-    }
-})
-router.get("/getAllregions",verifyAccessToken, verifyadmin , async(req, res, next) => {
-    try {
-        const regions = await getAllregions()
-        console.log(regions)
-        res.send(regions)        
     } catch (error) {
         console.log(error)
         next(createError(500, "An unexpected error occurred"));

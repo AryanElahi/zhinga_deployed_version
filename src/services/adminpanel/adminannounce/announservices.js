@@ -1,5 +1,4 @@
 const {PrismaClient} = require("@prisma/client")
-const { use } = require("bcrypt/promises")
 const prisma = new PrismaClient()
 
 async function creatannounce (data, userId){
@@ -21,13 +20,6 @@ async function inPrigressStates() {
     })
     const count = announs.length
     return ({"inprogress": announs, "number": count})
-}
-async function confirmed() {
-    const announs = await prisma.property.findMany({
-        where : {check : true}
-    })
-    const count = announs.length
-    return ({"confirmed": announs, "number": count})
 }
 async function deleted_or_not_confirmed (){
     const announs = await prisma.property.findMany({
