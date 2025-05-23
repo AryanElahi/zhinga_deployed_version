@@ -12,6 +12,7 @@ const {
     inPrigressStates,
     deleted_or_not_confirmed,
     search,
+    delete_photos,
     photo_adding,
     checkAnnounce,
     rejectAnnoun,
@@ -223,6 +224,16 @@ router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, nex
         let result = await update.validateAsync(req.body)
         let updated = await updateAnnoun(result)
         res.send ("The announcement has been updated successfully")
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
+router.put("/delete_photos" , async (req, res, next) => {
+    try {
+        const u = req.body.uid
+        let updated = await delete_photos(u)
+        res.send ("photo has been deleted from announce")
     } catch (error) {
         console.log(error)
         next(createError(500, "An unexpected error occurred"));
