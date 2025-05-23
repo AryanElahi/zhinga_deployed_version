@@ -34,9 +34,14 @@ async function updateAnnoun (result){
     where: {Uid : code.Uid},
     data : result
     })
-    }
-
-    async function search(data) {
+}
+async function delete_photos (uid){
+    return await prisma.property.update({
+    where: {Uid :uid},
+    data : { photo: [] }
+    })
+}
+async function search(data) {
         const { full_name, address, ...rest } = data;
       
         const where = {
@@ -60,10 +65,7 @@ async function updateAnnoun (result){
         });
       
         return user_announs;
-      }
-      
-
-
+}
 async function getByUid (code) {
     return prisma.property.findUnique({
         where: {
@@ -76,7 +78,7 @@ async function photo_adding (Uid, Url){
     where: {Uid : Uid},
     data : {photo : Url}
     })
-    }
+}
 async function checkAnnounce (ID, stateCode){
       const updated = await prisma.property.update({
       where: {Uid: ID},
@@ -85,7 +87,7 @@ async function checkAnnounce (ID, stateCode){
       }
       })
     return (updated)
-  }
+}
 async function rejectAnnoun(ID){
     const updated = await prisma.property.update({
     where: {Uid: ID},
@@ -104,5 +106,6 @@ module.exports = {
     rejectAnnoun, 
     updateAnnoun ,
     photo_adding,
-    getByUid
+    getByUid,
+    delete_photos
 }
