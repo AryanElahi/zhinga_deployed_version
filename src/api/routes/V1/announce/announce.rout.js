@@ -16,8 +16,10 @@ const {
 } = require("../../../../services/anouncement/CRUD")
 const {getUserByAccessToken} = require ("./../../../../services/user/auth")
 const {verifyAccessToken} = require("../../../middlewares/isAuth.middleware")
-
-router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
+const {
+    getAllregions,
+} = require("../../../../services/adminpanel/region/CRUD")
+    router.post ("/creatAnnounce", verifyAccessToken , async (req, res, next) => {
     try {
         let result = await creat.validateAsync(req.body)
         const authheader = req.headers["authorization"]
@@ -103,7 +105,16 @@ router.delete("/hdelete",verifyAccessToken , async (req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
-
+router.get("/getAllregions", async(req, res, next) => {
+    try {
+        const regions = await getAllregions()
+        console.log(regions)
+        res.send(regions)        
+    } catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+})
 module.exports = router
 
 

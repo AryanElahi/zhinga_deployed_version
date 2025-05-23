@@ -59,7 +59,6 @@ const {
     getByStateCode,
 } = require("../../../../services/anouncement/CRUD")
 const {creatregion,
-    getAllregions,
     deleteregion
 } = require("../../../../services/adminpanel/region/CRUD")
 //Dashboard started
@@ -531,16 +530,6 @@ router.post("/creatregion",verifyAccessToken, verifyadmin  , async(req, res, nex
         console.log(data)
         region = await creatregion(data)
         res.status(200).send(region);       
-    } catch (error) {
-        console.log(error)
-        next(createError(500, "An unexpected error occurred"));
-    }
-})
-router.get("/getAllregions",verifyAccessToken, verifyadmin , async(req, res, next) => {
-    try {
-        const regions = await getAllregions()
-        console.log(regions)
-        res.send(regions)        
     } catch (error) {
         console.log(error)
         next(createError(500, "An unexpected error occurred"));
