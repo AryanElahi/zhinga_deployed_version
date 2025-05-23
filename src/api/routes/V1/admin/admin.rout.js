@@ -229,7 +229,7 @@ router.put("/updateannoun",verifyAccessToken, verifyadmin , async (req, res, nex
         next(createError(500, "An unexpected error occurred"));
     }
 })
-router.put("/delete_photos" , async (req, res, next) => {
+router.put("/delete_photos" ,verifyAccessToken, verifyadmin, async (req, res, next) => {
     try {
         const u = req.body.uid
         let updated = await delete_photos(u)
