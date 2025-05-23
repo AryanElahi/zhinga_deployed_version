@@ -95,7 +95,6 @@ async function rejectAnnoun(ID){
 }
 
 module.exports = {
-    confirmed,
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
