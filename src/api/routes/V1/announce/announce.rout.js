@@ -10,6 +10,7 @@ const {
     getAllAnnouns,
     getByUid,
     updateAnnoun,
+    confirmed,
     deleteAnnoun,
     photo_adding,
     search
@@ -115,6 +116,16 @@ router.get("/getAllregions", async(req, res, next) => {
         next(createError(500, "An unexpected error occurred"));
     }
 })
+router.get("/confirmed_announce", async (req, res, next) => {
+    try {
+        const confirm = await confirmed()
+        res.send(confirm)
+    } 
+    catch (error) {
+        console.log(error)
+        next(createError(500, "An unexpected error occurred"));
+    }
+});
 module.exports = router
 
 

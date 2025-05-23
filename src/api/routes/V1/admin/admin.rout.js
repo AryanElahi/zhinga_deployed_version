@@ -10,7 +10,6 @@ const {
     creatannounce,
     getAllAnnouns,
     inPrigressStates,
-    confirmed,
     deleted_or_not_confirmed,
     search,
     photo_adding,
@@ -165,18 +164,6 @@ router.get("/inprogress",verifyAccessToken, verifyadmin , async (req, res, next)
         next(createError(500, "An unexpected error occurred"));
     }
 });
-// not an admin rout, need to transfer to announce rout
-router.get("/confirmed_announce", async (req, res, next) => {
-    try {
-        const confirm = await confirmed()
-        res.send(confirm)
-    } 
-    catch (error) {
-        console.log(error)
-        next(createError(500, "An unexpected error occurred"));
-    }
-});
-// end the rout 
 router.get("/notconfirmedannouncements",verifyAccessToken, verifyadmin , async (req, res, next) => {
     try {
         const notconfirmed = await deleted_or_not_confirmed()

@@ -16,7 +16,7 @@ async function photo_adding (Uid, Url){
     where: {Uid : Uid},
     data : {photo : Url}
     })
-    }
+}
 async function getByStateCode (code) {
     return prisma.property.findFirst({
         where: {
@@ -42,16 +42,13 @@ async function updateAnnoun (result){
     where: {Uid : code.Uid},
     data : result
     })
-    }
-
+}
 async function deleteAnnoun (ID){
       const updated = await prisma.property.delete({
       where: {Uid: ID}
       })
     return (updated)
-  }
-
-
+}
   async function search(data) {
     const { full_name, ...rest } = data;
   
@@ -71,8 +68,14 @@ async function deleteAnnoun (ID){
     });
   
     return user_announs;
-  }
-  
+}
+async function confirmed() {
+    const announs = await prisma.property.findMany({
+        where : {check : true}
+    })
+    const count = announs.length
+    return ({"confirmed": announs, "number": count})
+}
   
 
 
@@ -84,5 +87,6 @@ module.exports = {
     getByStateCode,
     getByUid,
     photo_adding,
-    search
+    search,
+    confirmed
 }
